@@ -8,9 +8,12 @@
   <meta name="description" content="Portfolio of Mehrdad Behrouzi - Computer Engineer & IoT Developer">
   <meta name="theme-color" content="#050816">
 
-  <!-- Vazir Font for Persian -->
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="pic/MB-LOGO.png">
+
+  <!-- Vazir Font -->
   <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
-  <!-- Inter Font for English -->
+  <!-- Inter Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -47,7 +50,6 @@
     </nav>
   </header>
 
-  <!-- Hero Section -->
   <section id="home">
     <div class="hero">
       <div class="hero-left">
@@ -65,7 +67,7 @@
         </div>
       </div>
       <div class="hero-right">
-        <div class="glass-card">
+        <div class="glass-card hero-stats">
           <div class="circle"></div>
           <div class="circle2"></div>
           <h2>System Status</h2>
@@ -89,14 +91,12 @@
     </div>
   </section>
 
-  <!-- Military Service Roadmap (compact, road-style) -->
   <section id="service-roadmap">
     <h2 class="section-title">📍 Military Service Roadmap</h2>
-    <div class="roadmap-container glass">
+    <div class="roadmap-container glass-card">
       <div class="road-progress">
         <div class="road-fill" id="road-fill"></div>
         <div class="road-car" id="road-car">🚙</div>
-        <!-- Milestones -->
         <div class="milestone" style="left:0%" data-label="Start: 1404/06/01"></div>
         <div class="milestone" style="left:25%" data-label="Training camp"></div>
         <div class="milestone" style="left:50%" data-label="Base assignment"></div>
@@ -113,9 +113,8 @@
     </div>
   </section>
 
-  <!-- About Section -->
   <section id="about">
-    <div class="glass about-card">
+    <div class="glass-card about-card">
       <h2>About Me</h2>
       <p>
         I'm Mehrdad Behrouzi, a Computer Engineering graduate with a background in Mathematics & Physics.
@@ -143,36 +142,35 @@
     </div>
   </section>
 
-  <!-- Education & Certificates -->
   <section id="education">
     <h2 class="section-title">Education & Certificates</h2>
     <div class="education-grid">
-      <div class="edu-card glass">
+      <div class="edu-card glass-card">
         <i class="fas fa-graduation-cap"></i>
         <h3>B.Sc. Computer Engineering</h3>
         <span class="edu-place">University of ...</span>
       </div>
-      <div class="edu-card glass">
+      <div class="edu-card glass-card">
         <i class="fas fa-square-root-alt"></i>
         <h3>B.Sc. Mathematics & Physics</h3>
         <span class="edu-place">University of ...</span>
       </div>
-      <div class="edu-card glass">
+      <div class="edu-card glass-card">
         <i class="fas fa-network-wired"></i>
         <h3>Network+ Certification</h3>
         <span class="edu-place">CompTIA</span>
       </div>
-      <div class="edu-card glass">
+      <div class="edu-card glass-card">
         <i class="fas fa-cube"></i>
         <h3>SolidWorks Design</h3>
         <span class="edu-place">Professional Training</span>
       </div>
-      <div class="edu-card glass">
+      <div class="edu-card glass-card">
         <i class="fas fa-code"></i>
         <h3>C++ / C# Programming</h3>
         <span class="edu-place">Advanced Certificate</span>
       </div>
-      <div class="edu-card glass">
+      <div class="edu-card glass-card">
         <i class="fas fa-home"></i>
         <h3>Smart Home Automation</h3>
         <span class="edu-place">Certified Specialist</span>
@@ -180,36 +178,35 @@
     </div>
   </section>
 
-  <!-- Skills -->
   <section id="skills">
     <h2 class="section-title">Technical Skills</h2>
     <div class="skills-grid">
-      <div class="skill-card glass">
+      <div class="skill-card glass-card">
         <i class="fas fa-microchip"></i>
         <h3>Embedded Systems</h3>
         <p>ESP32 · Arduino · ARM · FreeRTOS</p>
       </div>
-      <div class="skill-card glass">
+      <div class="skill-card glass-card">
         <i class="fas fa-code"></i>
         <h3>Programming</h3>
         <p>Python · C/C++ · C# · JavaScript</p>
       </div>
-      <div class="skill-card glass">
+      <div class="skill-card glass-card">
         <i class="fas fa-network-wired"></i>
         <h3>Networking</h3>
         <p>TCP/IP · MQTT · LoRa · Wi-Fi</p>
       </div>
-      <div class="skill-card glass">
+      <div class="skill-card glass-card">
         <i class="fas fa-cubes"></i>
         <h3>Design</h3>
         <p>SolidWorks · Figma · UI/UX</p>
       </div>
-      <div class="skill-card glass">
+      <div class="skill-card glass-card">
         <i class="fas fa-home"></i>
         <h3>Automation</h3>
         <p>Home Assistant · Node-RED · PLC</p>
       </div>
-      <div class="skill-card glass">
+      <div class="skill-card glass-card">
         <i class="fas fa-cloud"></i>
         <h3>DevOps</h3>
         <p>Git · Docker · Linux · CI/CD</p>
@@ -217,39 +214,35 @@
     </div>
   </section>
 
-  <!-- Projects (GitHub API) -->
   <section id="projects">
     <h2 class="section-title">Featured Projects</h2>
-    <div class="projects-grid" id="projects-container">
-      <!-- dynamically filled -->
-    </div>
+    <div class="projects-grid" id="projects-container"></div>
   </section>
 
-  <!-- Contact -->
   <section id="contact">
     <h2 class="section-title">Get in Touch</h2>
     <div class="contact-grid">
-      <div class="contact-card glass">
+      <div class="contact-card glass-card">
         <i class="fas fa-envelope"></i>
         <h3>Email</h3>
         <a href="mailto:game.developer.mb@gmail.com">game.developer.mb@gmail.com</a>
       </div>
-      <div class="contact-card glass">
+      <div class="contact-card glass-card">
         <i class="fab fa-github"></i>
         <h3>GitHub</h3>
         <a href="https://github.com/mehrdadmb2" target="_blank">mehrdadmb2</a>
       </div>
-      <div class="contact-card glass">
+      <div class="contact-card glass-card">
         <i class="fab fa-telegram"></i>
         <h3>Telegram</h3>
         <a href="https://t.me/IIMehrdadII" target="_blank">@IIMehrdadII</a>
       </div>
-      <div class="contact-card glass">
+      <div class="contact-card glass-card">
         <i class="fab fa-instagram"></i>
         <h3>Instagram</h3>
         <a href="https://instagram.com/_._.m._.b" target="_blank">_._.m._.b</a>
       </div>
-      <div class="contact-card glass">
+      <div class="contact-card glass-card">
         <i class="fas fa-phone"></i>
         <h3>Phone</h3>
         <a href="tel:+989031937072">+98 903 193 7072</a>
