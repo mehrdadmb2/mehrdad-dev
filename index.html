@@ -4,14 +4,13 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>مهرداد بهروزی | مهندس کامپیوتر</title>
-  <meta name="description" content="پورتفولیوی رسمی مهرداد بهروزی">
+  <title>Mehrdad Behrouzi | Computer Engineer</title>
+  <meta name="description" content="Portfolio of Mehrdad Behrouzi - Computer Engineer & IoT Developer">
   <meta name="theme-color" content="#050816">
 
   <!-- Vazir Font for Persian -->
   <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
-
-  <!-- Inter Font for English (fallback) -->
+  <!-- Inter Font for English -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -32,14 +31,15 @@
 
   <header>
     <nav class="glass-nav">
-      <div class="logo">مهرداد</div>
+      <div class="logo">Mehrdad</div>
       <ul>
-        <li><a href="#home">خانه</a></li>
-        <li><a href="#about">درباره من</a></li>
-        <li><a href="#military">خدمت سربازی</a></li>
-        <li><a href="#skills">مهارت‌ها</a></li>
-        <li><a href="#projects">پروژه‌ها</a></li>
-        <li><a href="#contact">تماس</a></li>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#service-roadmap">Service</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
       <div class="buttons">
         <button id="theme">🌙</button>
@@ -47,39 +47,41 @@
     </nav>
   </header>
 
+  <!-- Hero Section -->
   <section id="home">
     <div class="hero">
       <div class="hero-left">
-        <h3>سلام 👋</h3>
-        <h1>من <span>مهرداد</span> هستم</h1>
-        <h2><span class="typing"></span></h2>
+        <h3>Hi, I'm</h3>
+        <h1><span>Mehrdad Behrouzi</span></h1>
+        <h2 class="english-title">Computer Engineer & IoT Developer</h2>
+        <h2 class="typing-wrapper"><span class="typing"></span></h2>
         <p>
-          دانشجوی مهندسی کامپیوتر، عاشق ساخت سیستم‌های embedded، IoT، شبکه و اتوماسیون.
-          همچنین ستوان سوم رسته رایانه نیروی زمینی ارتش جمهوری اسلامی ایران.
+          Passionate about building futuristic embedded systems, automation platforms, and modern user interfaces.
+          Also serving as a 2nd Lieutenant in the Iranian Army (Computer branch).
         </p>
         <div class="hero-buttons">
-          <a href="#projects" class="btn">پروژه‌ها</a>
-          <a href="https://github.com/mehrdadmb2" class="btn2">گیت‌هاب</a>
+          <a href="#projects" class="btn">My Projects</a>
+          <a href="https://github.com/mehrdadmb2" class="btn2">GitHub</a>
         </div>
       </div>
       <div class="hero-right">
         <div class="glass-card">
           <div class="circle"></div>
           <div class="circle2"></div>
-          <h2>وضعیت سیستم</h2>
+          <h2>System Status</h2>
           <div class="status">
-            <span>● آنلاین</span>
+            <span>● Online</span>
           </div>
           <div class="stat">
-            <p>مخازن</p>
+            <p>Repositories</p>
             <h1 id="repoCount">--</h1>
           </div>
           <div class="stat">
-            <p>دنبال‌کنندگان</p>
+            <p>Followers</p>
             <h1 id="followers">--</h1>
           </div>
           <div class="stat">
-            <p>ستاره‌ها</p>
+            <p>Stars</p>
             <h1 id="starsCount">--</h1>
           </div>
         </div>
@@ -87,166 +89,183 @@
     </div>
   </section>
 
+  <!-- Military Service Roadmap (compact, road-style) -->
+  <section id="service-roadmap">
+    <h2 class="section-title">📍 Military Service Roadmap</h2>
+    <div class="roadmap-container glass">
+      <div class="road-progress">
+        <div class="road-fill" id="road-fill"></div>
+        <div class="road-car" id="road-car">🚙</div>
+        <!-- Milestones -->
+        <div class="milestone" style="left:0%" data-label="Start: 1404/06/01"></div>
+        <div class="milestone" style="left:25%" data-label="Training camp"></div>
+        <div class="milestone" style="left:50%" data-label="Base assignment"></div>
+        <div class="milestone" style="left:75%" data-label="Shiraz mission"></div>
+        <div class="milestone" style="left:100%" data-label="End: 1406/03/02"></div>
+      </div>
+      <div class="road-labels">
+        <span class="road-start">اعزام</span>
+        <span class="road-end">پایان خدمت</span>
+      </div>
+      <div class="progress-text">
+        <span id="progress-percent">0%</span> completed · <span id="remaining-days">--</span> days left
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
   <section id="about">
     <div class="glass about-card">
-      <h2>درباره من</h2>
+      <h2>About Me</h2>
       <p>
-        محمدرضا بهروزی هستم؛ ستوان سوم رسته رایانه در نیروی زمینی ارتش ایران.
-        دارای مدرک کارشناسی ریاضی فیزیک و کارشناسی مهندسی کامپیوتر.
-        متخصص در حوزه شبکه، برنامه‌نویسی و طراحی صنعتی.
-        به فناوری‌های نوین، اتوماسیون و توسعه نرم‌افزارهای مدرن علاقه‌مندم.
+        I'm Mehrdad Behrouzi, a Computer Engineering graduate with a background in Mathematics & Physics.
+        Currently serving as a 2nd Lieutenant in the Iranian Army's Ground Forces, Computer branch.
+        I specialize in embedded systems, IoT, networking, and automation. I love open-source and creating beautiful, functional tech.
       </p>
       <div class="about-stats">
         <div class="stat-item">
+          <span class="stat-number">BSc</span>
+          <span class="stat-label">Computer Eng.</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">BSc</span>
+          <span class="stat-label">Math & Physics</span>
+        </div>
+        <div class="stat-item">
           <span class="stat-number">+Network</span>
-          <span class="stat-label">مدرک تکنسین شبکه</span>
+          <span class="stat-label">Certified</span>
         </div>
         <div class="stat-item">
-          <span class="stat-number">SolidWorks</span>
-          <span class="stat-label">طراحی سه‌بعدی</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number">C++ / C#</span>
-          <span class="stat-label">برنامه‌نویسی</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number">هوشمندسازی</span>
-          <span class="stat-label">خانه هوشمند</span>
+          <span class="stat-number">3+</span>
+          <span class="stat-label">Years Exp.</span>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="military">
-    <h2 class="section-title">نقشه راه خدمت سربازی</h2>
-    <div class="military-progress glass">
-      <div class="progress-info">
-        <span>درصد پیشرفت خدمت</span>
-        <span id="progress-percent">0%</span>
+  <!-- Education & Certificates -->
+  <section id="education">
+    <h2 class="section-title">Education & Certificates</h2>
+    <div class="education-grid">
+      <div class="edu-card glass">
+        <i class="fas fa-graduation-cap"></i>
+        <h3>B.Sc. Computer Engineering</h3>
+        <span class="edu-place">University of ...</span>
       </div>
-      <div class="progress-bar">
-        <div class="progress-fill" id="progress-fill"></div>
+      <div class="edu-card glass">
+        <i class="fas fa-square-root-alt"></i>
+        <h3>B.Sc. Mathematics & Physics</h3>
+        <span class="edu-place">University of ...</span>
       </div>
-      <div class="progress-dates">
-        <span>شروع: ۱۴۰۴/۰۶/۰۱</span>
-        <span id="remaining-text">باقی‌مانده: --</span>
+      <div class="edu-card glass">
+        <i class="fas fa-network-wired"></i>
+        <h3>Network+ Certification</h3>
+        <span class="edu-place">CompTIA</span>
       </div>
-    </div>
-
-    <div class="timeline military-timeline">
-      <div class="timeline-item glass">
-        <div class="timeline-icon"><i class="fas fa-calendar-check"></i></div>
-        <div class="timeline-content">
-          <h3>اعزام به خدمت</h3>
-          <span>۱ شهریور ۱۴۰۴</span>
-          <p>شروع دوره آموزشی در پادگان ۰۷ نزاجا کازرون، گردان ۴ گروهان ۱</p>
-        </div>
+      <div class="edu-card glass">
+        <i class="fas fa-cube"></i>
+        <h3>SolidWorks Design</h3>
+        <span class="edu-place">Professional Training</span>
       </div>
-      <div class="timeline-item glass">
-        <div class="timeline-icon"><i class="fas fa-user-graduate"></i></div>
-        <div class="timeline-content">
-          <h3>پایان آموزش و درجه‌داری</h3>
-          <span>پس از ۲ ماه</span>
-          <p>اخذ درجه ستوان سومی و ادامه خدمت در همان پادگان (یگان قرارگاه)</p>
-        </div>
+      <div class="edu-card glass">
+        <i class="fas fa-code"></i>
+        <h3>C++ / C# Programming</h3>
+        <span class="edu-place">Advanced Certificate</span>
       </div>
-      <div class="timeline-item glass">
-        <div class="timeline-icon"><i class="fas fa-exchange-alt"></i></div>
-        <div class="timeline-content">
-          <h3>ماموریت به حفا ارشد شیراز</h3>
-          <span>اردیبهشت ۱۴۰۵</span>
-          <p>گذراندن ۱ ماه در حفا ارشد شیراز</p>
-        </div>
-      </div>
-      <div class="timeline-item glass">
-        <div class="timeline-icon"><i class="fas fa-tools"></i></div>
-        <div class="timeline-content">
-          <h3>مدیریت اسلحه و مهمات</h3>
-          <span>از خرداد ۱۴۰۵ تاکنون</span>
-          <p>ادامه خدمت در مدیریت اسلحه مهمات شیراز</p>
-        </div>
+      <div class="edu-card glass">
+        <i class="fas fa-home"></i>
+        <h3>Smart Home Automation</h3>
+        <span class="edu-place">Certified Specialist</span>
       </div>
     </div>
   </section>
 
+  <!-- Skills -->
   <section id="skills">
-    <h2 class="section-title">مهارت‌های فنی</h2>
+    <h2 class="section-title">Technical Skills</h2>
     <div class="skills-grid">
       <div class="skill-card glass">
         <i class="fas fa-microchip"></i>
-        <h3>Embedded</h3>
+        <h3>Embedded Systems</h3>
         <p>ESP32 · Arduino · ARM · FreeRTOS</p>
       </div>
       <div class="skill-card glass">
         <i class="fas fa-code"></i>
-        <h3>برنامه‌نویسی</h3>
+        <h3>Programming</h3>
         <p>Python · C/C++ · C# · JavaScript</p>
       </div>
       <div class="skill-card glass">
         <i class="fas fa-network-wired"></i>
-        <h3>شبکه</h3>
-        <p>TCP/IP · Network+ · MQTT · LoRa</p>
+        <h3>Networking</h3>
+        <p>TCP/IP · MQTT · LoRa · Wi-Fi</p>
       </div>
       <div class="skill-card glass">
         <i class="fas fa-cubes"></i>
-        <h3>طراحی</h3>
-        <p>SolidWorks · Figma · طراحی صنعتی</p>
+        <h3>Design</h3>
+        <p>SolidWorks · Figma · UI/UX</p>
       </div>
       <div class="skill-card glass">
         <i class="fas fa-home"></i>
-        <h3>اتوماسیون</h3>
-        <p>هوشمندسازی · Home Assistant · Node-RED</p>
+        <h3>Automation</h3>
+        <p>Home Assistant · Node-RED · PLC</p>
       </div>
       <div class="skill-card glass">
         <i class="fas fa-cloud"></i>
-        <h3>زیرساخت</h3>
+        <h3>DevOps</h3>
         <p>Git · Docker · Linux · CI/CD</p>
       </div>
     </div>
   </section>
 
+  <!-- Projects (GitHub API) -->
   <section id="projects">
-    <h2 class="section-title">پروژه‌های منتخب</h2>
+    <h2 class="section-title">Featured Projects</h2>
     <div class="projects-grid" id="projects-container">
-      <!-- پر می‌شود با API گیت‌هاب -->
+      <!-- dynamically filled -->
     </div>
   </section>
 
+  <!-- Contact -->
   <section id="contact">
-    <h2 class="section-title">تماس با من</h2>
+    <h2 class="section-title">Get in Touch</h2>
     <div class="contact-grid">
       <div class="contact-card glass">
         <i class="fas fa-envelope"></i>
-        <h3>ایمیل</h3>
-        <a href="mailto:mehrdad@example.com">mehrdad@example.com</a>
+        <h3>Email</h3>
+        <a href="mailto:game.developer.mb@gmail.com">game.developer.mb@gmail.com</a>
       </div>
       <div class="contact-card glass">
         <i class="fab fa-github"></i>
-        <h3>گیت‌هاب</h3>
+        <h3>GitHub</h3>
         <a href="https://github.com/mehrdadmb2" target="_blank">mehrdadmb2</a>
       </div>
       <div class="contact-card glass">
-        <i class="fab fa-linkedin"></i>
-        <h3>لینکدین</h3>
-        <a href="#" target="_blank">Mehrdad</a>
+        <i class="fab fa-telegram"></i>
+        <h3>Telegram</h3>
+        <a href="https://t.me/IIMehrdadII" target="_blank">@IIMehrdadII</a>
       </div>
       <div class="contact-card glass">
-        <i class="fab fa-telegram"></i>
-        <h3>تلگرام</h3>
-        <a href="https://t.me/mehrdad" target="_blank">mehrdad</a>
+        <i class="fab fa-instagram"></i>
+        <h3>Instagram</h3>
+        <a href="https://instagram.com/_._.m._.b" target="_blank">_._.m._.b</a>
+      </div>
+      <div class="contact-card glass">
+        <i class="fas fa-phone"></i>
+        <h3>Phone</h3>
+        <a href="tel:+989031937072">+98 903 193 7072</a>
       </div>
     </div>
   </section>
 
   <footer class="glass-footer">
-    <p>ساخته شده با ❤️ توسط مهرداد | ۱۴۰۳</p>
+    <p>Made with ❤️ by Mehrdad Behrouzi | 1403</p>
     <div class="footer-links">
-      <a href="#home">خانه</a>
-      <a href="#about">درباره</a>
-      <a href="#military">سربازی</a>
-      <a href="#skills">مهارت‌ها</a>
-      <a href="#projects">پروژه‌ها</a>
-      <a href="#contact">تماس</a>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#service-roadmap">Service</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
     </div>
   </footer>
 
