@@ -81,7 +81,7 @@ animateParticles();
 // ==================== TYPING EFFECT ====================
 const typingElement = document.querySelector('.typing');
 if (typingElement) {
-  const words = ['مهندس کامپیوتر', 'توسعه‌دهنده IoT', 'متخصص شبکه', 'برنامه‌نویس C++/C#', 'طراح SolidWorks', 'فعال متن‌باز'];
+  const words = ['Embedded Developer', 'IoT Architect', 'Network Specialist', 'Python Lover', 'Open Source Contributor'];
   let wordIndex = 0, charIndex = 0, isDeleting = false, currentWord = '';
   function type() {
     const full = words[wordIndex];
@@ -99,7 +99,7 @@ if (typingElement) {
 const cursor = document.getElementById('cursor');
 if (cursor) {
   document.addEventListener('mousemove', e => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
-  document.querySelectorAll('a, button, .glass-card, .skill-card, .project-card, .contact-card').forEach(el => {
+  document.querySelectorAll('a, button, .glass-card, .skill-card, .project-card, .contact-card, .edu-card').forEach(el => {
     el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
     el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
   });
@@ -127,15 +127,15 @@ async function fetchGitHubData() {
       container.innerHTML = '';
       repos.slice(0,6).forEach(repo => {
         const card = document.createElement('div');
-        card.className = 'project-card';
+        card.className = 'project-card glass';
         const tags = repo.topics ? repo.topics.slice(0,4).map(t => `<span>${t}</span>`).join('') : '';
         card.innerHTML = `
           <h3>${repo.name}</h3>
-          <p>${repo.description || 'بدون توضیح'}</p>
+          <p>${repo.description || 'No description'}</p>
           <div class="project-tags">${tags}</div>
           <div class="project-links">
-            <a href="${repo.html_url}" target="_blank"><i class="fab fa-github"></i> سورس</a>
-            ${repo.homepage ? `<a href="${repo.homepage}" target="_blank"><i class="fas fa-external-link-alt"></i> دمو</a>` : ''}
+            <a href="${repo.html_url}" target="_blank"><i class="fab fa-github"></i> Source</a>
+            ${repo.homepage ? `<a href="${repo.homepage}" target="_blank"><i class="fas fa-external-link-alt"></i> Demo</a>` : ''}
           </div>`;
         container.appendChild(card);
       });
@@ -149,39 +149,34 @@ async function fetchGitHubData() {
 }
 fetchGitHubData();
 
-// ==================== MILITARY SERVICE PROGRESS ====================
-function updateMilitaryProgress() {
-  const startShamsi = { year: 1404, month: 6, day: 1 };
-  // Convert to approximate Gregorian: 1404/06/01 ≈ 2025-08-23 (using fixed conversion)
-  const startGregorian = new Date(2025, 7, 23); // month 7 = August
+// ==================== MILITARY SERVICE ROADMAP ====================
+function updateRoadmap() {
+  // Start date: 1404/06/01  => 2025-08-23
+  // End date: 1406/03/02    => 2027-05-23
+  const start = new Date(2025, 7, 23); // August 23, 2025
+  const end = new Date(2027, 4, 23);   // May 23, 2027
   const today = new Date();
-  const diffTime = today - startGregorian;
-  const totalDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
 
-  // Standard service duration 24 months = ~730 days
-  const serviceDays = 730;
-  const elapsedDays = Math.max(0, Math.min(totalDays, serviceDays));
-  const percent = Math.floor((elapsedDays / serviceDays) * 100);
+  const total = end - start;
+  const elapsed = today - start;
+  const percent = Math.min(100, Math.max(0, Math.floor((elapsed / total) * 100)));
 
-  const progressFill = document.getElementById('progress-fill');
+  const roadFill = document.getElementById('road-fill');
+  const roadCar = document.getElementById('road-car');
   const progressPercent = document.getElementById('progress-percent');
-  const remainingText = document.getElementById('remaining-text');
+  const remainingDays = document.getElementById('remaining-days');
 
-  if (progressFill) progressFill.style.width = percent + '%';
+  if (roadFill) roadFill.style.width = percent + '%';
+  if (roadCar) roadCar.style.left = percent + '%';
   if (progressPercent) progressPercent.textContent = percent + '%';
 
-  if (remainingText) {
-    const remainingDays = serviceDays - elapsedDays;
-    const months = Math.floor(remainingDays / 30);
-    const days = remainingDays % 30;
-    if (remainingDays <= 0) {
-      remainingText.textContent = 'پایان خدمت';
-    } else {
-      remainingText.textContent = `باقی‌مانده: حدود ${months} ماه و ${days} روز`;
-    }
+  if (remainingDays) {
+    const remaining = end - today;
+    const days = Math.max(0, Math.floor(remaining / (1000 * 60 * 60 * 24)));
+    remainingDays.textContent = days;
   }
 }
-updateMilitaryProgress();
+updateRoadmap();
 
 // ==================== ACTIVE NAV LINK ====================
 const sections = document.querySelectorAll('section');
@@ -213,4 +208,4 @@ document.addEventListener('mousemove', e => {
   }
 });
 
-console.log('🚀 پورتفولیوی مهرداد – آماده با نقشه سربازی');
+console.log('🚀 Mehrdad Behrouzi Portfolio ready.');
