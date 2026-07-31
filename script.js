@@ -298,3 +298,34 @@ window.addEventListener('load', () => {
   // Service location: 29°37'43.5"N 51°38'29.0"E -> 29.62875, 51.64139
   initMap('map-service', 29.62875, 51.64139);
 });
+
+// محاسبه و نمایش ستاره تولد با اطلاعات
+function updateBirthday() {
+  const birthDate = new Date(2001, 9, 13); // 13 اکتبر 2001
+  const today = new Date();
+  
+  // محاسبه سن
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const monthDiff = today.getMonth() - birthDate.getMonth();
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  
+  // محاسبه روزهای مانده تا تولد بعدی
+  const nextBirthday = new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate());
+  if (today > nextBirthday) {
+    nextBirthday.setFullYear(today.getFullYear() + 1);
+  }
+  const diffTime = nextBirthday - today;
+  const daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  
+  // به‌روزرسانی محتوای ستاره تولد
+  const starElement = document.getElementById('birthday-star');
+  if (starElement) {
+    starElement.setAttribute('data-tooltip', `${age} years old · ${daysLeft} days until birthday`);
+  }
+}
+
+// مقداردهی اولیه و به‌روزرسانی هر ساعت
+updateBirthday();
+setInterval(updateBirthday, 3600000);
