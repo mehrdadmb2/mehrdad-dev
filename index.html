@@ -42,6 +42,7 @@
         <li><a href="#education">Education</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#projects">Projects</a></li>
+        <li><a href="#donate">Donate</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
       <div class="buttons">
@@ -225,7 +226,36 @@
     <h2 class="section-title">Featured Projects</h2>
     <div class="projects-grid" id="projects-container"></div>
   </section>
+<section id="donate">
+  <h2 class="section-title">💎 Support Me</h2>
+  <div class="donate-grid">
+    <!-- کارت TON -->
+    <div class="donate-card glass-card">
+      <i class="fas fa-coins" style="font-size: 2rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+      <h3>TON Network</h3>
+      <p class="network-note">Gram & Tokens on TON</p>
+      <div class="address-box">
+        <code id="ton-address">UQBQU9KnjwIsdSGwG08b3L43Vy_wPlCg_3FaK9m4N2Toj84k</code>
+        <button class="copy-btn" onclick="copyAddress('ton-address', this)">📋 Copy</button>
+      </div>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=UQBQU9KnjwIsdSGwG08b3L43Vy_wPlCg_3FaK9m4N2Toj84k" alt="TON QR" class="qr-img">
+      <p class="warning">⚠️ Only Gram & tokens on TON network.</p>
+    </div>
 
+    <!-- کارت TRC20 -->
+    <div class="donate-card glass-card">
+      <i class="fas fa-dollar-sign" style="font-size: 2rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+      <h3>TRC20 (TRON)</h3>
+      <p class="network-note">USDT TRC20</p>
+      <div class="address-box">
+        <code id="trc20-address">TYbqxzEWrvYPnLvGtk6JY6Sbh8DMqfjcYq</code>
+        <button class="copy-btn" onclick="copyAddress('trc20-address', this)">📋 Copy</button>
+      </div>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=TYbqxzEWrvYPnLvGtk6JY6Sbh8DMqfjcYq" alt="TRC20 QR" class="qr-img">
+      <p class="warning">⚠️ Only USDT on TRC20 network.</p>
+    </div>
+  </div>
+</section>
   <section id="contact">
     <h2 class="section-title">Get in Touch</h2>
     <div class="contact-grid">
