@@ -968,8 +968,7 @@ ul { list-style: none; }
 
 /* ==================== Birthday Star ==================== */
 .birthday-star {
-  position: absolute;
-  pointer-events: auto;   /* این خط را اضافه کنید */
+  position: fixed;
   top: 85%;
   left: 50%;
   font-size: 2rem;
@@ -977,8 +976,9 @@ ul { list-style: none; }
   cursor: default;
   animation: twinkleStar 3s ease-in-out infinite;
   filter: drop-shadow(0 0 8px gold);
-  z-index: -1;
+  z-index: 10;
   transition: opacity 0.3s, transform 0.3s;
+  pointer-events: auto;
 }
 
 .birthday-star:hover {
