@@ -41,6 +41,22 @@
   <!-- Back to top button -->
   <button id="back-to-top" title="Back to top"><i class="fas fa-arrow-up"></i></button>
 
+  <!-- Travel elements floating in background (inside body) -->
+  <div id="travel-bg">
+    <!-- UAE by plane -->
+    <div class="travel-float" style="top: 15%; left: 80%; animation-delay: 0s;">
+      <i class="fas fa-plane"></i> 🇦🇪
+    </div>
+    <!-- Georgia by plane -->
+    <div class="travel-float" style="top: 75%; left: 10%; animation-delay: 1.2s;">
+      <i class="fas fa-plane"></i> 🇬🇪
+    </div>
+    <!-- Turkey by car -->
+    <div class="travel-float" style="top: 50%; left: 90%; animation-delay: 2.5s;">
+      <i class="fas fa-car"></i> 🇹🇷
+    </div>
+  </div>
+
   <header>
     <nav class="glass-nav">
       <div class="logo">Mehrdad</div>
@@ -48,6 +64,7 @@
         <li><a href="#home">Home</a></li>
         <li><a href="#service-roadmap">Service</a></li>
         <li><a href="#about">About</a></li>
+        <li><a href="#education">Education</a></li>
         <li><a href="#journey">Journey</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#projects">Projects</a></li>
@@ -60,7 +77,7 @@
     </nav>
   </header>
 
-  <!-- Hero (unchanged, just repeated for completeness) -->
+  <!-- Hero Section -->
   <section id="home">
     <div class="hero">
       <div class="hero-left">
@@ -106,7 +123,7 @@
     </div>
   </section>
 
-  <!-- Military Service Roadmap (compact) -->
+  <!-- Military Service Roadmap -->
   <section id="service-roadmap">
     <h2 class="section-title">📍 Military Service Roadmap</h2>
     <div class="roadmap-container glass-card">
@@ -129,7 +146,7 @@
     </div>
   </section>
 
-  <!-- About (unchanged) -->
+  <!-- About -->
   <section id="about">
     <div class="glass-card about-card">
       <h2>About Me</h2>
@@ -159,7 +176,44 @@
     </div>
   </section>
 
-  <!-- NEW: My Journey (Timeline with maps) -->
+  <!-- Education & Certificates -->
+  <section id="education">
+    <h2 class="section-title">Education & Certificates</h2>
+    <div class="education-grid">
+      <div class="edu-card glass-card">
+        <i class="fas fa-graduation-cap"></i>
+        <h3>B.Sc. Computer Engineering</h3>
+        <span class="edu-place">University of ...</span>
+      </div>
+      <div class="edu-card glass-card">
+        <i class="fas fa-square-root-alt"></i>
+        <h3>B.Sc. Mathematics & Physics</h3>
+        <span class="edu-place">University of ...</span>
+      </div>
+      <div class="edu-card glass-card">
+        <i class="fas fa-network-wired"></i>
+        <h3>Network+ Certification</h3>
+        <span class="edu-place">CompTIA</span>
+      </div>
+      <div class="edu-card glass-card">
+        <i class="fas fa-cube"></i>
+        <h3>SolidWorks Design</h3>
+        <span class="edu-place">Professional Training</span>
+      </div>
+      <div class="edu-card glass-card">
+        <i class="fas fa-code"></i>
+        <h3>C++ / C# Programming</h3>
+        <span class="edu-place">Advanced Certificate</span>
+      </div>
+      <div class="edu-card glass-card">
+        <i class="fas fa-home"></i>
+        <h3>Smart Home Automation</h3>
+        <span class="edu-place">Certified Specialist</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- My Journey (Timeline with maps) -->
   <section id="journey">
     <h2 class="section-title">🗺️ My Journey</h2>
     <div class="journey-timeline">
@@ -183,20 +237,20 @@
           <div class="map-container" id="map-uni"></div>
         </div>
       </div>
-      <!-- Military Service (location) -->
+      <!-- Military Service -->
       <div class="timeline-item glass-card reveal">
         <div class="timeline-icon"><i class="fas fa-shield-alt"></i></div>
         <div class="timeline-content">
-          <h3>Military Service Location</h3>
-          <span>Current base: شیراز</span>
-          <p>مدیریت اسلحه و مهمات</p>
+          <h3>Military Service</h3>
+          <span>2nd Lieutenant, Computer Branch, Iranian Army Ground Forces</span>
+          <p>مدیریت اسلحه و مهمات - شیراز</p>
           <div class="map-container" id="map-service"></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Skills with proficiency bars -->
+  <!-- Technical Skills -->
   <section id="skills">
     <h2 class="section-title">Technical Skills</h2>
     <div class="skills-grid">
@@ -245,72 +299,72 @@
     </div>
   </section>
 
-  <!-- Projects (unchanged) -->
+  <!-- Featured Projects -->
   <section id="projects">
     <h2 class="section-title">Featured Projects</h2>
     <div class="projects-grid" id="projects-container"></div>
   </section>
 
-  <!-- Donate (unchanged) -->
+  <!-- Support Me -->
   <section id="donate">
     <h2 class="section-title">💎 Support Me</h2>
     <div class="donate-grid">
       <div class="donate-card glass-card">
-  <i class="fas fa-coins" style="font-size: 2rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
-  <h3>TON Network</h3>
-  <p class="network-note">Gram & Tokens on TON</p>
-  <div class="address-box">
-    <code id="ton-address">UQBQU9KnjwIsdSGwG08b3L43Vy_wPlCg_3FaK9m4N2Toj84k</code>
-    <button class="copy-btn" onclick="copyAddress('ton-address', this)">📋 Copy</button>
-  </div>
-  <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=UQBQU9KnjwIsdSGwG08b3L43Vy_wPlCg_3FaK9m4N2Toj84k" alt="TON QR" class="qr-img">
-  <p class="warning">⚠️ Only Gram & tokens on TON network.</p>
-</div>
-
-<div class="donate-card glass-card">
-  <i class="fas fa-dollar-sign" style="font-size: 2rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
-  <h3>TRC20 (TRON)</h3>
-  <p class="network-note">USDT TRC20</p>
-  <div class="address-box">
-    <code id="trc20-address">TYbqxzEWrvYPnLvGtk6JY6Sbh8DMqfjcYq</code>
-    <button class="copy-btn" onclick="copyAddress('trc20-address', this)">📋 Copy</button>
-  </div>
-  <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=TYbqxzEWrvYPnLvGtk6JY6Sbh8DMqfjcYq" alt="TRC20 QR" class="qr-img">
-  <p class="warning">⚠️ Only USDT on TRC20 network.</p>
-</div>
+        <i class="fas fa-coins" style="font-size: 2rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+        <h3>TON Network</h3>
+        <p class="network-note">Gram & Tokens on TON</p>
+        <div class="address-box">
+          <code id="ton-address">UQBQU9KnjwIsdSGwG08b3L43Vy_wPlCg_3FaK9m4N2Toj84k</code>
+          <button class="copy-btn" onclick="copyAddress('ton-address', this)">📋 Copy</button>
+        </div>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=UQBQU9KnjwIsdSGwG08b3L43Vy_wPlCg_3FaK9m4N2Toj84k" alt="TON QR" class="qr-img">
+        <p class="warning">⚠️ Only Gram & tokens on TON network.</p>
+      </div>
+      <div class="donate-card glass-card">
+        <i class="fas fa-dollar-sign" style="font-size: 2rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+        <h3>TRC20 (TRON)</h3>
+        <p class="network-note">USDT TRC20</p>
+        <div class="address-box">
+          <code id="trc20-address">TYbqxzEWrvYPnLvGtk6JY6Sbh8DMqfjcYq</code>
+          <button class="copy-btn" onclick="copyAddress('trc20-address', this)">📋 Copy</button>
+        </div>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=TYbqxzEWrvYPnLvGtk6JY6Sbh8DMqfjcYq" alt="TRC20 QR" class="qr-img">
+        <p class="warning">⚠️ Only USDT on TRC20 network.</p>
+      </div>
     </div>
   </section>
 
-  <!-- Contact with real form -->
+  <!-- Get in Touch -->
   <section id="contact">
     <h2 class="section-title">Get in Touch</h2>
     <div class="contact-grid">
       <div class="contact-card glass-card">
-  <i class="fas fa-envelope"></i>
-  <h3>Email</h3>
-  <a href="mailto:game.developer.mb@gmail.com">game.developer.mb@gmail.com</a>
-</div>
-<div class="contact-card glass-card">
-  <i class="fab fa-github"></i>
-  <h3>GitHub</h3>
-  <a href="https://github.com/mehrdadmb2" target="_blank">mehrdadmb2</a>
-</div>
-<div class="contact-card glass-card">
-  <i class="fab fa-telegram"></i>
-  <h3>Telegram</h3>
-  <a href="https://t.me/IIMehrdadII" target="_blank">@IIMehrdadII</a>
-</div>
-<div class="contact-card glass-card">
-  <i class="fab fa-instagram"></i>
-  <h3>Instagram</h3>
-  <a href="https://instagram.com/_._.m._.b" target="_blank">_._.m._.b</a>
-</div>
-<div class="contact-card glass-card">
-  <i class="fas fa-phone"></i>
-  <h3>Phone</h3>
-  <a href="tel:+989031937072">+98 903 193 7072</a>
-</div>
+        <i class="fas fa-envelope"></i>
+        <h3>Email</h3>
+        <a href="mailto:game.developer.mb@gmail.com">game.developer.mb@gmail.com</a>
+      </div>
+      <div class="contact-card glass-card">
+        <i class="fab fa-github"></i>
+        <h3>GitHub</h3>
+        <a href="https://github.com/mehrdadmb2" target="_blank">mehrdadmb2</a>
+      </div>
+      <div class="contact-card glass-card">
+        <i class="fab fa-telegram"></i>
+        <h3>Telegram</h3>
+        <a href="https://t.me/IIMehrdadII" target="_blank">@IIMehrdadII</a>
+      </div>
+      <div class="contact-card glass-card">
+        <i class="fab fa-instagram"></i>
+        <h3>Instagram</h3>
+        <a href="https://instagram.com/_._.m._.b" target="_blank">_._.m._.b</a>
+      </div>
+      <div class="contact-card glass-card">
+        <i class="fas fa-phone"></i>
+        <h3>Phone</h3>
+        <a href="tel:+989031937072">+98 903 193 7072</a>
+      </div>
     </div>
+
     <!-- Contact Form -->
     <div class="glass-card contact-form reveal" style="max-width:600px; margin:3rem auto;">
       <h3 style="text-align:center; margin-bottom:1.5rem;">Send a Message</h3>
@@ -331,9 +385,17 @@
 
   <footer class="glass-footer">
     <p>Made with ❤️ by Mehrdad Behrouzi | 1403</p>
+    <div class="footer-socials">
+      <a href="mailto:game.developer.mb@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+      <a href="https://github.com/mehrdadmb2" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+      <a href="https://t.me/IIMehrdadII" target="_blank" title="Telegram"><i class="fab fa-telegram"></i></a>
+      <a href="https://instagram.com/_._.m._.b" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="tel:+989031937072" title="Phone"><i class="fas fa-phone"></i></a>
+    </div>
     <div class="footer-links">
       <a href="#home">Home</a>
       <a href="#about">About</a>
+      <a href="#education">Education</a>
       <a href="#journey">Journey</a>
       <a href="#service-roadmap">Service</a>
       <a href="#skills">Skills</a>
