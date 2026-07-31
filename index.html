@@ -9,7 +9,7 @@
   <meta name="theme-color" content="#050816">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="pic/MB-LOGO.png">
+  <link rel="icon" type="image/png" href="pic/MB-LOGO2.png">
 
   <!-- Vazir Font -->
   <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
@@ -255,7 +255,29 @@
   <section id="donate">
     <h2 class="section-title">💎 Support Me</h2>
     <div class="donate-grid">
-      <!-- ... (same as before) ... -->
+      <div class="donate-card glass-card">
+  <i class="fas fa-coins" style="font-size: 2rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+  <h3>TON Network</h3>
+  <p class="network-note">Gram & Tokens on TON</p>
+  <div class="address-box">
+    <code id="ton-address">UQBQU9KnjwIsdSGwG08b3L43Vy_wPlCg_3FaK9m4N2Toj84k</code>
+    <button class="copy-btn" onclick="copyAddress('ton-address', this)">📋 Copy</button>
+  </div>
+  <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=UQBQU9KnjwIsdSGwG08b3L43Vy_wPlCg_3FaK9m4N2Toj84k" alt="TON QR" class="qr-img">
+  <p class="warning">⚠️ Only Gram & tokens on TON network.</p>
+</div>
+
+<div class="donate-card glass-card">
+  <i class="fas fa-dollar-sign" style="font-size: 2rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+  <h3>TRC20 (TRON)</h3>
+  <p class="network-note">USDT TRC20</p>
+  <div class="address-box">
+    <code id="trc20-address">TYbqxzEWrvYPnLvGtk6JY6Sbh8DMqfjcYq</code>
+    <button class="copy-btn" onclick="copyAddress('trc20-address', this)">📋 Copy</button>
+  </div>
+  <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=TYbqxzEWrvYPnLvGtk6JY6Sbh8DMqfjcYq" alt="TRC20 QR" class="qr-img">
+  <p class="warning">⚠️ Only USDT on TRC20 network.</p>
+</div>
     </div>
   </section>
 
@@ -263,7 +285,31 @@
   <section id="contact">
     <h2 class="section-title">Get in Touch</h2>
     <div class="contact-grid">
-      <!-- Contact cards (same) -->
+      <div class="contact-card glass-card">
+  <i class="fas fa-envelope"></i>
+  <h3>Email</h3>
+  <a href="mailto:game.developer.mb@gmail.com">game.developer.mb@gmail.com</a>
+</div>
+<div class="contact-card glass-card">
+  <i class="fab fa-github"></i>
+  <h3>GitHub</h3>
+  <a href="https://github.com/mehrdadmb2" target="_blank">mehrdadmb2</a>
+</div>
+<div class="contact-card glass-card">
+  <i class="fab fa-telegram"></i>
+  <h3>Telegram</h3>
+  <a href="https://t.me/IIMehrdadII" target="_blank">@IIMehrdadII</a>
+</div>
+<div class="contact-card glass-card">
+  <i class="fab fa-instagram"></i>
+  <h3>Instagram</h3>
+  <a href="https://instagram.com/_._.m._.b" target="_blank">_._.m._.b</a>
+</div>
+<div class="contact-card glass-card">
+  <i class="fas fa-phone"></i>
+  <h3>Phone</h3>
+  <a href="tel:+989031937072">+98 903 193 7072</a>
+</div>
     </div>
     <!-- Contact Form -->
     <div class="glass-card contact-form reveal" style="max-width:600px; margin:3rem auto;">
