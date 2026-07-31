@@ -974,7 +974,7 @@ ul { list-style: none; }
   font-size: 2rem;
   opacity: 0.4;
   cursor: default;
-  animation: twinkleStar 3s ease-in-out infinite;
+  animation: twinkleStar 3s ease-in-out infinite, floatTravel 14s ease-in-out infinite;
   filter: drop-shadow(0 0 8px gold);
   z-index: 10;
   transition: opacity 0.3s, transform 0.3s;
