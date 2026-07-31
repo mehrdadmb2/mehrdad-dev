@@ -934,3 +934,33 @@ ul { list-style: none; }
   border-color: var(--neon-cyan);
   box-shadow: 0 0 8px rgba(34,211,238,0.3);
 }
+
+/* ==================== Floating Travel Elements ==================== */
+#travel-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -2;  /* همان لایه aurora */
+}
+
+.travel-float {
+  position: absolute;
+  font-size: 1.4rem;
+  opacity: 0.25;
+  color: white;
+  filter: blur(0.5px);
+  animation: floatTravel 14s ease-in-out infinite;
+  white-space: nowrap;
+}
+
+.travel-float i {
+  margin-right: 0.3rem;
+  color: var(--neon-cyan);
+}
+
+@keyframes floatTravel {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(-15px, -25px) rotate(3deg); }
+  50% { transform: translate(10px, -40px) rotate(-2deg); }
+  75% { transform: translate(-5px, -15px) rotate(1deg); }
+}
