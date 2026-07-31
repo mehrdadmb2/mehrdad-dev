@@ -968,6 +968,7 @@ ul { list-style: none; }
 /* ==================== Birthday Star ==================== */
 .birthday-star {
   position: absolute;
+  pointer-events: auto;   /* این خط را اضافه کنید */
   top: 85%;
   left: 50%;
   font-size: 2rem;
