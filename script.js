@@ -226,3 +226,75 @@ function copyAddress(elementId, btn) {
     alert('Copy failed. Please select and copy manually.');
   });
 }
+
+// ==================== (توابع قبلی بدون تغییر: loader, stars, particles, typing, cursor, github, roadmap) ====================
+
+// ==================== READING PROGRESS BAR ====================
+window.addEventListener('scroll', () => {
+  const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const scrolled = (winScroll / height) * 100;
+  document.getElementById('progress-bar').style.width = scrolled + '%';
+});
+
+// ==================== BACK TO TOP ====================
+const backToTopBtn = document.getElementById('back-to-top');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 500) {
+    backToTopBtn.classList.add('show');
+  } else {
+    backToTopBtn.classList.remove('show');
+  }
+});
+backToTopBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// ==================== REVEAL ON SCROLL ====================
+const revealElements = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('active');
+    }
+  });
+}, { threshold: 0.1 });
+revealElements.forEach(el => revealObserver.observe(el));
+
+// ==================== SKILL BARS ANIMATION ====================
+const skillBars = document.querySelectorAll('.skill-fill');
+const skillObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const bar = entry.target;
+      bar.style.width = bar.getAttribute('data-width');
+      skillObserver.unobserve(bar);
+    }
+  });
+}, { threshold: 0.3 });
+skillBars.forEach(bar => skillObserver.observe(bar));
+
+// ==================== INIT MAPS ====================
+function initMap(id, lat, lng, zoom = 15) {
+  const container = document.getElementById(id);
+  if (!container || typeof L === 'undefined') return;
+  const map = L.map(id).setView([lat, lng], zoom);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+  L.marker([lat, lng]).addTo(map)
+    .bindPopup('Location')
+    .openPopup();
+  // Fix rendering issue when map is hidden initially
+  setTimeout(() => { map.invalidateSize(); }, 300);
+}
+
+// Initialize maps after load
+window.addEventListener('load', () => {
+  // Coordinates: high school 29.623503, 52.475145
+  initMap('map-school', 29.623503, 52.475145);
+  // University: 29°37'32.8"N 52°29'36.3"E -> 29.625778, 52.493417
+  initMap('map-uni', 29.625778, 52.493417);
+  // Service location: 29°37'43.5"N 51°38'29.0"E -> 29.62875, 51.64139
+  initMap('map-service', 29.62875, 51.64139);
+});
