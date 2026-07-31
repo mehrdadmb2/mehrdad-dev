@@ -939,11 +939,12 @@ ul { list-style: none; }
 #travel-bg {
   position: fixed;
   inset: 0;
-  pointer-events: none;
+  /*pointer-events: none;*/
   z-index: -2;  /* همان لایه aurora */
 }
 
 .travel-float {
+  pointer-events: none;
   position: absolute;
   font-size: 1.4rem;
   opacity: 0.25;
