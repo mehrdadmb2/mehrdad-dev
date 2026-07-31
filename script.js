@@ -209,3 +209,20 @@ document.addEventListener('mousemove', e => {
 });
 
 console.log('🚀 Mehrdad Behrouzi Portfolio ready.');
+
+
+// ==================== COPY ADDRESS ====================
+function copyAddress(elementId, btn) {
+  const code = document.getElementById(elementId);
+  if (!code) return;
+  navigator.clipboard.writeText(code.textContent).then(() => {
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = '📋 Copy';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(() => {
+    alert('Copy failed. Please select and copy manually.');
+  });
+}
