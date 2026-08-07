@@ -108,32 +108,21 @@ if (cursor) {
 }
 
 // ==================== GITHUB API ====================
-// اگر خواستی محدودیت ریت رو برداری، یه توکن از گیت‌هاب بساز و جایگزین کن:
-// const GITHUB_TOKEN = 'your_token_here';
 async function fetchGitHubData() {
   const username = 'mehrdadmb2';
   const repoEl = document.getElementById('repoCount');
   const followersEl = document.getElementById('followers');
   const starsEl = document.getElementById('starsCount');
-
-  const headers = {};
-  // اگر توکن داری خط زیر رو فعال کن
-  // if (GITHUB_TOKEN) headers['Authorization'] = `token ${GITHUB_TOKEN}`;
-
   try {
-    const userRes = await fetch(`https://api.github.com/users/${username}`, { headers });
+    const userRes = await fetch(`https://api.github.com/users/${username}`);
     const userData = await userRes.json();
     if (repoEl) repoEl.textContent = userData.public_repos || '--';
     if (followersEl) followersEl.textContent = userData.followers || '--';
-
-    const reposRes = await fetch(`https://api.github.com/users/${username}/repos?per_page=100`, { headers });
+    const reposRes = await fetch(`https://api.github.com/users/${username}/repos?per_page=100`);
     const repos = await reposRes.json();
-
-    // مجموع ستاره‌ها
     const totalStars = repos.reduce((acc, r) => acc + r.stargazers_count, 0);
     if (starsEl) starsEl.textContent = totalStars || '--';
 
-    // پر کردن پروژه‌ها
     const container = document.getElementById('projects-container');
     if (container) {
       container.innerHTML = '';
@@ -152,70 +141,30 @@ async function fetchGitHubData() {
         container.appendChild(card);
       });
     }
-
-    // پر کردن وبسایت‌های زنده
-    const websitesContainer = document.getElementById('websites-container');
-    if (websitesContainer) {
-      const liveRepos = repos.filter(repo => repo.homepage);
-      websitesContainer.innerHTML = '';
-
-      if (liveRepos.length === 0) {
-        websitesContainer.innerHTML = `<div class="glass-card" style="text-align:center; padding:3rem; grid-column:1/-1;">
-          <p>🚀 No live websites found.</p>
-          <p style="color:var(--text-secondary); margin-top:1rem;">Add a <code>homepage</code> URL to your GitHub repos and they'll appear here automatically.</p>
-        </div>`;
-        return;
-      }
-
-      liveRepos.forEach(repo => {
-        const card = document.createElement('div');
-        card.className = 'website-card glass-card';
-        card.innerHTML = `
-          <h3>${repo.name}</h3>
-          <p>${repo.description || 'No description'}</p>
-          <div class="website-links">
-            <a href="${repo.homepage}" target="_blank"><i class="fas fa-external-link-alt"></i> Visit Site</a>
-            <a href="${repo.html_url}" target="_blank"><i class="fab fa-github"></i> Source</a>
-          </div>`;
-        websitesContainer.appendChild(card);
-      });
-    }
   } catch(e) {
     console.error('GitHub fetch error:', e);
     if (repoEl) repoEl.textContent = '∞';
     if (followersEl) followersEl.textContent = '∞';
     if (starsEl) starsEl.textContent = '∞';
-
-    const websitesContainer = document.getElementById('websites-container');
-    if (websitesContainer) {
-      websitesContainer.innerHTML = `<div class="glass-card" style="text-align:center; padding:3rem; grid-column:1/-1;">
-        <p>⚠️ Could not load websites.</p>
-        <p style="color:var(--text-secondary); margin-top:1rem;">Please try again later.</p>
-      </div>`;
-    }
   }
 }
 fetchGitHubData();
 
 // ==================== MILITARY SERVICE ROADMAP ====================
 function updateRoadmap() {
-  const start = new Date(2025, 7, 23); // August 23, 2025
-  const end = new Date(2027, 4, 23);   // May 23, 2027
+  const start = new Date(2025, 7, 23);
+  const end = new Date(2027, 4, 23);
   const today = new Date();
-
   const total = end - start;
   const elapsed = today - start;
   const percent = Math.min(100, Math.max(0, Math.floor((elapsed / total) * 100)));
-
   const roadFill = document.getElementById('road-fill');
   const roadCar = document.getElementById('road-car');
   const progressPercent = document.getElementById('progress-percent');
   const remainingDays = document.getElementById('remaining-days');
-
   if (roadFill) roadFill.style.width = percent + '%';
   if (roadCar) roadCar.style.left = percent + '%';
   if (progressPercent) progressPercent.textContent = percent + '%';
-
   if (remainingDays) {
     const remaining = end - today;
     const days = Math.max(0, Math.floor(remaining / (1000 * 60 * 60 * 24)));
@@ -283,11 +232,8 @@ window.addEventListener('scroll', () => {
 // ==================== BACK TO TOP ====================
 const backToTopBtn = document.getElementById('back-to-top');
 window.addEventListener('scroll', () => {
-  if (window.scrollY > 500) {
-    backToTopBtn.classList.add('show');
-  } else {
-    backToTopBtn.classList.remove('show');
-  }
+  if (window.scrollY > 500) backToTopBtn.classList.add('show');
+  else backToTopBtn.classList.remove('show');
 });
 backToTopBtn.addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -297,9 +243,7 @@ backToTopBtn.addEventListener('click', () => {
 const revealElements = document.querySelectorAll('.reveal');
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('active');
-    }
+    if (entry.isIntersecting) entry.target.classList.add('active');
   });
 }, { threshold: 0.1 });
 revealElements.forEach(el => revealObserver.observe(el));
@@ -325,12 +269,9 @@ function initMap(id, lat, lng, zoom = 15) {
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
   }).addTo(map);
-  L.marker([lat, lng]).addTo(map)
-    .bindPopup('Location')
-    .openPopup();
+  L.marker([lat, lng]).addTo(map).bindPopup('Location').openPopup();
   setTimeout(() => { map.invalidateSize(); }, 300);
 }
-
 window.addEventListener('load', () => {
   initMap('map-school', 29.623503, 52.475145);
   initMap('map-uni', 29.625778, 52.493417);
@@ -339,7 +280,7 @@ window.addEventListener('load', () => {
 
 // ==================== BIRTHDAY STAR ====================
 function updateBirthday() {
-  const birthDate = new Date(2001, 9, 13); // 13 October 2001
+  const birthDate = new Date(2001, 9, 13);
   const today = new Date();
   let age = today.getFullYear() - birthDate.getFullYear();
   const monthDiff = today.getMonth() - birthDate.getMonth();
@@ -347,12 +288,9 @@ function updateBirthday() {
     age--;
   }
   const nextBirthday = new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate());
-  if (today > nextBirthday) {
-    nextBirthday.setFullYear(today.getFullYear() + 1);
-  }
+  if (today > nextBirthday) nextBirthday.setFullYear(today.getFullYear() + 1);
   const diffTime = nextBirthday - today;
   const daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
   const starElement = document.getElementById('birthday-star');
   if (starElement) {
     starElement.setAttribute('data-tooltip', `${age} years old · ${daysLeft} days until birthday`);
