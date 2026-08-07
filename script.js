@@ -122,12 +122,14 @@ async function fetchGitHubData() {
     const repos = await reposRes.json();
     const totalStars = repos.reduce((acc, r) => acc + r.stargazers_count, 0);
     if (starsEl) starsEl.textContent = totalStars || '--';
+
+    // 1. پر کردن پروژه‌ها
     const container = document.getElementById('projects-container');
     if (container) {
       container.innerHTML = '';
       repos.slice(0,6).forEach(repo => {
         const card = document.createElement('div');
-        card.className = 'project-card glass';
+        card.className = 'project-card glass-card';
         const tags = repo.topics ? repo.topics.slice(0,4).map(t => `<span>${t}</span>`).join('') : '';
         card.innerHTML = `
           <h3>${repo.name}</h3>
@@ -140,6 +142,27 @@ async function fetchGitHubData() {
         container.appendChild(card);
       });
     }
+
+    // 2. پر کردن وبسایت‌های زنده (جدید)
+    const websitesContainer = document.getElementById('websites-container');
+    if (websitesContainer) {
+      const liveRepos = repos.filter(repo => repo.homepage);
+      websitesContainer.innerHTML = '';
+      liveRepos.forEach(repo => {
+        const card = document.createElement('div');
+        card.className = 'website-card glass-card';
+        card.innerHTML = `
+          <h3>${repo.name}</h3>
+          <p>${repo.description || 'No description'}</p>
+          <div class="website-links">
+            <a href="${repo.homepage}" target="_blank"><i class="fas fa-external-link-alt"></i> Visit Site</a>
+            <a href="${repo.html_url}" target="_blank"><i class="fab fa-github"></i> Source</a>
+          </div>
+        `;
+        websitesContainer.appendChild(card);
+      });
+    }
+
   } catch(e) {
     console.error('GitHub fetch error:', e);
     if (repoEl) repoEl.textContent = '∞';
