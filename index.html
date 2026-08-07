@@ -41,26 +41,21 @@
   <!-- Back to top button -->
   <button id="back-to-top" title="Back to top"><i class="fas fa-arrow-up"></i></button>
 
-  <!-- Travel elements floating in background (inside body) -->
+  <!-- Travel elements floating in background -->
   <div id="travel-bg">
-    <!-- UAE by plane -->
     <div class="travel-float" style="top: 15%; left: 80%; animation-delay: 0s;">
       <i class="fas fa-plane"></i> 🇦🇪
     </div>
-    <!-- Georgia by plane -->
     <div class="travel-float" style="top: 75%; left: 10%; animation-delay: 1.2s;">
       <i class="fas fa-plane"></i> 🇬🇪
     </div>
-    <!-- Turkey by car -->
     <div class="travel-float" style="top: 50%; left: 90%; animation-delay: 2.5s;">
       <i class="fas fa-car"></i> 🇹🇷
     </div>
- </div> <!-- بسته شدن travel-bg -->
-
-  <!-- ستاره تولد شناور (بیرون از travel-bg) -->
-  <div class="birthday-star-floating" id="birthday-star" style="top: 10%; left: 10%;">✨</div>
-
   </div>
+
+  <!-- Birthday star floating -->
+  <div class="birthday-star-floating" id="birthday-star" style="top: 10%; left: 10%;">✨</div>
 
   <header>
     <nav class="glass-nav">
@@ -219,11 +214,10 @@
     </div>
   </section>
 
-  <!-- My Journey (Timeline with maps) -->
+  <!-- My Journey -->
   <section id="journey">
     <h2 class="section-title">🗺️ My Journey</h2>
     <div class="journey-timeline">
-      <!-- High School -->
       <div class="timeline-item glass-card reveal">
         <div class="timeline-icon"><i class="fas fa-school"></i></div>
         <div class="timeline-content">
@@ -233,7 +227,6 @@
           <div class="map-container" id="map-school"></div>
         </div>
       </div>
-      <!-- University -->
       <div class="timeline-item glass-card reveal">
         <div class="timeline-icon"><i class="fas fa-university"></i></div>
         <div class="timeline-content">
@@ -243,7 +236,6 @@
           <div class="map-container" id="map-uni"></div>
         </div>
       </div>
-      <!-- Military Service -->
       <div class="timeline-item glass-card reveal">
         <div class="timeline-icon"><i class="fas fa-shield-alt"></i></div>
         <div class="timeline-content">
@@ -263,59 +255,81 @@
       <div class="skill-card glass-card reveal">
         <i class="fas fa-microchip"></i>
         <h3>Embedded Systems</h3>
-        <div class="skill-bar">
-          <div class="skill-fill" data-width="90%">90%</div>
-        </div>
+        <div class="skill-bar"><div class="skill-fill" data-width="90%">90%</div></div>
       </div>
       <div class="skill-card glass-card reveal">
         <i class="fas fa-code"></i>
         <h3>Programming</h3>
-        <div class="skill-bar">
-          <div class="skill-fill" data-width="85%">85%</div>
-        </div>
+        <div class="skill-bar"><div class="skill-fill" data-width="85%">85%</div></div>
       </div>
       <div class="skill-card glass-card reveal">
         <i class="fas fa-network-wired"></i>
         <h3>Networking</h3>
-        <div class="skill-bar">
-          <div class="skill-fill" data-width="80%">80%</div>
-        </div>
+        <div class="skill-bar"><div class="skill-fill" data-width="80%">80%</div></div>
       </div>
       <div class="skill-card glass-card reveal">
         <i class="fas fa-cubes"></i>
         <h3>SolidWorks</h3>
-        <div class="skill-bar">
-          <div class="skill-fill" data-width="75%">75%</div>
-        </div>
+        <div class="skill-bar"><div class="skill-fill" data-width="75%">75%</div></div>
       </div>
       <div class="skill-card glass-card reveal">
         <i class="fas fa-home"></i>
         <h3>Home Automation</h3>
-        <div class="skill-bar">
-          <div class="skill-fill" data-width="70%">70%</div>
-        </div>
+        <div class="skill-bar"><div class="skill-fill" data-width="70%">70%</div></div>
       </div>
       <div class="skill-card glass-card reveal">
         <i class="fas fa-cloud"></i>
         <h3>DevOps</h3>
-        <div class="skill-bar">
-          <div class="skill-fill" data-width="65%">65%</div>
-        </div>
+        <div class="skill-bar"><div class="skill-fill" data-width="65%">65%</div></div>
       </div>
     </div>
   </section>
 
-  <!-- Featured Projects -->
+  <!-- Featured Projects (GitHub) -->
   <section id="projects">
     <h2 class="section-title">Featured Projects</h2>
     <div class="projects-grid" id="projects-container"></div>
   </section>
 
-    <!-- Live Websites (Dynamic) -->
+  <!-- Live Websites Portal -->
   <section id="websites">
     <h2 class="section-title">🌐 Live Websites</h2>
-    <div class="websites-grid" id="websites-container">
-      <!-- با API گیت‌هاب پر می‌شود -->
+    <div class="websites-grid">
+      <div class="website-card glass-card reveal">
+        <div class="portal-frame">
+          <iframe src="https://mehrdadmb2.github.io/PySmartHome-PC" title="PySmartHome PC" loading="lazy" sandbox="allow-scripts allow-same-origin"></iframe>
+          <div class="portal-overlay"></div>
+        </div>
+        <h3>PySmartHome PC</h3>
+        <p>Desktop automation dashboard</p>
+        <div class="website-links">
+          <a href="https://mehrdadmb2.github.io/PySmartHome-PC" target="_blank"><i class="fas fa-external-link-alt"></i> Visit Site</a>
+        </div>
+      </div>
+
+      <div class="website-card glass-card reveal">
+        <div class="portal-frame">
+          <iframe src="https://mehrdadmb2.github.io/SmartHome-Hybrid-IoT" title="SmartHome Hybrid IoT" loading="lazy" sandbox="allow-scripts allow-same-origin"></iframe>
+          <div class="portal-overlay"></div>
+        </div>
+        <h3>SmartHome Hybrid IoT</h3>
+        <p>IoT & home automation platform</p>
+        <div class="website-links">
+          <a href="https://mehrdadmb2.github.io/SmartHome-Hybrid-IoT" target="_blank"><i class="fas fa-external-link-alt"></i> Visit Site</a>
+        </div>
+      </div>
+
+      <div class="website-card glass-card reveal">
+        <div class="portal-frame">
+          <iframe src="https://mehrdadmb2.github.io/javaz-renewal-calculator" title="Javaz Renewal Calculator" loading="lazy" sandbox="allow-scripts allow-same-origin"></iframe>
+          <div class="portal-overlay"></div>
+        </div>
+        <h3>Javaz Renewal Calculator</h3>
+        <p>Utility tool for renewals</p>
+        <div class="website-links">
+          <a href="https://mehrdadmb2.github.io/javaz-renewal-calculator" target="_blank"><i class="fas fa-external-link-alt"></i> Visit Site</a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -414,15 +428,15 @@
       <a href="#service-roadmap">Service</a>
       <a href="#skills">Skills</a>
       <a href="#projects">Projects</a>
+      <a href="#websites">Websites</a>
       <a href="#contact">Contact</a>
     </div>
   </footer>
 
   <canvas id="particle-canvas"></canvas>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <!-- Leaflet JS for maps -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
