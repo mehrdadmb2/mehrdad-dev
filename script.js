@@ -99,7 +99,7 @@ if (typingElement) {
 const cursor = document.getElementById('cursor');
 if (cursor) {
   document.addEventListener('mousemove', e => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
-  document.querySelectorAll('a, button, .glass-card, .skill-card, .project-card, .contact-card, .edu-card').forEach(el => {
+  document.querySelectorAll('a, button, .glass-card, .skill-card, .project-card, .contact-card, .edu-card, .website-card').forEach(el => {
     el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
     el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
   });
@@ -108,22 +108,32 @@ if (cursor) {
 }
 
 // ==================== GITHUB API ====================
+// اگر خواستی محدودیت ریت رو برداری، یه توکن از گیت‌هاب بساز و جایگزین کن:
+// const GITHUB_TOKEN = 'your_token_here';
 async function fetchGitHubData() {
   const username = 'mehrdadmb2';
   const repoEl = document.getElementById('repoCount');
   const followersEl = document.getElementById('followers');
   const starsEl = document.getElementById('starsCount');
+
+  const headers = {};
+  // اگر توکن داری خط زیر رو فعال کن
+  // if (GITHUB_TOKEN) headers['Authorization'] = `token ${GITHUB_TOKEN}`;
+
   try {
-    const userRes = await fetch(`https://api.github.com/users/${username}`);
+    const userRes = await fetch(`https://api.github.com/users/${username}`, { headers });
     const userData = await userRes.json();
     if (repoEl) repoEl.textContent = userData.public_repos || '--';
     if (followersEl) followersEl.textContent = userData.followers || '--';
-    const reposRes = await fetch(`https://api.github.com/users/${username}/repos?per_page=100`);
+
+    const reposRes = await fetch(`https://api.github.com/users/${username}/repos?per_page=100`, { headers });
     const repos = await reposRes.json();
+
+    // مجموع ستاره‌ها
     const totalStars = repos.reduce((acc, r) => acc + r.stargazers_count, 0);
     if (starsEl) starsEl.textContent = totalStars || '--';
 
-    // 1. پر کردن پروژه‌ها
+    // پر کردن پروژه‌ها
     const container = document.getElementById('projects-container');
     if (container) {
       container.innerHTML = '';
@@ -143,11 +153,20 @@ async function fetchGitHubData() {
       });
     }
 
-    // 2. پر کردن وبسایت‌های زنده (جدید)
+    // پر کردن وبسایت‌های زنده
     const websitesContainer = document.getElementById('websites-container');
     if (websitesContainer) {
       const liveRepos = repos.filter(repo => repo.homepage);
       websitesContainer.innerHTML = '';
+
+      if (liveRepos.length === 0) {
+        websitesContainer.innerHTML = `<div class="glass-card" style="text-align:center; padding:3rem; grid-column:1/-1;">
+          <p>🚀 No live websites found.</p>
+          <p style="color:var(--text-secondary); margin-top:1rem;">Add a <code>homepage</code> URL to your GitHub repos and they'll appear here automatically.</p>
+        </div>`;
+        return;
+      }
+
       liveRepos.forEach(repo => {
         const card = document.createElement('div');
         card.className = 'website-card glass-card';
@@ -157,25 +176,29 @@ async function fetchGitHubData() {
           <div class="website-links">
             <a href="${repo.homepage}" target="_blank"><i class="fas fa-external-link-alt"></i> Visit Site</a>
             <a href="${repo.html_url}" target="_blank"><i class="fab fa-github"></i> Source</a>
-          </div>
-        `;
+          </div>`;
         websitesContainer.appendChild(card);
       });
     }
-
   } catch(e) {
     console.error('GitHub fetch error:', e);
     if (repoEl) repoEl.textContent = '∞';
     if (followersEl) followersEl.textContent = '∞';
     if (starsEl) starsEl.textContent = '∞';
+
+    const websitesContainer = document.getElementById('websites-container');
+    if (websitesContainer) {
+      websitesContainer.innerHTML = `<div class="glass-card" style="text-align:center; padding:3rem; grid-column:1/-1;">
+        <p>⚠️ Could not load websites.</p>
+        <p style="color:var(--text-secondary); margin-top:1rem;">Please try again later.</p>
+      </div>`;
+    }
   }
 }
 fetchGitHubData();
 
 // ==================== MILITARY SERVICE ROADMAP ====================
 function updateRoadmap() {
-  // Start date: 1404/06/01  => 2025-08-23
-  // End date: 1406/03/02    => 2027-05-23
   const start = new Date(2025, 7, 23); // August 23, 2025
   const end = new Date(2027, 4, 23);   // May 23, 2027
   const today = new Date();
@@ -233,7 +256,6 @@ document.addEventListener('mousemove', e => {
 
 console.log('🚀 Mehrdad Behrouzi Portfolio ready.');
 
-
 // ==================== COPY ADDRESS ====================
 function copyAddress(elementId, btn) {
   const code = document.getElementById(elementId);
@@ -249,8 +271,6 @@ function copyAddress(elementId, btn) {
     alert('Copy failed. Please select and copy manually.');
   });
 }
-
-// ==================== (توابع قبلی بدون تغییر: loader, stars, particles, typing, cursor, github, roadmap) ====================
 
 // ==================== READING PROGRESS BAR ====================
 window.addEventListener('scroll', () => {
@@ -308,47 +328,35 @@ function initMap(id, lat, lng, zoom = 15) {
   L.marker([lat, lng]).addTo(map)
     .bindPopup('Location')
     .openPopup();
-  // Fix rendering issue when map is hidden initially
   setTimeout(() => { map.invalidateSize(); }, 300);
 }
 
-// Initialize maps after load
 window.addEventListener('load', () => {
-  // Coordinates: high school 29.623503, 52.475145
   initMap('map-school', 29.623503, 52.475145);
-  // University: 29°37'32.8"N 52°29'36.3"E -> 29.625778, 52.493417
   initMap('map-uni', 29.625778, 52.493417);
-  // Service location: 29°37'43.5"N 51°38'29.0"E -> 29.62875, 51.64139
   initMap('map-service', 29.62875, 51.64139);
 });
 
-// محاسبه و نمایش ستاره تولد با اطلاعات
+// ==================== BIRTHDAY STAR ====================
 function updateBirthday() {
-  const birthDate = new Date(2001, 9, 13); // 13 اکتبر 2001
+  const birthDate = new Date(2001, 9, 13); // 13 October 2001
   const today = new Date();
-  
-  // محاسبه سن
   let age = today.getFullYear() - birthDate.getFullYear();
   const monthDiff = today.getMonth() - birthDate.getMonth();
   if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
     age--;
   }
-  
-  // محاسبه روزهای مانده تا تولد بعدی
   const nextBirthday = new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate());
   if (today > nextBirthday) {
     nextBirthday.setFullYear(today.getFullYear() + 1);
   }
   const diffTime = nextBirthday - today;
   const daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  
-  // به‌روزرسانی محتوای ستاره تولد
+
   const starElement = document.getElementById('birthday-star');
   if (starElement) {
     starElement.setAttribute('data-tooltip', `${age} years old · ${daysLeft} days until birthday`);
   }
 }
-
-// مقداردهی اولیه و به‌روزرسانی هر ساعت
 updateBirthday();
 setInterval(updateBirthday, 3600000);
