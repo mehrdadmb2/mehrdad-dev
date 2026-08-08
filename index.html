@@ -335,32 +335,113 @@
 
   <!-- Support Me -->
   <section id="donate">
-    <h2 class="section-title">💎 Support Me</h2>
-    <div class="donate-grid">
-      <div class="donate-card glass-card">
-        <i class="fas fa-coins" style="font-size: 2rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
-        <h3>TON Network</h3>
-        <p class="network-note">Gram & Tokens on TON</p>
-        <div class="address-box">
-          <code id="ton-address">UQBQU9KnjwIsdSGwG08b3L43Vy_wPlCg_3FaK9m4N2Toj84k</code>
-          <button class="copy-btn" onclick="copyAddress('ton-address', this)">📋 Copy</button>
-        </div>
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=UQBQU9KnjwIsdSGwG08b3L43Vy_wPlCg_3FaK9m4N2Toj84k" alt="TON QR" class="qr-img">
-        <p class="warning">⚠️ Only Gram & tokens on TON network.</p>
+  <h2 class="section-title">💎 Support Me</h2>
+  <div class="donate-grid">
+    <!-- TON (قبلی) -->
+    <div class="donate-card glass-card">
+      <i class="fas fa-coins" style="font-size: 2rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+      <h3>TON Network</h3>
+      <p class="network-note">Gram & Tokens on TON</p>
+      <div class="address-box">
+        <code id="ton-address">UQBQU9KnjwIsdSGwG08b3L43Vy_wPlCg_3FaK9m4N2Toj84k</code>
+        <button class="copy-btn" onclick="copyAddress('ton-address', this)">📋 Copy</button>
       </div>
-      <div class="donate-card glass-card">
-        <i class="fas fa-dollar-sign" style="font-size: 2rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
-        <h3>TRC20 (TRON)</h3>
-        <p class="network-note">USDT TRC20</p>
-        <div class="address-box">
-          <code id="trc20-address">TYbqxzEWrvYPnLvGtk6JY6Sbh8DMqfjcYq</code>
-          <button class="copy-btn" onclick="copyAddress('trc20-address', this)">📋 Copy</button>
-        </div>
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=TYbqxzEWrvYPnLvGtk6JY6Sbh8DMqfjcYq" alt="TRC20 QR" class="qr-img">
-        <p class="warning">⚠️ Only USDT on TRC20 network.</p>
-      </div>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=UQBQU9KnjwIsdSGwG08b3L43Vy_wPlCg_3FaK9m4N2Toj84k" alt="TON QR" class="qr-img">
+      <p class="warning">⚠️ Only Gram & tokens on TON network.</p>
     </div>
-  </section>
+
+    <!-- TRC20 USDT (قبلی) -->
+    <div class="donate-card glass-card">
+      <i class="fas fa-dollar-sign" style="font-size: 2rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+      <h3>TRC20 (USDT)</h3>
+      <p class="network-note">USDT TRC20</p>
+      <div class="address-box">
+        <code id="trc20-address">TYbqxzEWrvYPnLvGtk6JY6Sbh8DMqfjcYq</code>
+        <button class="copy-btn" onclick="copyAddress('trc20-address', this)">📋 Copy</button>
+      </div>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=TYbqxzEWrvYPnLvGtk6JY6Sbh8DMqfjcYq" alt="TRC20 QR" class="qr-img">
+      <p class="warning">⚠️ Only USDT on TRC20 network.</p>
+    </div>
+
+    <!-- Ethereum -->
+    <div class="donate-card glass-card">
+      <i class="fab fa-ethereum" style="font-size: 2rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+      <h3>Ethereum</h3>
+      <p class="network-note">ETH / ERC-20</p>
+      <div class="address-box">
+        <code id="eth-address">0x968C2fD883a2004276f5e627Fe38654137601c51</code>
+        <button class="copy-btn" onclick="copyAddress('eth-address', this)">📋 Copy</button>
+      </div>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=0x968C2fD883a2004276f5e627Fe38654137601c51" alt="Ethereum QR" class="qr-img">
+      <p class="warning">⚠️ Only ETH / ERC-20 tokens on Ethereum network.</p>
+    </div>
+
+    <!-- Bitcoin -->
+    <div class="donate-card glass-card">
+      <i class="fab fa-bitcoin" style="font-size: 2rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+      <h3>Bitcoin</h3>
+      <p class="network-note">BTC</p>
+      <div class="address-box">
+        <code id="btc-address">bc1q6knq0g4w9axt7t204y3e4hk4kz4zkh8vxj2e3a</code>
+        <button class="copy-btn" onclick="copyAddress('btc-address', this)">📋 Copy</button>
+      </div>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=bc1q6knq0g4w9axt7t204y3e4hk4kz4zkh8vxj2e3a" alt="Bitcoin QR" class="qr-img">
+      <p class="warning">⚠️ Only BTC on Bitcoin network.</p>
+    </div>
+
+    <!-- Solana -->
+    <div class="donate-card glass-card">
+      <i class="fas fa-sun" style="font-size: 2rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+      <h3>Solana</h3>
+      <p class="network-note">SOL / SPL Tokens</p>
+      <div class="address-box">
+        <code id="sol-address">7otC7qwCWqmrzbVA3XykjsZHbuKgrqaP2hE25NnByRDP</code>
+        <button class="copy-btn" onclick="copyAddress('sol-address', this)">📋 Copy</button>
+      </div>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=7otC7qwCWqmrzbVA3XykjsZHbuKgrqaP2hE25NnByRDP" alt="Solana QR" class="qr-img">
+      <p class="warning">⚠️ Only SOL / SPL tokens on Solana network.</p>
+    </div>
+
+    <!-- BNB Chain -->
+    <div class="donate-card glass-card">
+      <i class="fas fa-link" style="font-size: 2rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+      <h3>BNB Smart Chain</h3>
+      <p class="network-note">BNB / BEP-20</p>
+      <div class="address-box">
+        <code id="bnb-address">0x968C2fD883a2004276f5e627Fe38654137601c51</code>
+        <button class="copy-btn" onclick="copyAddress('bnb-address', this)">📋 Copy</button>
+      </div>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=0x968C2fD883a2004276f5e627Fe38654137601c51" alt="BNB QR" class="qr-img">
+      <p class="warning">⚠️ Only BNB / BEP-20 tokens on BNB Smart Chain.</p>
+    </div>
+
+    <!-- Polygon -->
+    <div class="donate-card glass-card">
+      <i class="fas fa-polygon" style="font-size: 2rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+      <h3>Polygon</h3>
+      <p class="network-note">MATIC / POL</p>
+      <div class="address-box">
+        <code id="polygon-address">0x968C2fD883a2004276f5e627Fe38654137601c51</code>
+        <button class="copy-btn" onclick="copyAddress('polygon-address', this)">📋 Copy</button>
+      </div>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=0x968C2fD883a2004276f5e627Fe38654137601c51" alt="Polygon QR" class="qr-img">
+      <p class="warning">⚠️ Only MATIC / POL tokens on Polygon network.</p>
+    </div>
+
+    <!-- Tron (آدرس جدید) -->
+    <div class="donate-card glass-card">
+      <i class="fas fa-bolt" style="font-size: 2rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+      <h3>Tron (TRX)</h3>
+      <p class="network-note">TRX / TRC-20</p>
+      <div class="address-box">
+        <code id="tron-address">TGYN1zzeGUjuXipVPvS4gTUivQyAu7GNUm</code>
+        <button class="copy-btn" onclick="copyAddress('tron-address', this)">📋 Copy</button>
+      </div>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=TGYN1zzeGUjuXipVPvS4gTUivQyAu7GNUm" alt="Tron QR" class="qr-img">
+      <p class="warning">⚠️ Only TRX / TRC-20 tokens on Tron network.</p>
+    </div>
+  </div>
+</section>
 
   <!-- Get in Touch -->
   <section id="contact">
