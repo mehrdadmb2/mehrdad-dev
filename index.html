@@ -17,6 +17,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Noto Serif JP for Japanese text -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
 
   <!-- Leaflet CSS for maps -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
@@ -54,6 +56,9 @@
     </div>
   </div>
 
+  <!-- Floating shapes background -->
+  <div id="shapes-bg"></div>
+
   <!-- Birthday star floating -->
   <div class="birthday-star-floating" id="birthday-star" style="top: 10%; left: 10%;">✨</div>
 
@@ -69,6 +74,7 @@
         <li><a href="#skills">Skills</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#websites">Websites</a></li>
+        <li><a href="#haiku">Zen</a></li>
         <li><a href="#donate">Donate</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -306,7 +312,6 @@
           <a href="https://mehrdadmb2.github.io/PySmartHome-PC" target="_blank"><i class="fas fa-external-link-alt"></i> Visit Site</a>
         </div>
       </div>
-
       <div class="website-card glass-card reveal">
         <div class="portal-frame">
           <iframe src="https://mehrdadmb2.github.io/SmartHome-Hybrid-IoT" title="SmartHome Hybrid IoT" loading="lazy" sandbox="allow-scripts allow-same-origin"></iframe>
@@ -318,7 +323,6 @@
           <a href="https://mehrdadmb2.github.io/SmartHome-Hybrid-IoT" target="_blank"><i class="fas fa-external-link-alt"></i> Visit Site</a>
         </div>
       </div>
-
       <div class="website-card glass-card reveal">
         <div class="portal-frame">
           <iframe src="https://mehrdadmb2.github.io/javaz-renewal-calculator" title="Javaz Renewal Calculator" loading="lazy" sandbox="allow-scripts allow-same-origin"></iframe>
@@ -330,6 +334,16 @@
           <a href="https://mehrdadmb2.github.io/javaz-renewal-calculator" target="_blank"><i class="fas fa-external-link-alt"></i> Visit Site</a>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Zen Words (Haiku) -->
+  <section id="haiku">
+    <h2 class="section-title">🎋 Zen Words</h2>
+    <div class="haiku-card glass-card reveal">
+      <div class="haiku-text" id="haiku-jp"></div>
+      <div class="haiku-translation" id="haiku-en"></div>
+      <div class="haiku-author" id="haiku-author"></div>
     </div>
   </section>
 
@@ -510,11 +524,16 @@
       <a href="#skills">Skills</a>
       <a href="#projects">Projects</a>
       <a href="#websites">Websites</a>
+      <a href="#haiku">Zen</a>
       <a href="#contact">Contact</a>
     </div>
   </footer>
 
+  <!-- Canvas elements for artistic effects -->
   <canvas id="particle-canvas"></canvas>
+  <canvas id="brush-canvas"></canvas>
+  <canvas id="ink-canvas"></canvas>
+  <canvas id="constellation-canvas"></canvas>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
