@@ -212,13 +212,8 @@ function copyAddress(elementId, btn) {
   navigator.clipboard.writeText(code.textContent).then(() => {
     btn.textContent = '✓ Copied!';
     btn.classList.add('copied');
-    setTimeout(() => {
-      btn.textContent = '📋 Copy';
-      btn.classList.remove('copied');
-    }, 2000);
-  }).catch(() => {
-    alert('Copy failed. Please select and copy manually.');
-  });
+    setTimeout(() => { btn.textContent = '📋 Copy'; btn.classList.remove('copied'); }, 2000);
+  }).catch(() => { alert('Copy failed. Please select and copy manually.'); });
 }
 
 // ==================== READING PROGRESS BAR ====================
@@ -235,16 +230,12 @@ window.addEventListener('scroll', () => {
   if (window.scrollY > 500) backToTopBtn.classList.add('show');
   else backToTopBtn.classList.remove('show');
 });
-backToTopBtn.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+backToTopBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
 
 // ==================== REVEAL ON SCROLL ====================
 const revealElements = document.querySelectorAll('.reveal');
 const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) entry.target.classList.add('active');
-  });
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
 }, { threshold: 0.1 });
 revealElements.forEach(el => revealObserver.observe(el));
 
@@ -266,9 +257,7 @@ function initMap(id, lat, lng, zoom = 15) {
   const container = document.getElementById(id);
   if (!container || typeof L === 'undefined') return;
   const map = L.map(id).setView([lat, lng], zoom);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors'
-  }).addTo(map);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap contributors' }).addTo(map);
   L.marker([lat, lng]).addTo(map).bindPopup('Location').openPopup();
   setTimeout(() => { map.invalidateSize(); }, 300);
 }
@@ -284,17 +273,238 @@ function updateBirthday() {
   const today = new Date();
   let age = today.getFullYear() - birthDate.getFullYear();
   const monthDiff = today.getMonth() - birthDate.getMonth();
-  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-    age--;
-  }
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) { age--; }
   const nextBirthday = new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate());
   if (today > nextBirthday) nextBirthday.setFullYear(today.getFullYear() + 1);
   const diffTime = nextBirthday - today;
   const daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   const starElement = document.getElementById('birthday-star');
-  if (starElement) {
-    starElement.setAttribute('data-tooltip', `${age} years old · ${daysLeft} days until birthday`);
-  }
+  if (starElement) { starElement.setAttribute('data-tooltip', `${age} years old · ${daysLeft} days until birthday`); }
 }
 updateBirthday();
 setInterval(updateBirthday, 3600000);
+
+// ==================== BRUSH TRAIL ====================
+(function() {
+  const canvas = document.getElementById('brush-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let width, height;
+  let mouseX = -100, mouseY = -100;
+  let prevX = -100, prevY = -100;
+  const points = [];
+
+  function resize() {
+    width = window.innerWidth; height = window.innerHeight;
+    canvas.width = width; canvas.height = height;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
+
+  const colors = ['#c084fc', '#22d3ee', '#f472b6', '#34d399', '#fbbf24'];
+
+  function draw() {
+    if (prevX < 0 || prevY < 0) { prevX = mouseX; prevY = mouseY; }
+    const dx = mouseX - prevX;
+    const dy = mouseY - prevY;
+    const dist = Math.sqrt(dx*dx+dy*dy);
+    if (dist > 3) {
+      points.push({
+        x: mouseX, y: mouseY, alpha: 1,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        size: Math.random() * 3 + 1
+      });
+      prevX = mouseX; prevY = mouseY;
+    }
+
+    ctx.clearRect(0, 0, width, height);
+
+    for (let i = points.length - 1; i >= 0; i--) {
+      const p = points[i];
+      p.alpha -= 0.015;
+      if (p.alpha <= 0) { points.splice(i, 1); continue; }
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = p.alpha * 0.4;
+      ctx.fill();
+      if (i > 0) {
+        const prev = points[i-1];
+        ctx.beginPath();
+        ctx.moveTo(prev.x, prev.y);
+        ctx.lineTo(p.x, p.y);
+        ctx.strokeStyle = p.color;
+        ctx.lineWidth = 0.8;
+        ctx.stroke();
+      }
+    }
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ==================== FLOATING SHAPES ====================
+(function() {
+  const container = document.getElementById('shapes-bg');
+  if (!container) return;
+  const shapes = ['triangle', 'circle', 'diamond'];
+  for (let i = 0; i < 15; i++) {
+    const el = document.createElement('div');
+    const type = shapes[Math.floor(Math.random() * shapes.length)];
+    el.className = `shape ${type}`;
+    el.style.left = Math.random() * 90 + '%';
+    el.style.top = Math.random() * 80 + 20 + '%';
+    el.style.animationDuration = (Math.random() * 20 + 15) + 's';
+    el.style.animationDelay = Math.random() * 10 + 's';
+    container.appendChild(el);
+  }
+})();
+
+// ==================== CONSTELLATIONS ====================
+(function() {
+  const canvas = document.getElementById('constellation-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let width, height;
+  const stars = [];
+  const numStars = 50;
+
+  function resize() {
+    width = window.innerWidth; height = window.innerHeight;
+    canvas.width = width; canvas.height = height;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  for (let i = 0; i < numStars; i++) {
+    stars.push({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      radius: Math.random() * 2 + 1
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, width, height);
+    for (let i = 0; i < stars.length; i++) {
+      const s1 = stars[i];
+      for (let j = i+1; j < stars.length; j++) {
+        const s2 = stars[j];
+        const dx = s1.x - s2.x;
+        const dy = s1.y - s2.y;
+        const dist = Math.sqrt(dx*dx+dy*dy);
+        if (dist < 150) {
+          ctx.beginPath();
+          ctx.moveTo(s1.x, s1.y);
+          ctx.lineTo(s2.x, s2.y);
+          ctx.strokeStyle = '#ffffff';
+          ctx.lineWidth = 0.3;
+          ctx.globalAlpha = (1 - dist/150) * 0.15;
+          ctx.stroke();
+        }
+      }
+    }
+    ctx.globalAlpha = 1;
+    stars.forEach(s => {
+      s.x += (Math.random() - 0.5) * 0.1;
+      s.y += (Math.random() - 0.5) * 0.1;
+      if (s.x < 0 || s.x > width) s.x = Math.random() * width;
+      if (s.y < 0 || s.y > height) s.y = Math.random() * height;
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ==================== HAIKU ROTATOR ====================
+const haikus = [
+  { jp: "古池や\n蛙飛びこむ\n水の音", en: "Old pond —\na frog jumps in,\nsound of water.", author: "Matsuo Bashō" },
+  { jp: "蛍の火や\n吹き消す風の\n恋しき", en: "Firefly's light —\nthe wind that blows it out\nis dear to me.", author: "Kobayashi Issa" },
+  { jp: "我死なば\n筆を捨てよと\n蝉の声", en: "When I die,\nthrow away my brush —\nthe cicada's cry.", author: "Miyamoto Musashi" },
+  { jp: "荒海や\n佐渡によこたふ\n天の川", en: "Rough sea —\nstretching out towards Sado,\nthe Milky Way.", author: "Matsuo Bashō" }
+];
+let currentHaiku = 0;
+const haikuCard = document.querySelector('.haiku-card');
+
+function showHaiku(index) {
+  const jp = document.getElementById('haiku-jp');
+  const en = document.getElementById('haiku-en');
+  const author = document.getElementById('haiku-author');
+  if (!jp || !en || !author) return;
+  haikuCard.classList.remove('active');
+  setTimeout(() => {
+    jp.innerHTML = haikus[index].jp.replace(/\n/g, '<br>');
+    en.textContent = haikus[index].en;
+    author.textContent = `— ${haikus[index].author}`;
+    haikuCard.classList.add('active');
+  }, 100);
+}
+if (haikuCard) {
+  showHaiku(0);
+  setInterval(() => {
+    currentHaiku = (currentHaiku + 1) % haikus.length;
+    showHaiku(currentHaiku);
+  }, 8000);
+}
+
+// ==================== INK BRUSH BACKGROUND ====================
+(function() {
+  const canvas = document.getElementById('ink-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let width, height;
+  const strokes = [];
+
+  function resize() {
+    width = window.innerWidth; height = window.innerHeight;
+    canvas.width = width; canvas.height = height;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  const kanjiList = ['夢', '愛', '静', '禅', '侍', '刀', '雲', '風', '花', '空'];
+
+  function createStroke() {
+    const x = Math.random() * width;
+    const y = Math.random() * height * 0.8;
+    const kanji = kanjiList[Math.floor(Math.random() * kanjiList.length)];
+    strokes.push({
+      x, y, kanji, alpha: 1,
+      size: 20 + Math.random() * 30,
+      rotation: (Math.random() - 0.5) * 0.5,
+      life: 0,
+      maxLife: 200 + Math.random() * 150
+    });
+  }
+
+  function drawStroke(s) {
+    ctx.save();
+    ctx.translate(s.x, s.y);
+    ctx.rotate(s.rotation);
+    ctx.font = `${s.size}px "Noto Serif JP", serif`;
+    ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha * 0.15})`;
+    ctx.shadowColor = 'rgba(34, 211, 238, 0.3)';
+    ctx.shadowBlur = 8;
+    ctx.fillText(s.kanji, 0, 0);
+    ctx.restore();
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
+    if (Math.random() < 0.02) createStroke();
+    for (let i = strokes.length - 1; i >= 0; i--) {
+      const s = strokes[i];
+      s.life++;
+      const progress = s.life / s.maxLife;
+      s.alpha = progress < 0.2 ? progress * 5 : (1 - progress) * 1.2;
+      if (s.alpha < 0) s.alpha = 0;
+      drawStroke(s);
+      if (s.life >= s.maxLife) strokes.splice(i, 1);
+    }
+    requestAnimationFrame(animate);
+  }
+  setTimeout(animate, 1000);
+})();
