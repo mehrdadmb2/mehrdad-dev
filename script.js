@@ -7,7 +7,7 @@ window.addEventListener('load', () => {
   }
 });
 
-// Stars background (lightweight)
+// Stars background
 function createStars() {
   const container = document.getElementById('stars');
   if (!container) return;
@@ -121,20 +121,7 @@ window.addEventListener('scroll', () => {
 });
 backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-// Scroll reveal
-const revealElements = document.querySelectorAll('.glass-card, .section-title');
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) entry.target.style.opacity = '1';
-  });
-}, { threshold: 0.1 });
-revealElements.forEach(el => {
-  el.style.opacity = '0';
-  el.style.transition = 'opacity 0.6s ease';
-  revealObserver.observe(el);
-});
-
-// Skill bars
+// Skill bars animation
 const skillBars = document.querySelectorAll('.skill-fill');
 const skillObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -154,7 +141,7 @@ function copyAddress(elementId, btn) {
   navigator.clipboard.writeText(code.textContent).then(() => {
     btn.textContent = '✓ Copied!';
     btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    setTimeout(() => { btn.textContent = '📋 Copy'; btn.classList.remove('copied'); }, 2000);
   }).catch(() => alert('Copy failed'));
 }
 
@@ -173,3 +160,74 @@ function updateBirthday() {
 }
 updateBirthday();
 setInterval(updateBirthday, 3600000);
+
+// Lazy load Leaflet and initialize maps when journey details opened
+let leafletLoaded = false;
+function loadLeaflet(callback) {
+  if (leafletLoaded) {
+    callback();
+    return;
+  }
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+  document.head.appendChild(link);
+
+  const script = document.createElement('script');
+  script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+  script.onload = () => {
+    leafletLoaded = true;
+    callback();
+  };
+  document.body.appendChild(script);
+}
+
+function initMaps() {
+  if (typeof L === 'undefined') return;
+  const locations = [
+    { id: 'map-school', lat: 29.623503, lng: 52.475145, label: 'Tohidi High School' },
+    { id: 'map-uni', lat: 29.625778, lng: 52.493417, label: 'Zand Institute' },
+    { id: 'map-service', lat: 29.62875, lng: 51.64139, label: 'Military Base' }
+  ];
+  locations.forEach(loc => {
+    const container = document.getElementById(loc.id);
+    if (container && !container._leaflet_id) {
+      const map = L.map(loc.id).setView([loc.lat, loc.lng], 15);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(map);
+      L.marker([loc.lat, loc.lng]).addTo(map).bindPopup(loc.label).openPopup();
+      setTimeout(() => map.invalidateSize(), 200);
+    }
+  });
+}
+
+document.getElementById('journey-details').addEventListener('toggle', function() {
+  if (this.open) {
+    loadLeaflet(initMaps);
+  }
+});
+
+// Haiku rotation
+const haikus = [
+  { jp: "古池や\n蛙飛びこむ\n水の音", en: "Old pond —\na frog jumps in,\nsound of water.", author: "Matsuo Bashō" },
+  { jp: "蛍の火や\n吹き消す風の\n恋しき", en: "Firefly's light —\nthe wind that blows it out\nis dear to me.", author: "Kobayashi Issa" },
+  { jp: "我死なば\n筆を捨てよと\n蝉の声", en: "When I die,\nthrow away my brush —\nthe cicada's cry.", author: "Miyamoto Musashi" },
+  { jp: "荒海や\n佐渡によこたふ\n天の川", en: "Rough sea —\nstretching out towards Sado,\nthe Milky Way.", author: "Matsuo Bashō" }
+];
+let currentHaiku = 0;
+function showHaiku(index) {
+  const jp = document.getElementById('haiku-jp');
+  const en = document.getElementById('haiku-en');
+  const author = document.getElementById('haiku-author');
+  if (jp) jp.innerHTML = haikus[index].jp.replace(/\n/g, '<br>');
+  if (en) en.textContent = haikus[index].en;
+  if (author) author.textContent = `— ${haikus[index].author}`;
+}
+if (document.getElementById('haiku-jp')) {
+  showHaiku(0);
+  setInterval(() => {
+    currentHaiku = (currentHaiku + 1) % haikus.length;
+    showHaiku(currentHaiku);
+  }, 8000);
+}
