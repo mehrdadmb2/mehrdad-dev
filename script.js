@@ -7,28 +7,41 @@ window.addEventListener('load', () => {
   }
 });
 
-// Stars background
+// ==================== STARS BACKGROUND (Enhanced) ====================
 function createStars() {
   const container = document.getElementById('stars');
   if (!container) return;
-  for (let i = 0; i < 200; i++) {
+  const starCount = 250;
+
+  for (let i = 0; i < starCount; i++) {
     const star = document.createElement('div');
-    const size = Math.random() * 3 + 1;
+    star.className = 'star-element';
+
+    const size = Math.random() * 4 + 1;
     star.style.width = size + 'px';
     star.style.height = size + 'px';
-    star.style.background = 'white';
-    star.style.borderRadius = '50%';
-    star.style.position = 'absolute';
     star.style.left = Math.random() * 100 + '%';
     star.style.top = Math.random() * 100 + '%';
     star.style.opacity = Math.random() * 0.8 + 0.2;
-    star.style.animation = `twinkle ${Math.random() * 3 + 2}s ease-in-out infinite`;
+
+    // Shape variation
+    const shape = Math.random();
+    if (shape < 0.5) {
+      star.style.clipPath = 'polygon(0 0, 100% 0, 100% 100%, 0 100%)'; // square
+    } else if (shape < 0.8) {
+      star.style.borderRadius = '50%'; // circle
+    } else {
+      star.style.clipPath = 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)'; // diamond
+    }
+
+    const twinkleDuration = (Math.random() * 3 + 2).toFixed(2) + 's';
+    const driftDuration = (Math.random() * 10 + 8).toFixed(2) + 's';
+    star.style.setProperty('--twinkle-duration', twinkleDuration);
+    star.style.setProperty('--drift-duration', driftDuration);
+
     container.appendChild(star);
   }
 }
-const twinkleStyle = document.createElement('style');
-twinkleStyle.textContent = `@keyframes twinkle { 0%,100%{opacity:0.3;transform:scale(1)} 50%{opacity:1;transform:scale(1.5)} }`;
-document.head.appendChild(twinkleStyle);
 createStars();
 
 // Typing effect
