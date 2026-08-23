@@ -7,44 +7,90 @@ window.addEventListener('load', () => {
   }
 });
 
-// ==================== STARS BACKGROUND (Enhanced) ====================
+// ==================== STARS BACKGROUND (old style) ====================
 function createStars() {
   const container = document.getElementById('stars');
   if (!container) return;
-  const starCount = 250;
-
-  for (let i = 0; i < starCount; i++) {
+  for (let i = 0; i < 200; i++) {
     const star = document.createElement('div');
-    star.className = 'star-element';
-
-    const size = Math.random() * 4 + 1;
+    const size = Math.random() * 3 + 1;
     star.style.width = size + 'px';
     star.style.height = size + 'px';
+    star.style.background = 'white';
+    star.style.borderRadius = '50%';
+    star.style.position = 'absolute';
     star.style.left = Math.random() * 100 + '%';
     star.style.top = Math.random() * 100 + '%';
     star.style.opacity = Math.random() * 0.8 + 0.2;
-
-    // Shape variation
-    const shape = Math.random();
-    if (shape < 0.5) {
-      star.style.clipPath = 'polygon(0 0, 100% 0, 100% 100%, 0 100%)'; // square
-    } else if (shape < 0.8) {
-      star.style.borderRadius = '50%'; // circle
-    } else {
-      star.style.clipPath = 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)'; // diamond
-    }
-
-    const twinkleDuration = (Math.random() * 3 + 2).toFixed(2) + 's';
-    const driftDuration = (Math.random() * 10 + 8).toFixed(2) + 's';
-    star.style.setProperty('--twinkle-duration', twinkleDuration);
-    star.style.setProperty('--drift-duration', driftDuration);
-
+    star.style.animation = `twinkle ${Math.random() * 3 + 2}s ease-in-out infinite`;
     container.appendChild(star);
   }
 }
+const twinkleStyle = document.createElement('style');
+twinkleStyle.textContent = `@keyframes twinkle { 0%,100%{opacity:0.3;transform:scale(1)} 50%{opacity:1;transform:scale(1.5)} }`;
+document.head.appendChild(twinkleStyle);
 createStars();
 
-// Typing effect
+// ==================== THREE.JS PARTICLES ====================
+let scene, camera, renderer, particles;
+function initParticles() {
+  const canvas = document.getElementById('particle-canvas');
+  if (!canvas || typeof THREE === 'undefined') return;
+  scene = new THREE.Scene();
+  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.z = 30;
+  renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  const geometry = new THREE.BufferGeometry();
+  const count = 800;
+  const pos = new Float32Array(count * 3);
+  const col = new Float32Array(count * 3);
+  for (let i = 0; i < count * 3; i += 3) {
+    pos[i] = (Math.random() - 0.5) * 80;
+    pos[i+1] = (Math.random() - 0.5) * 80;
+    pos[i+2] = (Math.random() - 0.5) * 40;
+    const r = Math.random();
+    if (r < 0.33) { col[i]=0.75; col[i+1]=0.52; col[i+2]=0.98; }
+    else if (r < 0.66) { col[i]=0.13; col[i+1]=0.83; col[i+2]=0.93; }
+    else { col[i]=0.96; col[i+1]=0.45; col[i+2]=0.71; }
+  }
+  geometry.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  geometry.setAttribute('color', new THREE.BufferAttribute(col, 3));
+  const mat = new THREE.PointsMaterial({ size: 0.15, vertexColors: true, blending: THREE.AdditiveBlending, depthWrite: false, transparent: true, opacity: 0.6 });
+  particles = new THREE.Points(geometry, mat);
+  scene.add(particles);
+}
+function animateParticles() {
+  if (!particles) return;
+  requestAnimationFrame(animateParticles);
+  particles.rotation.x += 0.0003;
+  particles.rotation.y += 0.0005;
+  renderer.render(scene, camera);
+}
+window.addEventListener('resize', () => {
+  if (camera && renderer) {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  }
+});
+initParticles();
+animateParticles();
+
+// ==================== CUSTOM CURSOR ====================
+const cursor = document.getElementById('cursor');
+if (cursor) {
+  document.addEventListener('mousemove', e => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
+  document.querySelectorAll('a, button, .glass-card, .skill-card, .project-card, .contact-card, .edu-card, .website-card').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+  });
+  document.addEventListener('mouseout', () => cursor.style.opacity = '0');
+  document.addEventListener('mouseover', () => cursor.style.opacity = '1');
+}
+
+// ==================== TYPING EFFECT ====================
 const typingElement = document.querySelector('.typing');
 if (typingElement) {
   const words = ['Embedded Developer', 'IoT Architect', 'Network Specialist', 'Python Lover', 'Open Source Contributor'];
@@ -61,7 +107,7 @@ if (typingElement) {
   type();
 }
 
-// GitHub API (stats + projects)
+// ==================== GITHUB API ====================
 async function fetchGitHubData() {
   const username = 'mehrdadmb2';
   const repoEl = document.getElementById('repoCount');
@@ -103,7 +149,7 @@ async function fetchGitHubData() {
 }
 fetchGitHubData();
 
-// Military roadmap progress
+// ==================== MILITARY ROADMAP ====================
 function updateRoadmap() {
   const start = new Date(2025, 7, 23);
   const end = new Date(2027, 4, 23);
@@ -126,7 +172,7 @@ function updateRoadmap() {
 }
 updateRoadmap();
 
-// Back to top
+// ==================== BACK TO TOP ====================
 const backToTopBtn = document.getElementById('back-to-top');
 window.addEventListener('scroll', () => {
   if (window.scrollY > 500) backToTopBtn.classList.add('show');
@@ -134,7 +180,7 @@ window.addEventListener('scroll', () => {
 });
 backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-// Skill bars animation
+// ==================== SKILL BARS ====================
 const skillBars = document.querySelectorAll('.skill-fill');
 const skillObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -147,7 +193,7 @@ const skillObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.3 });
 skillBars.forEach(bar => skillObserver.observe(bar));
 
-// Copy address
+// ==================== COPY ADDRESS ====================
 function copyAddress(elementId, btn) {
   const code = document.getElementById(elementId);
   if (!code) return;
@@ -158,7 +204,7 @@ function copyAddress(elementId, btn) {
   }).catch(() => alert('Copy failed'));
 }
 
-// Birthday star
+// ==================== BIRTHDAY STAR ====================
 function updateBirthday() {
   const birthDate = new Date(2001, 9, 13);
   const today = new Date();
@@ -174,27 +220,19 @@ function updateBirthday() {
 updateBirthday();
 setInterval(updateBirthday, 3600000);
 
-// Lazy load Leaflet and initialize maps when journey details opened
+// ==================== LAZY LOAD LEAFLET & MAPS ====================
 let leafletLoaded = false;
 function loadLeaflet(callback) {
-  if (leafletLoaded) {
-    callback();
-    return;
-  }
+  if (leafletLoaded) { callback(); return; }
   const link = document.createElement('link');
   link.rel = 'stylesheet';
   link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
   document.head.appendChild(link);
-
   const script = document.createElement('script');
   script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-  script.onload = () => {
-    leafletLoaded = true;
-    callback();
-  };
+  script.onload = () => { leafletLoaded = true; callback(); };
   document.body.appendChild(script);
 }
-
 function initMaps() {
   if (typeof L === 'undefined') return;
   const locations = [
@@ -214,14 +252,11 @@ function initMaps() {
     }
   });
 }
-
 document.getElementById('journey-details').addEventListener('toggle', function() {
-  if (this.open) {
-    loadLeaflet(initMaps);
-  }
+  if (this.open) loadLeaflet(initMaps);
 });
 
-// Haiku rotation
+// ==================== HAIKU ====================
 const haikus = [
   { jp: "古池や\n蛙飛びこむ\n水の音", en: "Old pond —\na frog jumps in,\nsound of water.", author: "Matsuo Bashō" },
   { jp: "蛍の火や\n吹き消す風の\n恋しき", en: "Firefly's light —\nthe wind that blows it out\nis dear to me.", author: "Kobayashi Issa" },
