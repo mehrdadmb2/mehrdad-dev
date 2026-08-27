@@ -7,7 +7,7 @@ window.addEventListener('load', () => {
   }
 });
 
-// ==================== STARS BACKGROUND (old style) ====================
+// ==================== STARS BACKGROUND ====================
 function createStars() {
   const container = document.getElementById('stars');
   if (!container) return;
@@ -128,7 +128,7 @@ async function fetchGitHubData() {
       container.innerHTML = '';
       repos.slice(0, 6).forEach(repo => {
         const card = document.createElement('div');
-        card.className = 'project-card glass-card';
+        card.className = 'project-card';
         const tags = repo.topics ? repo.topics.slice(0, 4).map(t => `<span>${t}</span>`).join('') : '';
         card.innerHTML = `
           <h3>${repo.name}</h3>
