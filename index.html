@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050816">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="Mehrdad Behrouzi — Computer Engineer, IoT & Embedded Developer, Networking and Automation enthusiast.">
+  <meta name="author" content="Mehrdad Behrouzi">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Mehrdad Behrouzi | Computer Engineer">
+  <meta property="og:description" content="Computer Engineering portfolio focused on IoT, embedded systems, networking, automation and modern web tools.">
+  <meta property="og:image" content="pic/MB-LOGO2.png">
+  <meta property="og:url" content="https://mehrdadmb2.github.io/mehrdad-dev/">
+  <title>Mehrdad Behrouzi | Computer Engineer</title>
+  <link rel="icon" type="image/png" href="pic/MB-LOGO2.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&family=Noto+Serif+JP:wght@400;700&family=Orbitron:wght@400;500;600;700;800&family=Share+Tech+Mono&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+</head>
+<body>
+  <a class="skip-link" href="#home">Skip to content</a>
+
+  <div id="progress-bar" aria-hidden="true"></div>
+
+  <!-- Matrix / hacker intro -->
+  <div id="loader" role="status" aria-label="Loading portfolio">
+    <canvas id="matrix-canvas" aria-hidden="true"></canvas>
+    <div class="loader-vignette"></div>
+    <div class="loader-center">
+      <div class="loader-system">SYSTEM // INITIALIZING</div>
+      <div class="loader-logo">M</div>
+      <div class="loader-name font-tech">MEHRDAD.DEV</div>
+      <div class="loader-status" id="loader-status">Connecting to the matrix...</div>
+      <div class="loader-progress"><span id="loader-progress-bar"></span></div>
+    </div>
+  </div>
+
+  <!-- Background effects: intentionally kept close to the original visual language -->
+  <div id="stars" aria-hidden="true"></div>
+  <div id="aurora" aria-hidden="true"></div>
+  <div id="gradient" aria-hidden="true"></div>
+  <div id="noise" aria-hidden="true"></div>
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+  <!-- Floating atmosphere objects -->
+  <div id="travel-bg" aria-hidden="true">
+    <div class="travel-float travel-a"><i class="fas fa-plane"></i> 🇦🇪</div>
+    <div class="travel-float travel-b"><i class="fas fa-plane"></i> 🇬🇪</div>
+    <div class="travel-float travel-c"><i class="fas fa-car"></i> 🇹🇷</div>
+  </div>
+  <button class="birthday-star-floating" id="birthday-star" type="button" aria-label="Birthday information">✨</button>
+
+  <button id="back-to-top" type="button" title="Back to top" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
+
+  <header>
+    <nav class="glass-nav" aria-label="Primary navigation">
+      <a class="logo font-tech" href="#home">Mehrdad</a>
+      <button class="mobile-menu-btn" id="mobile-menu-btn" type="button" aria-label="Open navigation" aria-expanded="false"><i class="fas fa-bars"></i></button>
+      <ul id="nav-links">
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#websites">Websites</a></li>
+        <li><a href="#donate">Donate</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-actions" aria-label="Quick controls">
+        <button id="theme-toggle" type="button" title="Toggle theme" aria-label="Toggle theme"><i class="fas fa-moon"></i></button>
+        <button id="palette-toggle" type="button" title="Open command palette" aria-label="Open command palette"><i class="fas fa-terminal"></i></button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="section-hero">
+      <div class="hero">
+        <div class="hero-left reveal">
+          <div class="hero-badge"><span class="pulse-dot"></span> Open to technology, ideas & experiments</div>
+          <div class="avatar-container interactive-object">
+            <img src="pic/me.png" alt="Mehrdad Behrouzi" class="avatar-img" loading="eager" decoding="async">
+            <div class="avatar-glow"></div>
+          </div>
+          <h3 class="font-tech">Hi, I'm</h3>
+          <h1><span class="font-tech">Mehrdad Behrouzi</span></h1>
+          <h2 class="english-title font-tech">Computer Engineer &amp; IoT Developer</h2>
+          <h2 class="typing-wrapper"><span class="typing"></span></h2>
+          <p>I build practical systems at the intersection of software, embedded hardware, networking, automation and visual design.</p>
+          <div class="hero-buttons">
+            <a href="#projects" class="btn magnetic"><i class="fas fa-code"></i> My Projects</a>
+            <a href="https://github.com/mehrdadmb2" class="btn2 magnetic" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a>
+            <button class="btn2 magnetic" id="copy-profile" type="button"><i class="fas fa-link"></i> Copy Profile</button>
+          </div>
+          <div class="hero-meta">
+            <span><i class="fas fa-location-dot"></i> Shiraz, Iran</span>
+            <span><i class="fas fa-microchip"></i> IoT / Embedded</span>
+            <span><i class="fas fa-network-wired"></i> Networking</span>
+          </div>
+        </div>
+
+        <div class="hero-right reveal">
+          <div class="glass-card stats-card tilt-card">
+            <div class="circle"></div><div class="circle2"></div>
+            <div class="status-row"><h2 class="font-tech">System Status</h2><span class="live-chip"><span></span> ONLINE</span></div>
+            <div class="status-sub" id="github-status">Synchronizing with GitHub...</div>
+            <div class="stat"><p>Public Repositories</p><h1 id="repoCount">--</h1></div>
+            <div class="stat"><p>Followers</p><h1 id="followers">--</h1></div>
+            <div class="stat"><p>Total Stars</p><h1 id="starsCount">--</h1></div>
+            <div class="stat"><p>Live GitHub Pages</p><h1 id="liveCount">--</h1></div>
+            <div class="api-foot"><span id="github-updated">Waiting for sync</span><button id="refresh-github" type="button" title="Refresh GitHub data"><i class="fas fa-rotate"></i></button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <h2 class="section-title font-tech">About Me</h2>
+      <div class="glass-card about-card tilt-card reveal">
+        <div class="section-kicker"><span></span> PROFILE // 001</div>
+        <p>I'm Mehrdad Behrouzi, a Computer Engineering graduate with a strong interest in embedded systems, IoT, networking, automation and modern UI/UX. I enjoy turning ideas into practical tools — from ESP32 and Arduino projects to dashboards, bots, GitHub automation and polished web experiences.</p>
+        <p class="muted-copy">I care about reliable systems, clean interfaces, open-source workflows and projects that keep working even when the environment is imperfect.</p>
+        <div class="about-stats">
+          <div class="stat-item"><span class="stat-number">BSc</span><span class="stat-label">Computer Engineering</span></div>
+          <div class="stat-item"><span class="stat-number">IoT</span><span class="stat-label">Embedded & Automation</span></div>
+          <div class="stat-item"><span class="stat-number">+NET</span><span class="stat-label">Networking Focus</span></div>
+          <div class="stat-item"><span class="stat-number">∞</span><span class="stat-label">Learning Mode</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="education">
+      <h2 class="section-title font-tech">Education &amp; Certificates</h2>
+      <div class="education-grid">
+        <article class="edu-card glass-card tilt-card reveal"><i class="fas fa-graduation-cap"></i><h3 class="font-tech">B.Sc. Computer Engineering</h3><span class="edu-place">Zand Institute of Higher Education</span><span class="edu-note">Software &amp; systems foundation</span></article>
+        <article class="edu-card glass-card tilt-card reveal"><i class="fas fa-square-root-alt"></i><h3 class="font-tech">Mathematics &amp; Physics</h3><span class="edu-place">Academic background</span><span class="edu-note">Analytical problem solving</span></article>
+        <article class="edu-card glass-card tilt-card reveal"><i class="fas fa-network-wired"></i><h3 class="font-tech">Network+</h3><span class="edu-place">CompTIA</span><span class="edu-note">Networking fundamentals</span></article>
+        <article class="edu-card glass-card tilt-card reveal"><i class="fas fa-cube"></i><h3 class="font-tech">SolidWorks Design</h3><span class="edu-place">Professional Training</span><span class="edu-note">3D / mechanical modeling</span></article>
+        <article class="edu-card glass-card tilt-card reveal"><i class="fas fa-code"></i><h3 class="font-tech">C++ / C# Programming</h3><span class="edu-place">Advanced Training</span><span class="edu-note">Programming &amp; application development</span></article>
+        <article class="edu-card glass-card tilt-card reveal"><i class="fas fa-house-signal"></i><h3 class="font-tech">Smart Home Automation</h3><span class="edu-place">Applied Training</span><span class="edu-note">Sensors, controllers &amp; dashboards</span></article>
+      </div>
+    </section>
+
+    <section id="skills">
+      <h2 class="section-title font-tech">Technical Skills</h2>
+      <div class="skills-grid">
+        <article class="skill-card glass-card tilt-card reveal"><i class="fas fa-microchip"></i><h3 class="font-tech">Embedded Systems</h3><div class="skill-top"><span>ESP32 / Arduino</span><strong>90%</strong></div><div class="skill-bar"><div class="skill-fill" data-width="90%"></div></div></article>
+        <article class="skill-card glass-card tilt-card reveal"><i class="fas fa-code"></i><h3 class="font-tech">Programming</h3><div class="skill-top"><span>Python / C++ / C#</span><strong>85%</strong></div><div class="skill-bar"><div class="skill-fill" data-width="85%"></div></div></article>
+        <article class="skill-card glass-card tilt-card reveal"><i class="fas fa-network-wired"></i><h3 class="font-tech">Networking</h3><div class="skill-top"><span>TCP/IP / DNS / VPN</span><strong>80%</strong></div><div class="skill-bar"><div class="skill-fill" data-width="80%"></div></div></article>
+        <article class="skill-card glass-card tilt-card reveal"><i class="fas fa-cubes"></i><h3 class="font-tech">3D / CAD</h3><div class="skill-top"><span>SolidWorks / Blender</span><strong>78%</strong></div><div class="skill-bar"><div class="skill-fill" data-width="78%"></div></div></article>
+        <article class="skill-card glass-card tilt-card reveal"><i class="fas fa-house-signal"></i><h3 class="font-tech">Home Automation</h3><div class="skill-top"><span>IoT / Sensors / Dashboards</span><strong>82%</strong></div><div class="skill-bar"><div class="skill-fill" data-width="82%"></div></div></article>
+        <article class="skill-card glass-card tilt-card reveal"><i class="fas fa-cloud"></i><h3 class="font-tech">DevOps &amp; Automation</h3><div class="skill-top"><span>GitHub / Docker / n8n</span><strong>70%</strong></div><div class="skill-bar"><div class="skill-fill" data-width="70%"></div></div></article>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="section-heading-row">
+        <div>
+          <h2 class="section-title font-tech section-title-inline">Featured Projects</h2>
+          <p class="section-lead">A curated view of the most relevant repositories. The complete repository list stays tucked away until the visitor asks for it.</p>
+        </div>
+        <div class="github-sync-badge"><span class="pulse-dot"></span><span id="project-sync-label">Live GitHub data</span></div>
+      </div>
+      <div class="project-toolbar glass-card">
+        <label class="search-box"><i class="fas fa-search"></i><input id="project-search" type="search" placeholder="Search projects, topics or descriptions…" autocomplete="off"></label>
+        <select id="project-sort" aria-label="Sort projects">
+          <option value="updated">Recently updated</option>
+          <option value="stars">Most stars</option>
+          <option value="forks">Most forks</option>
+          <option value="name">Name A–Z</option>
+        </select>
+      </div>
+      <div class="projects-grid" id="projects-container" aria-live="polite"></div>
+      <div class="section-action"><button class="btn2 magnetic" id="show-all-projects" type="button"><i class="fas fa-layer-group"></i> Show all repositories</button></div>
+      <div class="all-items-panel" id="all-projects-panel" hidden>
+        <div class="panel-header"><div><h3 class="font-tech">Repository Explorer</h3><p>Full list loaded without overwhelming the main page.</p></div><button class="icon-btn" id="close-all-projects" type="button" aria-label="Close repository explorer"><i class="fas fa-xmark"></i></button></div>
+        <div class="all-projects-grid" id="all-projects-container"></div>
+      </div>
+    </section>
+
+    <section id="websites">
+      <div class="section-heading-row">
+        <div>
+          <h2 class="section-title font-tech section-title-inline">🌐 Live Websites</h2>
+          <p class="section-lead">GitHub Pages are discovered automatically from your public repositories. Only three previews are shown here; the rest stay dormant until requested.</p>
+        </div>
+        <div class="github-sync-badge"><span class="live-dot"></span><span id="site-sync-label">Discovering Pages…</span></div>
+      </div>
+      <div class="websites-grid" id="websites-featured" aria-live="polite"></div>
+      <div class="section-action">
+        <button class="btn magnetic" id="show-all-sites" type="button"><i class="fas fa-globe"></i> Explore all live sites</button>
+      </div>
+      <div class="all-items-panel" id="all-sites-panel" hidden>
+        <div class="panel-header"><div><h3 class="font-tech">Live Site Explorer</h3><p id="all-sites-summary">Loading…</p></div><button class="icon-btn" id="close-all-sites" type="button" aria-label="Close live site explorer"><i class="fas fa-xmark"></i></button></div>
+        <div class="sites-toolbar"><label class="search-box"><i class="fas fa-search"></i><input id="site-search" type="search" placeholder="Search live sites…" autocomplete="off"></label></div>
+        <div class="all-sites-grid" id="all-sites-container"></div>
+      </div>
+    </section>
+
+    <section id="extras">
+      <h2 class="section-title font-tech">More</h2>
+      <div class="extras-container">
+        <details class="glass-card collapsible" id="military-details">
+          <summary class="font-tech"><i class="fas fa-shield-halved"></i> Personal Timeline</summary>
+          <div class="roadmap-container">
+            <div class="road-progress"><div class="road-fill" id="road-fill"></div><div class="road-car" id="road-car">🚙</div><div class="milestone" style="left:0%" data-label="Start"></div><div class="milestone" style="left:25%" data-label="Training"></div><div class="milestone" style="left:50%" data-label="Assignment"></div><div class="milestone" style="left:75%" data-label="Current stage"></div><div class="milestone" style="left:100%" data-label="Finish"></div></div>
+            <div class="road-labels"><span>START</span><span>FINISH</span></div>
+            <div class="progress-text"><span id="progress-percent">0%</span> completed · <span id="remaining-days">--</span> days remaining</div>
+          </div>
+        </details>
+
+        <details class="glass-card collapsible" id="journey-details">
+          <summary class="font-tech"><i class="fas fa-map-location-dot"></i> Journey &amp; Locations</summary>
+          <div class="journey-container">
+            <div class="location-card"><h4 class="font-tech"><i class="fas fa-school"></i> Tohidi High School</h4><p>دبیرستان دولتی پسرانه توحیدی - شیراز</p><div class="map-container" id="map-school"></div></div>
+            <div class="location-card"><h4 class="font-tech"><i class="fas fa-university"></i> Zand Institute</h4><p>موسسه آموزش عالی غیرانتفاعی زند - شیراز</p><div class="map-container" id="map-uni"></div></div>
+            <div class="location-card"><h4 class="font-tech"><i class="fas fa-location-dot"></i> Service Location</h4><p>Location is kept in this optional expandable section rather than the public hero.</p><div class="map-container" id="map-service"></div></div>
+          </div>
+        </details>
+
+        <details class="glass-card collapsible" id="zen-details">
+          <summary class="font-tech"><i class="fas fa-feather-pointed"></i> Zen Words (Haiku)</summary>
+          <div class="haiku-card"><div class="haiku-text" id="haiku-jp"></div><div class="haiku-translation" id="haiku-en"></div><div class="haiku-author" id="haiku-author"></div></div>
+        </details>
+      </div>
+    </section>
+
+    <section id="donate">
+      <div class="section-heading-row">
+        <div><h2 class="section-title font-tech section-title-inline">💎 Support Me</h2><p class="section-lead">Support the work directly through the network of your choice. Always verify the network before sending funds.</p></div>
+        <div class="security-badge"><i class="fas fa-shield-halved"></i> Verify network</div>
+      </div>
+      <div class="donate-grid">
+        <article class="donate-card glass-card tilt-card"><div class="donate-head"><div class="donate-icon"><i class="fas fa-coins"></i></div><div><h3 class="font-tech">TON Network</h3><p class="network-note">Gram &amp; tokens on TON</p></div></div><div class="address-box"><code id="ton-address">UQBQU9KnjwIsdSGwG08b3L43Vy_wPlCg_3FaK9m4N2Toj84k</code><button class="copy-btn" data-copy-target="ton-address" type="button">Copy</button></div><div class="qr-wrap"><img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&amp;data=UQBQU9KnjwIsdSGwG08b3L43Vy_wPlCg_3FaK9m4N2Toj84k" alt="TON QR code" class="qr-img" loading="lazy"></div><p class="warning"><i class="fas fa-triangle-exclamation"></i> Only Gram &amp; tokens on TON network.</p></article>
+        <article class="donate-card glass-card tilt-card"><div class="donate-head"><div class="donate-icon"><i class="fas fa-dollar-sign"></i></div><div><h3 class="font-tech">TRC20 (USDT)</h3><p class="network-note">USDT TRC20</p></div></div><div class="address-box"><code id="trc20-address">TYbqxzEWrvYPnLvGtk6JY6Sbh8DMqfjcYq</code><button class="copy-btn" data-copy-target="trc20-address" type="button">Copy</button></div><div class="qr-wrap"><img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&amp;data=TYbqxzEWrvYPnLvGtk6JY6Sbh8DMqfjcYq" alt="USDT TRC20 QR code" class="qr-img" loading="lazy"></div><p class="warning"><i class="fas fa-triangle-exclamation"></i> Only USDT on TRC20 network.</p></article>
+        <article class="donate-card glass-card tilt-card"><div class="donate-head"><div class="donate-icon"><i class="fab fa-ethereum"></i></div><div><h3 class="font-tech">Ethereum</h3><p class="network-note">ETH / ERC-20</p></div></div><div class="address-box"><code id="eth-address">0x968C2fD883a2004276f5e627Fe38654137601c51</code><button class="copy-btn" data-copy-target="eth-address" type="button">Copy</button></div><div class="qr-wrap"><img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&amp;data=0x968C2fD883a2004276f5e627Fe38654137601c51" alt="Ethereum QR code" class="qr-img" loading="lazy"></div><p class="warning"><i class="fas fa-triangle-exclamation"></i> ETH / ERC-20 tokens only.</p></article>
+        <article class="donate-card glass-card tilt-card"><div class="donate-head"><div class="donate-icon"><i class="fab fa-bitcoin"></i></div><div><h3 class="font-tech">Bitcoin</h3><p class="network-note">BTC</p></div></div><div class="address-box"><code id="btc-address">bc1q6knq0g4w9axt7t204y3e4hk4kz4zkh8vxj2e3a</code><button class="copy-btn" data-copy-target="btc-address" type="button">Copy</button></div><div class="qr-wrap"><img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&amp;data=bc1q6knq0g4w9axt7t204y3e4hk4kz4zkh8vxj2e3a" alt="Bitcoin QR code" class="qr-img" loading="lazy"></div><p class="warning"><i class="fas fa-triangle-exclamation"></i> BTC on Bitcoin network only.</p></article>
+        <article class="donate-card glass-card tilt-card"><div class="donate-head"><div class="donate-icon"><i class="fas fa-sun"></i></div><div><h3 class="font-tech">Solana</h3><p class="network-note">SOL / SPL</p></div></div><div class="address-box"><code id="sol-address">7otC7qwCWqmrzbVA3XykjsZHbuKgrqaP2hE25NnByRDP</code><button class="copy-btn" data-copy-target="sol-address" type="button">Copy</button></div><div class="qr-wrap"><img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&amp;data=7otC7qwCWqmrzbVA3XykjsZHbuKgrqaP2hE25NnByRDP" alt="Solana QR code" class="qr-img" loading="lazy"></div><p class="warning"><i class="fas fa-triangle-exclamation"></i> SOL / SPL tokens on Solana only.</p></article>
+        <article class="donate-card glass-card tilt-card"><div class="donate-head"><div class="donate-icon"><i class="fas fa-link"></i></div><div><h3 class="font-tech">BNB Smart Chain</h3><p class="network-note">BNB / BEP-20</p></div></div><div class="address-box"><code id="bnb-address">0x968C2fD883a2004276f5e627Fe38654137601c51</code><button class="copy-btn" data-copy-target="bnb-address" type="button">Copy</button></div><div class="qr-wrap"><img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&amp;data=0x968C2fD883a2004276f5e627Fe38654137601c51" alt="BNB Smart Chain QR code" class="qr-img" loading="lazy"></div><p class="warning"><i class="fas fa-triangle-exclamation"></i> BNB / BEP-20 on BSC only.</p></article>
+        <article class="donate-card glass-card tilt-card"><div class="donate-head"><div class="donate-icon"><i class="fas fa-bolt"></i></div><div><h3 class="font-tech">Tron (TRX)</h3><p class="network-note">TRX / TRC-20</p></div></div><div class="address-box"><code id="tron-address">TGYN1zzeGUjuXipVPvS4gTUivQyAu7GNUm</code><button class="copy-btn" data-copy-target="tron-address" type="button">Copy</button></div><div class="qr-wrap"><img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&amp;data=TGYN1zzeGUjuXipVPvS4gTUivQyAu7GNUm" alt="TRON QR code" class="qr-img" loading="lazy"></div><p class="warning"><i class="fas fa-triangle-exclamation"></i> TRX / TRC-20 on Tron only.</p></article>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2 class="section-title font-tech">Get in Touch</h2>
+      <div class="contact-grid">
+        <article class="contact-card glass-card tilt-card"><i class="fas fa-envelope"></i><h3>Email</h3><a href="mailto:game.developer.mb@gmail.com">game.developer.mb@gmail.com</a></article>
+        <article class="contact-card glass-card tilt-card"><i class="fab fa-github"></i><h3>GitHub</h3><a href="https://github.com/mehrdadmb2" target="_blank" rel="noopener noreferrer">mehrdadmb2</a></article>
+        <article class="contact-card glass-card tilt-card"><i class="fab fa-telegram"></i><h3>Telegram</h3><a href="https://t.me/IIMehrdadII" target="_blank" rel="noopener noreferrer">@IIMehrdadII</a></article>
+        <article class="contact-card glass-card tilt-card"><i class="fab fa-instagram"></i><h3>Instagram</h3><a href="https://instagram.com/_._.m._.b" target="_blank" rel="noopener noreferrer">_._.m._.b</a></article>
+        <article class="contact-card glass-card tilt-card"><i class="fas fa-phone"></i><h3>Phone</h3><a href="tel:+989031937072">+98 903 193 7072</a></article>
+      </div>
+      <div class="glass-card contact-form reveal">
+        <div class="section-kicker"><span></span> SECURE MESSAGE CHANNEL</div>
+        <h3>Send a Message</h3>
+        <p class="muted-copy">Messages are handled through Formspree; no custom backend is required for GitHub Pages.</p>
+        <form action="https://formspree.io/f/mlgqkwvj" method="POST">
+          <div class="form-row"><div class="form-group"><label for="contact-name">Name</label><input id="contact-name" type="text" name="name" placeholder="Your Name" required></div><div class="form-group"><label for="contact-email">Email</label><input id="contact-email" type="email" name="email" placeholder="Your Email" required></div></div>
+          <div class="form-group"><label for="contact-message">Message</label><textarea id="contact-message" name="message" rows="6" placeholder="Your Message" required></textarea></div>
+          <button type="submit" class="btn magnetic"><i class="fas fa-paper-plane"></i> Send Message</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="glass-footer">
+    <div class="footer-top"><div><p class="font-tech footer-brand">MEHRDAD.DEV</p><p class="footer-copy">Built with curiosity, caffeine &amp; code.</p></div><a href="#home" class="footer-top-btn magnetic">Back to top <i class="fas fa-arrow-up"></i></a></div>
+    <div class="footer-links"><a href="#home">Home</a><a href="#about">About</a><a href="#education">Education</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#websites">Websites</a><a href="#donate">Donate</a><a href="#contact">Contact</a></div>
+    <p class="copyright">© <span id="current-year"></span> Mehrdad Behrouzi. All systems nominal.</p>
+  </footer>
+
+  <div id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <div id="command-palette" class="modal-layer" hidden>
+    <div class="modal-backdrop" data-close-palette></div>
+    <div class="command-modal glass-card" role="dialog" aria-modal="true" aria-labelledby="palette-title">
+      <div class="command-header"><div><span class="section-kicker"><span></span> COMMAND // MENU</span><h2 id="palette-title" class="font-tech">Navigate</h2></div><button id="close-palette" class="icon-btn" type="button"><i class="fas fa-xmark"></i></button></div>
+      <label class="search-box command-search"><i class="fas fa-terminal"></i><input id="palette-search" type="search" placeholder="Jump to a section…" autocomplete="off"></label>
+      <div class="command-list" id="command-list"></div>
+      <div class="command-hint"><kbd>Esc</kbd> close <kbd>Enter</kbd> open</div>
+    </div>
+  </div>
+
+  <!-- Optional visual particle engine; script.js safely degrades if unavailable -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- Leaflet is loaded only when the Journey map section is opened -->
+  <script defer src="script.js"></script>
+</body>
+</html>
