@@ -54,60 +54,24 @@
     $('#theme-toggle')?.addEventListener('click',()=>setTheme(document.documentElement.classList.contains('light')?'dark':'light'));
   }
 
-  function initMatrixLoader(){
+  function initMatrixLoader() {
     const loader=$('#loader'); const canvas=$('#matrix-canvas'); const status=$('#loader-status'); const bar=$('#loader-progress-bar');
     if(!loader)return;
     let raf=0;
-    let closed=false;
-    const MIN_DURATION=3600;
-    const started=performance.now();
     if(canvas?.getContext && !reducedMotion()){
-      const ctx=canvas.getContext('2d');
-      const chars='アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789{}[]<>/\|';
+      const ctx=canvas.getContext('2d'); const chars='アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789{}[]<>/\\|';
       let w=0,h=0,size=16,cols=0,drops=[];
-      const resize=()=>{
-        const d=Math.min(devicePixelRatio||1,2);
-        w=canvas.width=Math.floor(innerWidth*d); h=canvas.height=Math.floor(innerHeight*d);
-        canvas.style.width=`${innerWidth}px`; canvas.style.height=`${innerHeight}px`;
-        size=Math.max(15,Math.floor(16*d)); cols=Math.ceil(w/size);
-        drops=Array.from({length:cols},()=>Math.random()*-h/size);
-      };
-      const draw=()=>{
-        ctx.fillStyle='rgba(2,8,16,.16)'; ctx.fillRect(0,0,w,h);
-        ctx.font=`${size}px Share Tech Mono,monospace`;
-        for(let i=0;i<cols;i++){
-          const ch=chars[(Math.random()*chars.length)|0], x=i*size, y=drops[i]*size;
-          ctx.fillStyle=i%21===0?'rgba(255,255,255,.96)':'rgba(34,211,238,.7)'; ctx.fillText(ch,x,y);
-          if(y>h&&Math.random()>.955)drops[i]=Math.random()*-24;
-          drops[i]+=.78;
-        }
-        raf=requestAnimationFrame(draw);
-      };
+      const resize=()=>{const d=Math.min(devicePixelRatio||1,2);w=canvas.width=innerWidth*d;h=canvas.height=innerHeight*d;canvas.style.width=`${innerWidth}px`;canvas.style.height=`${innerHeight}px`;size=16*d;cols=Math.ceil(w/size);drops=Array.from({length:cols},()=>Math.random()*-h/size);};
+      const draw=()=>{ctx.fillStyle='rgba(2,8,16,.2)';ctx.fillRect(0,0,w,h);ctx.font=`${size}px Share Tech Mono,monospace`;for(let i=0;i<cols;i++){const ch=chars[(Math.random()*chars.length)|0],x=i*size,y=drops[i]*size;ctx.fillStyle=i%19===0?'rgba(255,255,255,.95)':'rgba(34,211,238,.55)';ctx.fillText(ch,x,y);if(y>h&&Math.random()>.965)drops[i]=Math.random()*-20;drops[i]+=.72;}raf=requestAnimationFrame(draw);};
       resize(); addEventListener('resize',resize,{passive:true}); draw();
     }
-    let p=0,idx=0;
-    const messages=['BOOT SEQUENCE // 01','MATRIX LINK // 02','LOADING CORE // 03','SYNCING GITHUB // 04','SYSTEM READY // 05'];
-    const timer=setInterval(()=>{
-      p=Math.min(100,p+4+Math.round(Math.random()*7));
-      if(bar)bar.style.width=`${p}%`;
-      while(idx<messages.length && p>=Math.round((idx+1)*20)){if(status)status.textContent=messages[idx];idx++;}
-      if(p>=100)clearInterval(timer);
-    },120);
-    const close=()=>{
-      if(closed)return;
-      const elapsed=performance.now()-started;
-      const wait=Math.max(0,MIN_DURATION-elapsed);
-      setTimeout(()=>{
-        if(closed)return; closed=true;
-        if(bar)bar.style.width='100%'; if(status)status.textContent='ACCESS GRANTED // WELCOME';
-        loader.classList.add('hidden'); document.body.classList.remove('loading');
-        setTimeout(()=>loader.remove(),650); if(raf)cancelAnimationFrame(raf);
-      },wait);
-    };
-    addEventListener('load',close,{once:true});
-    setTimeout(close,6500);
-    if(document.readyState==='complete')setTimeout(close,650);
+    let p=0,idx=0; const messages=['Boot sequence...','Loading interface...','Connecting to GitHub...','Synchronizing modules...','Ready.'];
+    const timer=setInterval(()=>{p=Math.min(100,p+8+Math.round(Math.random()*13));if(bar)bar.style.width=`${p}%`;if(status&&idx<messages.length&&p>=idx*20+12)status.textContent=messages[idx++];if(p>=100)clearInterval(timer);},120);
+    let closed=false;
+    const close=()=>{if(closed)return;closed=true;if(bar)bar.style.width='100%';loader.classList.add('hidden');document.body.classList.remove('loading');setTimeout(()=>loader.remove(),550);if(raf)cancelAnimationFrame(raf);};
+    addEventListener('load',()=>setTimeout(close,300),{once:true}); setTimeout(close,4200); if(document.readyState==='complete')setTimeout(close,300);
   }
+
   function initGalaxy(){
     const field=$('#stars');
     if(field&&!reducedMotion()){
