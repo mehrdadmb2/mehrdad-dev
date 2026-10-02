@@ -24,6 +24,1186 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
 </head>
+  <!-- =========================================================
+     MEHRDAD.DEV + GITHUB PAGE INSIGHTS
+     DROP-IN VISITOR STATISTICS
+     ---------------------------------------------------------
+     1) Paste this entire block immediately BEFORE the existing
+        </body> tag in index.html.
+     2) Do NOT remove/replace your existing style.css or script.js.
+     ========================================================= -->
+
+<section id="visitor-stats" class="visitor-stats-section">
+  <div class="visitor-stats-shell glass-card" aria-live="polite">
+    <div class="visitor-stats-orb visitor-stats-orb-a"></div>
+    <div class="visitor-stats-orb visitor-stats-orb-b"></div>
+
+    <div class="visitor-stats-head">
+      <div>
+        <div class="section-kicker"><span></span> ANALYTICS // LIVE TELEMETRY</div>
+        <h2 class="font-tech">Site Visitor Statistics</h2>
+        <p>Live public analytics for <strong>mehrdad-dev</strong>, powered by GitHub Page Insights.</p>
+      </div>
+
+      <div class="visitor-stats-actions">
+        <label class="visitor-range-wrap" aria-label="Analytics time range">
+          <i class="fas fa-chart-line"></i>
+          <select id="visitor-stats-range">
+            <option value="1">24 Hours</option>
+            <option value="7" selected>7 Days</option>
+            <option value="30">30 Days</option>
+            <option value="90">90 Days</option>
+            <option value="all">All Time</option>
+          </select>
+        </label>
+
+        <button
+          id="visitor-stats-refresh"
+          class="visitor-refresh-btn"
+          type="button"
+          aria-label="Refresh visitor statistics"
+          title="Refresh statistics">
+          <i class="fas fa-rotate"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="visitor-stats-grid">
+      <article class="visitor-metric visitor-metric-primary">
+        <div class="visitor-metric-icon"><i class="fas fa-eye"></i></div>
+        <div>
+          <span>Page Views</span>
+          <strong id="visitor-stat-views">--</strong>
+          <small id="visitor-stat-views-note">Loading…</small>
+        </div>
+      </article>
+
+      <article class="visitor-metric">
+        <div class="visitor-metric-icon"><i class="fas fa-user"></i></div>
+        <div>
+          <span>Unique Visitors</span>
+          <strong id="visitor-stat-visitors">--</strong>
+          <small>Distinct visitors</small>
+        </div>
+      </article>
+
+      <article class="visitor-metric">
+        <div class="visitor-metric-icon"><i class="fas fa-compass"></i></div>
+        <div>
+          <span>Sessions</span>
+          <strong id="visitor-stat-sessions">--</strong>
+          <small>Recorded sessions</small>
+        </div>
+      </article>
+
+      <article class="visitor-metric">
+        <div class="visitor-metric-icon"><i class="fas fa-bolt"></i></div>
+        <div>
+          <span>Total Events</span>
+          <strong id="visitor-stat-events">--</strong>
+          <small>All telemetry events</small>
+        </div>
+      </article>
+
+      <article class="visitor-metric visitor-metric-wide">
+        <div class="visitor-metric-icon"><i class="fas fa-hourglass-half"></i></div>
+        <div>
+          <span>Average Visit Duration</span>
+          <strong id="visitor-stat-duration">--</strong>
+          <small>Collected page/session duration</small>
+        </div>
+      </article>
+    </div>
+
+    <div class="visitor-chart-panel">
+      <div class="visitor-chart-head">
+        <div>
+          <span class="visitor-mini-label">TRAFFIC FLOW</span>
+          <strong>Views over time</strong>
+        </div>
+        <span id="visitor-stat-updated">Waiting for data…</span>
+      </div>
+
+      <div id="visitor-mini-chart" class="visitor-mini-chart">
+        <div class="visitor-chart-loading">
+          <span class="visitor-spinner"></span>
+          <span>Connecting to analytics…</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="visitor-stats-foot">
+      <div class="visitor-health">
+        <span></span>
+        <span id="visitor-health-text">Connecting to GitHub Page Insights…</span>
+      </div>
+
+      <a
+        href="https://mehrdadmb2.github.io/github-page-insights/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="visitor-dashboard-link">
+        Full Analytics Dashboard
+        <i class="fas fa-arrow-up-right-from-square"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style id="visitor-stats-style">
+  .visitor-stats-section{
+    max-width:1300px;
+    margin:0 auto;
+    padding:80px 4% 10px;
+  }
+
+  .visitor-stats-shell{
+    padding:28px;
+    position:relative;
+    isolation:isolate;
+  }
+
+  .visitor-stats-orb{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(55px);
+    opacity:.11;
+    pointer-events:none;
+    z-index:-1;
+  }
+
+  .visitor-stats-orb-a{
+    width:180px;
+    height:180px;
+    right:-55px;
+    top:-55px;
+    background:var(--violet,#c084fc);
+  }
+
+  .visitor-stats-orb-b{
+    width:160px;
+    height:160px;
+    left:-55px;
+    bottom:-65px;
+    background:var(--cyan,#22d3ee);
+  }
+
+  .visitor-stats-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:20px;
+    margin-bottom:20px;
+  }
+
+  .visitor-stats-head h2{
+    font-size:1.35rem;
+    margin:.15rem 0 .35rem;
+  }
+
+  .visitor-stats-head p{
+    margin:0;
+    color:var(--muted,#94a3b8);
+    font-size:12px;
+  }
+
+  .visitor-stats-head p strong{
+    color:var(--cyan,#22d3ee);
+  }
+
+  .visitor-stats-actions{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+
+  .visitor-range-wrap{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    border:1px solid var(--line,rgba(255,255,255,.1));
+    background:var(--glass-2,rgba(255,255,255,.03));
+    border-radius:12px;
+    padding:0 10px;
+    color:var(--cyan,#22d3ee);
+    min-height:38px;
+  }
+
+  .visitor-range-wrap select{
+    border:0;
+    background:transparent;
+    color:var(--text,#f1f5f9);
+    outline:0;
+    font:10px var(--mono,'Fira Code',monospace);
+    height:36px;
+    cursor:pointer;
+  }
+
+  .visitor-range-wrap select option{
+    background:#0a101d;
+    color:#f1f5f9;
+  }
+
+  .visitor-refresh-btn{
+    width:38px;
+    height:38px;
+    border:1px solid var(--line,rgba(255,255,255,.1));
+    background:var(--glass-2,rgba(255,255,255,.03));
+    color:var(--muted,#94a3b8);
+    border-radius:12px;
+    cursor:pointer;
+    transition:.22s;
+  }
+
+  .visitor-refresh-btn:hover{
+    color:var(--cyan,#22d3ee);
+    border-color:rgba(34,211,238,.42);
+    transform:translateY(-2px);
+  }
+
+  .visitor-refresh-btn.is-loading{
+    pointer-events:none;
+  }
+
+  .visitor-refresh-btn.is-loading i{
+    animation:visitorSpin .8s linear infinite;
+  }
+
+  @keyframes visitorSpin{
+    to{transform:rotate(360deg)}
+  }
+
+  .visitor-stats-grid{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:12px;
+  }
+
+  .visitor-metric{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    min-height:88px;
+    padding:15px;
+    border:1px solid var(--line,rgba(255,255,255,.1));
+    border-radius:17px;
+    background:rgba(255,255,255,.025);
+    transition:.22s;
+  }
+
+  .visitor-metric:hover{
+    transform:translateY(-3px);
+    border-color:rgba(34,211,238,.28);
+    box-shadow:0 14px 28px rgba(0,0,0,.18);
+  }
+
+  .visitor-metric-primary{
+    background:linear-gradient(
+      145deg,
+      rgba(34,211,238,.09),
+      rgba(192,132,252,.06)
+    );
+  }
+
+  .visitor-metric-wide{
+    grid-column:span 2;
+  }
+
+  .visitor-metric-icon{
+    width:42px;
+    height:42px;
+    flex:0 0 42px;
+    display:grid;
+    place-items:center;
+    border-radius:13px;
+    background:var(--glass-2,rgba(255,255,255,.04));
+    border:1px solid var(--line,rgba(255,255,255,.1));
+    color:var(--cyan,#22d3ee);
+  }
+
+  .visitor-metric-primary .visitor-metric-icon{
+    background:linear-gradient(
+      135deg,
+      var(--cyan,#22d3ee),
+      var(--violet,#c084fc)
+    );
+    color:#07111e;
+    border:0;
+  }
+
+  .visitor-metric span{
+    display:block;
+    color:var(--muted,#94a3b8);
+    font-size:10px;
+  }
+
+  .visitor-metric strong{
+    display:block;
+    margin-top:2px;
+    font:800 1.55rem var(
+      --font-tech,
+      'Orbitron',
+      sans-serif
+    );
+    background:var(
+      --grad,
+      linear-gradient(135deg,#c084fc,#22d3ee)
+    );
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    line-height:1.15;
+  }
+
+  .visitor-metric small{
+    display:block;
+    color:rgba(148,163,184,.72);
+    font-size:9px;
+    margin-top:3px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  .visitor-chart-panel{
+    margin-top:14px;
+    border:1px solid var(--line,rgba(255,255,255,.1));
+    border-radius:17px;
+    background:rgba(255,255,255,.018);
+    padding:14px 15px;
+  }
+
+  .visitor-chart-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    margin-bottom:8px;
+  }
+
+  .visitor-mini-label{
+    display:block;
+    font:9px var(--mono,'Fira Code',monospace);
+    letter-spacing:.12em;
+    color:var(--cyan,#22d3ee);
+  }
+
+  .visitor-chart-head strong{
+    display:block;
+    font-size:13px;
+    margin-top:3px;
+  }
+
+  .visitor-chart-head>span{
+    font:9px var(--mono,'Fira Code',monospace);
+    color:var(--muted,#94a3b8);
+  }
+
+  .visitor-mini-chart{
+    height:155px;
+    min-height:155px;
+    display:grid;
+    place-items:center;
+  }
+
+  .visitor-mini-chart svg{
+    width:100%;
+    height:100%;
+    display:block;
+    overflow:visible;
+  }
+
+  .visitor-chart-grid-line{
+    stroke:rgba(255,255,255,.07);
+    stroke-width:1;
+  }
+
+  .visitor-chart-area{
+    fill:url(#visitorAreaGradient);
+    opacity:.65;
+  }
+
+  .visitor-chart-line{
+    fill:none;
+    stroke:var(--cyan,#22d3ee);
+    stroke-width:3;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+    filter:drop-shadow(0 0 7px rgba(34,211,238,.22));
+  }
+
+  .visitor-chart-dot{
+    fill:#07111e;
+    stroke:var(--cyan,#22d3ee);
+    stroke-width:2;
+  }
+
+  .visitor-chart-label{
+    fill:rgba(148,163,184,.72);
+    font:8px var(--mono,'Fira Code',monospace);
+  }
+
+  .visitor-chart-loading,
+  .visitor-chart-empty{
+    height:100%;
+    display:grid;
+    place-items:center;
+    align-content:center;
+    gap:8px;
+    color:var(--muted,#94a3b8);
+    font-size:10px;
+    text-align:center;
+  }
+
+  .visitor-spinner{
+    width:26px;
+    height:26px;
+    border:2px solid rgba(255,255,255,.11);
+    border-top-color:var(--cyan,#22d3ee);
+    border-radius:50%;
+    animation:visitorSpin 1s linear infinite;
+  }
+
+  .visitor-chart-error{
+    height:100%;
+    display:grid;
+    place-items:center;
+    align-content:center;
+    gap:7px;
+    text-align:center;
+    color:var(--muted,#94a3b8);
+    font-size:10px;
+  }
+
+  .visitor-chart-error strong{
+    color:var(--text,#f1f5f9);
+    font-size:12px;
+  }
+
+  .visitor-stats-foot{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:13px;
+    padding-top:12px;
+    border-top:1px solid rgba(255,255,255,.06);
+  }
+
+  .visitor-health{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    color:var(--muted,#94a3b8);
+    font:9px var(--mono,'Fira Code',monospace);
+  }
+
+  .visitor-health>span:first-child{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:#f59e0b;
+    box-shadow:0 0 9px rgba(245,158,11,.55);
+  }
+
+  .visitor-health.online>span:first-child{
+    background:#34d399;
+    box-shadow:0 0 9px rgba(52,211,153,.55);
+  }
+
+  .visitor-health.offline>span:first-child{
+    background:#fb7185;
+    box-shadow:0 0 9px rgba(251,113,133,.55);
+  }
+
+  .visitor-dashboard-link{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    color:var(--cyan,#22d3ee);
+    font-size:10px;
+  }
+
+  .visitor-dashboard-link:hover{
+    text-decoration:underline;
+  }
+
+  @media(max-width:900px){
+    .visitor-stats-grid{
+      grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+
+    .visitor-metric-wide{
+      grid-column:span 2;
+    }
+
+    .visitor-stats-head{
+      align-items:flex-start;
+      flex-direction:column;
+    }
+  }
+
+  @media(max-width:620px){
+    .visitor-stats-section{
+      padding:60px 15px 5px;
+    }
+
+    .visitor-stats-shell{
+      padding:20px;
+    }
+
+    .visitor-stats-grid{
+      grid-template-columns:1fr 1fr;
+      gap:8px;
+    }
+
+    .visitor-metric{
+      min-height:82px;
+      padding:11px;
+      gap:8px;
+    }
+
+    .visitor-metric-icon{
+      width:36px;
+      height:36px;
+      flex-basis:36px;
+      border-radius:11px;
+    }
+
+    .visitor-metric strong{
+      font-size:1.18rem;
+    }
+
+    .visitor-metric small{
+      font-size:8px;
+    }
+
+    .visitor-metric-wide{
+      grid-column:span 2;
+    }
+
+    .visitor-stats-actions{
+      width:100%;
+    }
+
+    .visitor-range-wrap{
+      flex:1;
+    }
+
+    .visitor-chart-panel{
+      padding:12px;
+    }
+
+    .visitor-mini-chart{
+      height:135px;
+      min-height:135px;
+    }
+  }
+</style>
+
+<!-- Page Insights configuration MUST appear before analytics.js -->
+<script>
+  window.PAGE_INSIGHTS_CONFIG = {
+    workerUrl: "https://github-page-insights-worker.game-developer-mb.workers.dev",
+    platformId: "mehrdad-dev",
+    platformName: "Mehrdad Behrouzi Portfolio",
+    platformType: "web",
+    environment: "production"
+  };
+</script>
+
+<!-- Current browser SDK from github-page-insights -->
+<script
+  defer
+  src="https://cdn.jsdelivr.net/gh/mehrdadmb2/github-page-insights@main/docs/analytics.js">
+</script>
+
+<!-- Visitor statistics reader -->
+<script>
+(() => {
+  "use strict";
+
+  const WORKER =
+    "https://github-page-insights-worker.game-developer-mb.workers.dev";
+
+  const PLATFORM_ID = "mehrdad-dev";
+  const CACHE_KEY = "mehrdad-dev-visitor-stats-v1";
+  const CACHE_TTL = 10 * 60 * 1000;
+
+  const $ = (id) => document.getElementById(id);
+
+  const els = {
+    range: $("visitor-stats-range"),
+    refresh: $("visitor-stats-refresh"),
+    views: $("visitor-stat-views"),
+    viewsNote: $("visitor-stat-views-note"),
+    visitors: $("visitor-stat-visitors"),
+    sessions: $("visitor-stat-sessions"),
+    events: $("visitor-stat-events"),
+    duration: $("visitor-stat-duration"),
+    updated: $("visitor-stat-updated"),
+    chart: $("visitor-mini-chart"),
+    health: document.querySelector(".visitor-health"),
+    healthText: $("visitor-health-text")
+  };
+
+  if (!els.range || !els.refresh || !els.chart) return;
+
+  const formatter = new Intl.NumberFormat("en-US");
+
+  function number(value) {
+    const n = Number(value);
+    if (!Number.isFinite(n)) return "0";
+    return formatter.format(Math.max(0, Math.round(n)));
+  }
+
+  function duration(ms) {
+    const seconds =
+      Math.max(0, Math.round(Number(ms) || 0) / 1000);
+
+    if (seconds < 60) {
+      return Math.round(seconds) + "s";
+    }
+
+    const minutes = Math.floor(seconds / 60);
+
+    if (minutes < 60) {
+      return (
+        minutes +
+        "m " +
+        Math.round(seconds % 60) +
+        "s"
+      );
+    }
+
+    const hours = Math.floor(minutes / 60);
+
+    return (
+      hours +
+      "h " +
+      (minutes % 60) +
+      "m"
+    );
+  }
+
+  function dateTime(value) {
+    const d = new Date(value);
+
+    if (Number.isNaN(d.getTime())) {
+      return "—";
+    }
+
+    return d.toLocaleString(undefined, {
+      month: "short",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+  }
+
+  function setHealth(state, message) {
+    if (!els.health) return;
+
+    els.health.classList.remove(
+      "online",
+      "offline"
+    );
+
+    if (state === "online") {
+      els.health.classList.add("online");
+    }
+
+    if (state === "offline") {
+      els.health.classList.add("offline");
+    }
+
+    if (els.healthText) {
+      els.healthText.textContent = message;
+    }
+  }
+
+  function setLoading(loading) {
+    els.refresh.classList.toggle(
+      "is-loading",
+      loading
+    );
+
+    els.refresh.disabled = loading;
+  }
+
+  function readCache() {
+    try {
+      const raw = localStorage.getItem(
+        CACHE_KEY
+      );
+
+      if (!raw) return null;
+
+      const parsed = JSON.parse(raw);
+
+      return parsed &&
+        parsed.data
+        ? parsed
+        : null;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function writeCache(data) {
+    try {
+      localStorage.setItem(
+        CACHE_KEY,
+        JSON.stringify({
+          savedAt: Date.now(),
+          data
+        })
+      );
+    } catch (_) {}
+  }
+
+  function normalize(data) {
+    const value =
+      data && typeof data === "object"
+        ? data
+        : {};
+
+    value.platform =
+      value.platform ||
+      value.site ||
+      null;
+
+    value.totals =
+      value.totals ||
+      {};
+
+    value.daily =
+      Array.isArray(value.daily)
+        ? value.daily
+        : [];
+
+    return value;
+  }
+
+  function renderChart(rows) {
+    const data = rows
+      .map((row) => ({
+        day: String(
+          row.day || ""
+        ),
+        value: Math.max(
+          0,
+          Number(
+            row.views ??
+            row.events ??
+            0
+          ) || 0
+        )
+      }))
+      .sort((a, b) =>
+        a.day.localeCompare(b.day)
+      );
+
+    if (!data.length) {
+      els.chart.innerHTML =
+        '<div class="visitor-chart-empty">' +
+        "<strong>No traffic data yet</strong>" +
+        "<span>" +
+        "Once the first visitor is recorded, " +
+        "the traffic curve will appear here." +
+        "</span>" +
+        "</div>";
+
+      return;
+    }
+
+    const width = 960;
+    const height = 155;
+    const left = 24;
+    const right = 14;
+    const top = 12;
+    const bottom = 26;
+
+    const plotW =
+      width - left - right;
+
+    const plotH =
+      height - top - bottom;
+
+    const max = Math.max(
+      1,
+      ...data.map((item) =>
+        item.value
+      )
+    );
+
+    const x = (index) =>
+      data.length === 1
+        ? width / 2
+        : left +
+          index *
+            plotW /
+            (data.length - 1);
+
+    const y = (value) =>
+      top +
+      (1 - value / max) *
+        plotH;
+
+    const points = data
+      .map(
+        (item, index) =>
+          x(index) +
+          "," +
+          y(item.value)
+      )
+      .join(" ");
+
+    const area =
+      points +
+      " " +
+      x(data.length - 1) +
+      "," +
+      (height - bottom) +
+      " " +
+      x(0) +
+      "," +
+      (height - bottom);
+
+    const step = Math.max(
+      1,
+      Math.ceil(data.length / 7)
+    );
+
+    const grid =
+      [0, 1, 2, 3]
+        .map((index) => {
+          const yy =
+            top +
+            (index * plotH) / 3;
+
+          return (
+            '<line class="visitor-chart-grid-line" ' +
+            'x1="' + left + '" ' +
+            'x2="' + (width - right) + '" ' +
+            'y1="' + yy + '" ' +
+            'y2="' + yy + '"/>'
+          );
+        })
+        .join("");
+
+    const labels = data
+      .map((item, index) => {
+        if (
+          !(
+            index % step === 0 ||
+            index === data.length - 1
+          )
+        ) {
+          return "";
+        }
+
+        const label =
+          item.day.length > 5
+            ? item.day.slice(5)
+            : item.day;
+
+        return (
+          '<text class="visitor-chart-label" ' +
+          'x="' +
+          x(index) +
+          '" y="' +
+          (height - 7) +
+          '" text-anchor="middle">' +
+          label +
+          "</text>"
+        );
+      })
+      .join("");
+
+    const dots = data
+      .map((item, index) => {
+        return (
+          '<circle class="visitor-chart-dot" ' +
+          'cx="' +
+          x(index) +
+          '" cy="' +
+          y(item.value) +
+          '" r="4">' +
+          "<title>" +
+          item.day +
+          " · " +
+          number(item.value) +
+          " views" +
+          "</title>" +
+          "</circle>"
+        );
+      })
+      .join("");
+
+    els.chart.innerHTML =
+      '<svg viewBox="0 0 ' +
+      width +
+      " " +
+      height +
+      '" preserveAspectRatio="none" ' +
+      'role="img" aria-label="Daily page views">' +
+      "<defs>" +
+      '<linearGradient id="visitorAreaGradient" ' +
+      'x1="0" y1="0" x2="0" y2="1">' +
+      '<stop offset="0%" stop-color="rgba(34,211,238,.32)"/>' +
+      '<stop offset="100%" stop-color="rgba(34,211,238,0)"/>' +
+      "</linearGradient>" +
+      "</defs>" +
+      grid +
+      '<polygon class="visitor-chart-area" points="' +
+      area +
+      '"/>' +
+      '<polyline class="visitor-chart-line" points="' +
+      points +
+      '"/>' +
+      dots +
+      labels +
+      "</svg>";
+  }
+
+  function render(data, fromCache) {
+    const normalized =
+      normalize(data);
+
+    const totals =
+      normalized.totals || {};
+
+    const platform =
+      normalized.platform || {};
+
+    const range =
+      els.range.value;
+
+    let rangeLabel = "last 7 days";
+
+    if (range === "1") {
+      rangeLabel = "last 24 hours";
+    } else if (range === "30") {
+      rangeLabel = "last 30 days";
+    } else if (range === "90") {
+      rangeLabel = "last 90 days";
+    } else if (range === "all") {
+      rangeLabel =
+        "all available time";
+    }
+
+    els.views.textContent =
+      number(
+        totals.views ??
+        totals.pageviews
+      );
+
+    els.viewsNote.textContent =
+      rangeLabel;
+
+    els.visitors.textContent =
+      number(
+        totals.uniqueVisitors
+      );
+
+    els.sessions.textContent =
+      number(
+        totals.sessions
+      );
+
+    els.events.textContent =
+      number(
+        totals.events
+      );
+
+    els.duration.textContent =
+      duration(
+        totals.avgDurationMs
+      );
+
+    const lastSeen =
+      platform.lastSeen ||
+      platform.last_seen;
+
+    els.updated.textContent =
+      lastSeen
+        ? "Last activity " +
+          dateTime(lastSeen)
+        : fromCache
+          ? "Cached snapshot"
+          : "Waiting for first event";
+
+    renderChart(
+      normalized.daily
+    );
+
+    if (fromCache) {
+      setHealth(
+        "offline",
+        "Live API unavailable · showing cached data"
+      );
+    } else {
+      setHealth(
+        "online",
+        "Live · GitHub Page Insights Worker"
+      );
+    }
+  }
+
+  async function fetchStats() {
+    const days =
+      encodeURIComponent(
+        els.range.value
+      );
+
+    const controller =
+      new AbortController();
+
+    const timeout =
+      setTimeout(
+        () => controller.abort(),
+        10000
+      );
+
+    try {
+      const response =
+        await fetch(
+          WORKER +
+          "/v1/platforms/" +
+          encodeURIComponent(
+            PLATFORM_ID
+          ) +
+          "?days=" +
+          days +
+          "&_=" +
+          Date.now(),
+          {
+            method: "GET",
+            cache: "no-store",
+            credentials: "omit",
+            signal: controller.signal
+          }
+        );
+
+      const body =
+        await response
+          .json()
+          .catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(
+          body.error ||
+          body.message ||
+          ("HTTP " +
+            response.status)
+        );
+      }
+
+      render(body, false);
+      writeCache(body);
+    } finally {
+      clearTimeout(timeout);
+    }
+  }
+
+  async function load(
+    useCacheFirst = true
+  ) {
+    setLoading(true);
+
+    if (useCacheFirst) {
+      const cached =
+        readCache();
+
+      if (
+        cached &&
+        cached.data &&
+        Date.now() -
+          cached.savedAt <
+          CACHE_TTL
+      ) {
+        render(
+          cached.data,
+          true
+        );
+      }
+    }
+
+    try {
+      await fetchStats();
+    } catch (error) {
+      const cached =
+        readCache();
+
+      if (cached && cached.data) {
+        render(
+          cached.data,
+          true
+        );
+      } else {
+        els.views.textContent =
+          "—";
+
+        els.visitors.textContent =
+          "—";
+
+        els.sessions.textContent =
+          "—";
+
+        els.events.textContent =
+          "—";
+
+        els.duration.textContent =
+          "—";
+
+        els.updated.textContent =
+          "Analytics unavailable";
+
+        els.chart.innerHTML =
+          '<div class="visitor-chart-error">' +
+          "<strong>" +
+          "Visitor statistics are temporarily unavailable" +
+          "</strong>" +
+          "<span>" +
+          "Please try the refresh button again." +
+          "</span>" +
+          "</div>";
+
+        setHealth(
+          "offline",
+          "Could not reach GitHub Page Insights Worker"
+        );
+      }
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  els.range.addEventListener(
+    "change",
+    () => load(false)
+  );
+
+  els.refresh.addEventListener(
+    "click",
+    () => load(false)
+  );
+
+  load(true);
+
+  setInterval(() => {
+    if (!document.hidden) {
+      load(false);
+    }
+  }, 120000);
+})();
+</script>
+
+<!-- END GITHUB PAGE INSIGHTS VISITOR STATISTICS -->
+
 <body>
   <a class="skip-link" href="#home">Skip to content</a>
 
