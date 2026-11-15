@@ -9,7 +9,7 @@
   <meta name="author" content="Mehrdad Behrouzi">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Mehrdad Behrouzi | Computer Engineer">
-  <meta property="og:description" content="Computer Engineering portfolio focused on IoT, embedded systems, networking, automation and modern web tools.">
+  <meta property="og:description" content="Computer Engineering portfolio with IoT, embedded systems, networking, automation, live Shiraz weather, market data and smart-home telemetry.">
   <meta property="og:image" content="pic/MB-LOGO2.png">
   <meta property="og:url" content="https://mehrdadmb2.github.io/mehrdad-dev/">
   <title>Mehrdad Behrouzi | Computer Engineer</title>
@@ -22,6 +22,7 @@
   <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&family=Noto+Serif+JP:wght@400;700&family=Orbitron:wght@400;500;600;700;800&family=Share+Tech+Mono&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="live-hub.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
 </head>
   
@@ -68,6 +69,7 @@
       <ul id="nav-links">
         <li><a href="#home" class="active">Home</a></li>
         <li><a href="#about">About</a></li>
+        <li><a href="#live-hub">Live Hub</a></li>
         <li><a href="#education">Education</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#projects">Projects</a></li>
@@ -136,6 +138,128 @@
           <div class="stat-item"><span class="stat-number">∞</span><span class="stat-label">Learning Mode</span></div>
         </div>
       </div>
+    </section>
+
+    <section id="live-hub" class="lh-section" aria-labelledby="lh-title">
+      <div class="lh-head">
+        <div>
+          <div class="lh-eyebrow">LIVE INTELLIGENCE // 003</div>
+          <h2 id="lh-title" class="section-title font-tech lh-title">Live Hub</h2>
+          <p class="lh-description">A quiet, real-time window into Shiraz weather, the Iranian market and the smart-home sensors — loaded only when this section comes into view.</p>
+        </div>
+        <div class="lh-actions">
+          <span id="lh-global-state" class="lh-global-state"><i></i><span>CONNECTING</span></span>
+          <button id="lh-refresh" class="lh-refresh" type="button" aria-label="Refresh live data" title="Refresh all live feeds"><i class="fas fa-rotate"></i><span>Refresh</span></button>
+          <span id="lh-last-check" class="lh-last-check">Waiting for first check</span>
+        </div>
+      </div>
+
+      <div class="lh-grid">
+        <article id="lh-weather-card" class="lh-card lh-weather-card s-cloudy d" aria-label="Live Shiraz weather">
+          <div id="lh-weather-fx" class="lh-fx" aria-hidden="true"></div>
+          <div class="lh-weather-body">
+            <div class="lh-weather-head">
+              <div>
+                <div class="lh-location">Shiraz, Iran</div>
+                <div class="lh-weather-subtitle">Live local conditions · Asia/Tehran</div>
+                <div class="lh-weather-condition"><span id="lh-weather-emoji" class="lh-weather-emoji" aria-hidden="true">⛅</span><span id="lh-weather-condition">Waiting for weather data</span></div>
+              </div>
+              <span id="lh-weather-state" class="lh-source-state"><i></i><span>LOADING</span></span>
+            </div>
+
+            <div class="lh-weather-main">
+              <div class="lh-temperature"><span id="lh-weather-temp">--</span><small>°C</small></div>
+              <div>
+                <div id="lh-weather-hilo" class="lh-weather-condition">H --° · L --°</div>
+                <div id="lh-weather-feels" class="lh-weather-feels">Feels like —</div>
+              </div>
+            </div>
+
+            <div class="lh-weather-stats" aria-label="Weather details">
+              <div class="lh-weather-stat"><span>Humidity</span><b id="lh-weather-humidity">—</b></div>
+              <div class="lh-weather-stat"><span>Wind</span><b id="lh-weather-wind">—</b></div>
+              <div class="lh-weather-stat"><span>Rain chance</span><b id="lh-weather-rain">—</b></div>
+              <div class="lh-weather-stat"><span>Max UV</span><b id="lh-weather-uv">—</b></div>
+              <div class="lh-weather-stat"><span>Sunrise</span><b id="lh-weather-sunrise">—</b></div>
+              <div class="lh-weather-stat"><span>Sunset</span><b id="lh-weather-sunset">—</b></div>
+            </div>
+
+            <div class="lh-forecast-block">
+              <div class="lh-forecast-label"><span>Next hours</span><span>Temperature · rain probability</span></div>
+              <div id="lh-weather-hours" class="lh-hours"><div class="lh-empty">Hourly forecast is loading…</div></div>
+            </div>
+
+            <div class="lh-forecast-block">
+              <div class="lh-forecast-label"><span>3-day outlook</span><span>High / low</span></div>
+              <div id="lh-weather-days" class="lh-days"><div class="lh-empty">Forecast is loading…</div></div>
+            </div>
+
+            <div class="lh-weather-foot">
+              <span id="lh-weather-updated">Waiting for source</span>
+              <div class="lh-scene-control">
+                <label for="lh-scene-preview">Scene preview</label>
+                <select id="lh-scene-preview" class="lh-scene-select" aria-label="Preview weather animation">
+                  <option value="live">Live weather</option>
+                  <option value="s-clear">Clear sky</option>
+                  <option value="s-partly">Partly cloudy</option>
+                  <option value="s-cloudy">Overcast</option>
+                  <option value="s-fog">Fog</option>
+                  <option value="s-rain">Rain</option>
+                  <option value="s-snow">Snow</option>
+                  <option value="s-storm">Thunderstorm</option>
+                </select>
+                <span id="lh-scene-note" class="lh-scene-note">Live scene</span>
+              </div>
+              <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo source ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="lh-card lh-market-card" aria-label="Iran market snapshot">
+          <div class="lh-card-head">
+            <div class="lh-card-title">
+              <span class="lh-card-icon"><i class="fas fa-chart-line" aria-hidden="true"></i></span>
+              <div><h3 class="font-tech">Market Pulse</h3><p>Iranian market · Toman conversion</p></div>
+            </div>
+            <span id="lh-market-state" class="lh-source-state"><i></i><span>LOADING</span></span>
+          </div>
+          <div class="lh-market-primary">
+            <div class="lh-market-primary-label">USD / USDT market proxy · 1 unit</div>
+            <div class="lh-market-primary-value"><strong id="lh-usd-price">—</strong><small>TOMAN</small></div>
+            <div id="lh-usd-change" class="lh-market-change flat">Change unavailable</div>
+          </div>
+          <div class="lh-market-rows">
+            <div class="lh-market-row">
+              <div class="lh-market-row-label"><span class="lh-market-coin"><i class="fas fa-coins" aria-hidden="true"></i></span><div><b>18K Gold</b><small>Per gram</small></div></div>
+              <div class="lh-market-row-value"><b id="lh-gold-price">—</b><small>Toman</small></div>
+            </div>
+            <div class="lh-market-row">
+              <div class="lh-market-row-label"><span class="lh-market-coin"><i class="fab fa-bitcoin" aria-hidden="true"></i></span><div><b>Bitcoin</b><small>BTC / IRR market</small></div></div>
+              <div class="lh-market-row-value"><b id="lh-btc-price">—</b><small>Toman</small></div>
+            </div>
+          </div>
+          <div class="lh-market-note">ArzPulse publishes source prices in Rial. Displayed values are divided by 10 to show Toman. USD/USDT is a market proxy, not an official bank rate.</div>
+          <div class="lh-card-foot"><span id="lh-market-updated">Waiting for source</span><a href="https://mehrdadmb2.github.io/ArzPulse/" target="_blank" rel="noopener noreferrer">Open ArzPulse ↗</a></div>
+        </article>
+
+        <article class="lh-card lh-home-card" aria-label="Smart home sensor telemetry">
+          <div class="lh-card-head">
+            <div class="lh-card-title">
+              <span class="lh-card-icon"><i class="fas fa-house-signal" aria-hidden="true"></i></span>
+              <div><h3 class="font-tech">Smart Home</h3><p>PySmartHome-PC · sensor telemetry</p></div>
+            </div>
+            <span id="lh-home-state" class="lh-source-state"><i></i><span>LOADING</span></span>
+          </div>
+          <div class="lh-home-summary">
+            <div><strong id="lh-home-count">—</strong><span id="lh-home-count-note">Sensors currently online</span></div>
+            <i class="fas fa-microchip" aria-hidden="true"></i>
+          </div>
+          <div id="lh-home-nodes" class="lh-home-nodes"><div class="lh-empty">Sensor telemetry is loading…</div></div>
+          <div class="lh-home-server"><span id="lh-home-server-state">Checking telemetry publisher…</span><span id="lh-home-updated">Waiting for source</span></div>
+          <div class="lh-card-foot"><span>Read-only public status snapshot</span><a href="https://mehrdadmb2.github.io/PySmartHome-PC/" target="_blank" rel="noopener noreferrer">Open PySmartHome ↗</a></div>
+        </article>
+      </div>
+      <p class="lh-privacy-note">Read-only telemetry. No local network addresses, access tokens or control endpoints are exposed on this page.</p>
     </section>
 
     <section id="education">
@@ -1454,7 +1578,7 @@
   
   <footer class="glass-footer">
     <div class="footer-top"><div><p class="font-tech footer-brand">MEHRDAD.DEV</p><p class="footer-copy">Built with curiosity, caffeine &amp; code.</p></div><a href="#home" class="footer-top-btn magnetic">Back to top <i class="fas fa-arrow-up"></i></a></div>
-    <div class="footer-links"><a href="#home">Home</a><a href="#about">About</a><a href="#education">Education</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#websites">Websites</a><a href="#donate">Donate</a><a href="#contact">Contact</a></div>
+    <div class="footer-links"><a href="#home">Home</a><a href="#about">About</a><a href="#live-hub">Live Hub</a><a href="#education">Education</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#websites">Websites</a><a href="#donate">Donate</a><a href="#contact">Contact</a></div>
     <p class="copyright">© <span id="current-year"></span> Mehrdad Behrouzi. All systems nominal.</p>
   </footer>
 
@@ -1474,5 +1598,6 @@
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <!-- Leaflet is loaded only when the Journey map section is opened -->
   <script defer src="script.js"></script>
+  <script defer src="live-hub.js"></script>
 </body>
 </html>

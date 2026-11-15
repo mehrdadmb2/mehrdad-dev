@@ -135,3 +135,26 @@ I'm passionate about transforming ideas into real-world projects using technolog
 ---
 
 ⭐ If you like my work, consider following me and checking out my repositories!
+
+
+---
+
+## ⚡ Live Hub
+
+The portfolio includes a lightweight, lazy-loaded Live Hub below the About section:
+
+- **Shiraz weather:** current conditions, feels-like temperature, humidity, wind, rain probability, sunrise/sunset and a 3-day outlook. The weather artwork adapts to clear, cloudy, foggy, rainy, snowy, stormy, day and night conditions.
+- **Market Pulse:** USD/USDT market proxy, 18K gold and Bitcoin values sourced from [ArzPulse](https://mehrdadmb2.github.io/ArzPulse/). Rial values are converted to Toman by dividing by 10.
+- **Smart Home:** public temperature/humidity telemetry and online status from [PySmartHome-PC](https://mehrdadmb2.github.io/PySmartHome-PC/).
+
+The browser first tries the live public sources and falls back to snapshots in `/data`. A GitHub Actions workflow refreshes those snapshots every 30 minutes; unavailable upstream sources do not erase the last good snapshot. The Live Hub starts fetching only when the visitor scrolls near it, pauses its weather scene off-screen, respects reduced-motion settings, and shows stale/offline states instead of inventing values.
+
+### Live data files
+
+- `live-hub.js` — client-side rendering, refresh, caching and source fallbacks.
+- `live-hub.css` — isolated glassmorphism and weather-scene styles.
+- `scripts/update-live-data.mjs` — scheduled snapshot collector (Node.js 20, no dependencies).
+- `.github/workflows/update-live-data.yml` — 30-minute scheduled refresh and manual workflow dispatch.
+- `data/` — public, read-only fallback snapshots.
+
+**Privacy note:** only the public sensor status file is consumed. Do not add Wi-Fi credentials, API keys, private tokens, internal LAN addresses or device-control endpoints to these snapshots.
