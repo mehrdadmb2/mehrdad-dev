@@ -1,0 +1,2 @@
+# Public fallback snapshots are created by .github/workflows/update-live-data.yml.
+# Do not put secrets, Wi-Fi credentials, private tokens, LAN IPs or control URLs here.
