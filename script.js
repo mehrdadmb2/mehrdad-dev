@@ -31,13 +31,134 @@
     return new Date(t).toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});
   };
 
+  const ACTIVITY_KEY = 'mehrdad-dev:activity:v1';
+  let activityLog = [];
+  let activityUnread = 0;
+  const activityIcons = { success: 'fa-circle-check', error: 'fa-circle-xmark', warning: 'fa-triangle-exclamation', info: 'fa-circle-info' };
+  const activityTitles = { success: 'Completed', error: 'Something went wrong', warning: 'Attention required', info: 'System notice' };
+
+  function loadActivityLog() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(ACTIVITY_KEY) || '[]');
+      if (Array.isArray(saved)) activityLog = saved.filter(x => x && typeof x.message === 'string' && Number.isFinite(Number(x.at))).slice(0, 30);
+    } catch (_) { activityLog = []; }
+  }
+
+  function saveActivityLog() {
+    try { localStorage.setItem(ACTIVITY_KEY, JSON.stringify(activityLog.slice(0, 30))); } catch (_) {}
+  }
+
+  function activityTime(value) {
+    try { return new Intl.DateTimeFormat('fa-IR', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Tehran' }).format(new Date(value)); }
+    catch (_) { return new Date(value).toLocaleTimeString(); }
+  }
+
+  function renderActivityLog() {
+    const list = $('#notification-list');
+    const count = $('#notification-count');
+    const connection = $('#notification-connection-label');
+    const connectionDot = $('#notification-connection-dot');
+    if (count) {
+      count.textContent = activityUnread > 9 ? '9+' : String(activityUnread);
+      count.hidden = activityUnread < 1;
+    }
+    if (connection) connection.textContent = navigator.onLine ? 'Connection available' : 'You are offline';
+    if (connectionDot) connectionDot.classList.toggle('is-offline', !navigator.onLine);
+    if (!list) return;
+    list.replaceChildren();
+    if (!activityLog.length) {
+      const empty = document.createElement('div');
+      empty.className = 'notification-empty';
+      empty.innerHTML = '<i class="far fa-bell-slash"></i><strong>All clear</strong><span>No recent activity has been recorded.</span>';
+      list.appendChild(empty);
+      return;
+    }
+    activityLog.slice(0, 20).forEach(item => {
+      const row = document.createElement('article');
+      row.className = `notification-item notification-${item.type || 'info'}`;
+      const icon = document.createElement('span'); icon.className = 'notification-item-icon';
+      const glyph = document.createElement('i'); glyph.className = `fas ${activityIcons[item.type] || activityIcons.info}`; icon.appendChild(glyph);
+      const body = document.createElement('div'); body.className = 'notification-item-body';
+      const title = document.createElement('strong'); title.textContent = activityTitles[item.type] || activityTitles.info;
+      const message = document.createElement('p'); message.textContent = item.message;
+      const time = document.createElement('time'); time.dateTime = new Date(item.at).toISOString(); time.textContent = activityTime(item.at);
+      body.append(title, message, time); row.append(icon, body); list.appendChild(row);
+    });
+  }
+
+  function recordActivity(message, type='info') {
+    const safeType = ['success', 'error', 'warning', 'info'].includes(type) ? type : 'info';
+    const safeMessage = String(message ?? '').trim().slice(0, 240);
+    if (!safeMessage) return;
+    const now = Date.now();
+    const previous = activityLog[0];
+    if (previous && previous.message === safeMessage && previous.type === safeType && now - Number(previous.at) < 1800) return;
+    activityLog.unshift({ id: `${now}-${activityLog.length}`, type: safeType, message: safeMessage, at: now });
+    activityLog = activityLog.slice(0, 30);
+    activityUnread = Math.min(99, activityUnread + 1);
+    saveActivityLog();
+    renderActivityLog();
+  }
+
   function toast(message, type='info') {
-    const host = $('#toast-container'); if (!host) return;
+    const host = $('#toast-container');
+    if (!host) { recordActivity(message, type); return; }
+    const safeType = ['success', 'error', 'warning', 'info'].includes(type) ? type : 'info';
+    const safeMessage = String(message ?? '').trim().slice(0, 240);
+    if (!safeMessage) return;
+    recordActivity(safeMessage, safeType);
+    while (host.children.length >= 3) host.firstElementChild?.remove();
+
     const el = document.createElement('div');
-    el.className = `toast toast-${type}`;
-    el.innerHTML = `<i class="fas ${type==='success'?'fa-circle-check':type==='error'?'fa-circle-exclamation':'fa-circle-info'}"></i><span>${escapeHTML(message)}</span>`;
-    host.appendChild(el); requestAnimationFrame(()=>el.classList.add('show'));
-    setTimeout(()=>{ el.classList.remove('show'); setTimeout(()=>el.remove(),300); },2600);
+    el.className = `toast toast-${safeType}`;
+    el.setAttribute('role', safeType === 'error' ? 'alert' : 'status');
+    const icon = document.createElement('span'); icon.className = 'toast-icon';
+    const glyph = document.createElement('i'); glyph.className = `fas ${activityIcons[safeType]}`; icon.appendChild(glyph);
+    const copy = document.createElement('div'); copy.className = 'toast-copy';
+    const title = document.createElement('strong'); title.textContent = activityTitles[safeType];
+    const text = document.createElement('span'); text.className = 'toast-message'; text.textContent = safeMessage;
+    copy.append(title, text);
+    const close = document.createElement('button'); close.className = 'toast-close'; close.type = 'button'; close.setAttribute('aria-label', 'Dismiss notification');
+    close.innerHTML = '<i class="fas fa-xmark"></i>';
+    const progress = document.createElement('span'); progress.className = 'toast-progress';
+    el.append(icon, copy, close, progress); host.appendChild(el);
+
+    let remaining = 4800, started = 0, timer = 0, removed = false;
+    const remove = () => {
+      if (removed) return; removed = true; clearTimeout(timer); el.classList.remove('show');
+      setTimeout(() => el.remove(), 260);
+    };
+    const resume = () => { if (removed || timer) return; started = Date.now(); progress.style.animationPlayState = 'running'; timer = setTimeout(remove, remaining); };
+    const pause = () => { if (!timer) return; clearTimeout(timer); timer = 0; remaining = Math.max(0, remaining - (Date.now() - started)); progress.style.animationPlayState = 'paused'; };
+    close.addEventListener('click', remove);
+    el.addEventListener('mouseenter', pause); el.addEventListener('mouseleave', resume);
+    el.addEventListener('focusin', pause); el.addEventListener('focusout', resume);
+    requestAnimationFrame(() => { el.classList.add('show'); resume(); });
+  }
+
+  function initNotificationCenter() {
+    loadActivityLog();
+    const wrap = $('.notification-wrap');
+    const trigger = $('#notification-toggle');
+    const panel = $('#notification-center');
+    const close = $('#notification-close');
+    const clear = $('#notification-clear');
+    if (!wrap || !trigger || !panel) return;
+    const setOpen = open => {
+      panel.hidden = !open;
+      trigger.setAttribute('aria-expanded', String(open));
+      if (open) { activityUnread = 0; renderActivityLog(); }
+    };
+    trigger.addEventListener('click', () => setOpen(panel.hidden));
+    close?.addEventListener('click', () => setOpen(false));
+    clear?.addEventListener('click', () => { activityLog = []; activityUnread = 0; saveActivityLog(); renderActivityLog(); });
+    document.addEventListener('click', event => { if (!wrap.contains(event.target)) setOpen(false); });
+    document.addEventListener('keydown', event => { if (event.key === 'Escape' && !panel.hidden) { setOpen(false); trigger.focus(); } });
+    renderActivityLog();
+    window.addEventListener('online', () => toast('Connection restored. Live modules can refresh again.', 'success'));
+    window.addEventListener('offline', () => toast('You are offline. Cached content remains available where possible.', 'warning'));
+    window.addEventListener('unhandledrejection', () => recordActivity('A background task was interrupted. Retry the affected module if its data is unavailable.', 'warning'));
+    window.addEventListener('error', event => { if (event.error) recordActivity('A script encountered an unexpected error. Some optional features may be unavailable.', 'error'); });
   }
 
   function setTheme(theme) {
@@ -172,7 +293,114 @@
   function bindTilt(el){if(!el||el.dataset.tiltBound==='1'||reducedMotion()||!matchMedia('(hover:hover)').matches)return;el.dataset.tiltBound='1';el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;el.style.setProperty('--mx',`${x}px`);el.style.setProperty('--my',`${y}px`);el.style.transform=`perspective(900px) rotateX(${((y/r.height)-.5)*-6}deg) rotateY(${((x/r.width)-.5)*8}deg) translateY(-5px)`;});el.addEventListener('pointerleave',()=>el.style.transform='');}
   function initInteractions(){ $$('.tilt-card,.glass-card,.skill-card,.edu-card,.donate-card,.contact-card').forEach(bindTilt);const cursor=$('#cursor');if(cursor&&matchMedia('(hover:hover)').matches&&!reducedMotion()){document.addEventListener('pointermove',e=>{cursor.style.left=`${e.clientX}px`;cursor.style.top=`${e.clientY}px`;cursor.style.opacity='1';});document.addEventListener('pointerover',e=>cursor.classList.toggle('hover',!!e.target.closest('a,button,.glass-card,.travel-float,.birthday-star-floating')));}else cursor?.remove();}
   function initSkills(){const bars=$$('.skill-fill'),run=b=>b.style.width=b.dataset.width||'0%';if(!('IntersectionObserver'in window)){bars.forEach(run);return;}const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){run(e.target);io.unobserve(e.target);}}),{threshold:.25});bars.forEach(b=>io.observe(b));}
-  function initRoadmap(){const f=$('#road-fill'),c=$('#road-car'),p=$('#progress-percent'),r=$('#remaining-days');if(!f||!c||!p||!r)return;const s=new Date(2025,7,23),e=new Date(2027,4,23),n=new Date(),pc=Math.min(100,Math.max(0,(n-s)/(e-s)*100));f.style.width=`${pc}%`;c.style.left=`${pc}%`;p.textContent=`${Math.floor(pc)}%`;r.textContent=formatNumber(Math.max(0,Math.ceil((e-n)/86400000)));}
+  const SERVICE_CONFIG = Object.freeze({
+    start: '2025-08-23T00:00:00+03:30',
+    originalEnd: '2027-05-23T00:00:00+03:30',
+    end: '2027-01-28T00:00:00+03:30',
+    endGregorian: '2027-01-28',
+    reductionMonths: 3,
+    reductionDays: 24,
+    timezone: 'Asia/Tehran'
+  });
+  const SERVICE_DAY = 86400000;
+  const jalaliPartsFormatter = new Intl.DateTimeFormat('en-US-u-ca-persian-nu-latn', { year: 'numeric', month: 'numeric', day: 'numeric', timeZone: SERVICE_CONFIG.timezone });
+  const jalaliDisplayFormatter = new Intl.DateTimeFormat('fa-IR-u-ca-persian', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: SERVICE_CONFIG.timezone });
+  const tehranDateTimeFormatter = new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: SERVICE_CONFIG.timezone });
+  const persianNumber = value => new Intl.NumberFormat('fa-IR').format(Math.max(0, Math.floor(Number(value) || 0)));
+  function getJalaliParts(date) {
+    const parts = jalaliPartsFormatter.formatToParts(date);
+    const get = type => Number(parts.find(part => part.type === type)?.value || 0);
+    return { year: get('year'), month: get('month'), day: get('day') };
+  }
+  function getJalaliMonthLength(year, month) {
+    if (month <= 6) return 31;
+    if (month <= 11) return 30;
+    const anchor = Date.UTC(year + 622, 2, 20, 12);
+    for (let offset = -4; offset <= 4; offset++) {
+      const candidate = new Date(anchor + offset * SERVICE_DAY);
+      const parts = getJalaliParts(candidate);
+      if (parts.year === year + 1 && parts.month === 1 && parts.day === 1) {
+        return getJalaliParts(new Date(candidate.getTime() - SERVICE_DAY)).day;
+      }
+    }
+    return 29;
+  }
+  function jalaliDateDifference(fromDate, toDate) {
+    const from = getJalaliParts(fromDate);
+    const to = getJalaliParts(toDate);
+    let months = (to.year - from.year) * 12 + (to.month - from.month);
+    let days = to.day - from.day;
+    if (days < 0) { months -= 1; days += getJalaliMonthLength(from.year, from.month); }
+    if (months < 0) return { years: 0, months: 0, days: 0 };
+    return { years: Math.floor(months / 12), months: months % 12, totalMonths: months, days: Math.max(0, days) };
+  }
+  function initRoadmap() {
+    const fill = $('#road-fill');
+    const marker = $('#road-car');
+    const percent = $('#progress-percent');
+    const remainingDaysEl = $('#remaining-days');
+    if (!fill || !marker || !percent || !remainingDaysEl) return;
+    const start = new Date(SERVICE_CONFIG.start);
+    const originalEnd = new Date(SERVICE_CONFIG.originalEnd);
+    const end = new Date(SERVICE_CONFIG.end);
+    const totalMs = end.getTime() - start.getTime();
+    const totalDays = Math.round(totalMs / SERVICE_DAY) + 1; // Inclusive service-day count, matching military day numbering.
+    const totalHours = Math.round(totalMs / 3600000);
+    const setText = (selector, value) => { const el = $(selector); if (el) el.textContent = String(value); };
+    setText('#service-start-date', jalaliDisplayFormatter.format(start));
+    setText('#service-original-end-date', jalaliDisplayFormatter.format(originalEnd));
+    setText('#service-end-date', jalaliDisplayFormatter.format(end));
+    setText('#service-final-date-inline', jalaliDisplayFormatter.format(end));
+    setText('#service-end-date-gregorian', SERVICE_CONFIG.endGregorian);
+    setText('#service-total-days', persianNumber(totalDays));
+    const update = () => {
+      const now = new Date();
+      const elapsedMs = Math.max(0, now.getTime() - start.getTime());
+      const remainingMs = Math.max(0, end.getTime() - now.getTime());
+      const elapsedDays = Math.min(totalDays, Math.floor(elapsedMs / SERVICE_DAY) + (now >= start ? 1 : 0));
+      const elapsedHours = Math.floor(elapsedMs / 3600000);
+      const elapsedMinutes = Math.floor(elapsedMs / 60000);
+      const elapsedSeconds = Math.floor(elapsedMs / 1000);
+      const progress = totalMs > 0 ? Math.min(100, Math.max(0, elapsedMs / totalMs * 100)) : 100;
+      const remainingWholeDays = Math.floor(remainingMs / SERVICE_DAY);
+      const remHours = Math.floor((remainingMs % SERVICE_DAY) / 3600000);
+      const remMinutes = Math.floor((remainingMs % 3600000) / 60000);
+      const remSeconds = Math.floor((remainingMs % 60000) / 1000);
+      const completed = jalaliDateDifference(start, now);
+      const remaining = jalaliDateDifference(now, end);
+      const pct = progress.toFixed(1);
+
+      fill.style.width = `${pct}%`;
+      marker.style.left = `${pct}%`;
+      percent.textContent = `${persianNumber(Math.floor(progress))}٪`;
+      const progressBar = $('#service-progress-bar');
+      if (progressBar) progressBar.setAttribute('aria-valuenow', String(Math.round(progress)));
+      remainingDaysEl.textContent = persianNumber(Math.ceil(remainingMs / SERVICE_DAY));
+      setText('#service-rem-days', persianNumber(remainingWholeDays));
+      setText('#service-rem-hours', persianNumber(remHours).padStart(2, '۰'));
+      setText('#service-rem-minutes', persianNumber(remMinutes).padStart(2, '۰'));
+      setText('#service-rem-seconds', persianNumber(remSeconds).padStart(2, '۰'));
+      setText('#service-countdown-calendar', remainingMs > 0 ? `${persianNumber(remaining.totalMonths ?? 0)} ماه و ${persianNumber(remaining.days)} روز تقویمی باقی‌مانده` : 'زمان محاسباتی پایان خدمت فرا رسیده است');
+      setText('#service-elapsed-calendar', `${persianNumber(completed.years)} سال · ${persianNumber(completed.months)} ماه · ${persianNumber(completed.days)} روز`);
+      setText('#service-elapsed-days', persianNumber(elapsedDays));
+      setText('#service-elapsed-days-inline', persianNumber(elapsedDays));
+      setText('#service-elapsed-hours', persianNumber(elapsedHours));
+      setText('#service-elapsed-minutes', persianNumber(elapsedMinutes));
+      setText('#service-elapsed-seconds', persianNumber(elapsedSeconds));
+      setText('#service-last-update', tehranDateTimeFormatter.format(now));
+      const completedService = remainingMs <= 0;
+      const card = $('#service-tracker');
+      card?.classList.toggle('service-completed', completedService);
+      setText('#service-summary-status-text', completedService ? 'COMPLETED' : 'LIVE TRACKER');
+      setText('#service-live-label', completedService ? 'COMPLETE' : 'LIVE');
+      if (completedService) setText('#service-countdown-calendar', 'زمان محاسباتی پایان خدمت فرا رسیده است');
+      // Keep the source dates visible and the remaining-time calculation deterministic in Asia/Tehran.
+      void totalHours;
+    };
+    update();
+    window.setInterval(() => { if (!document.hidden) update(); }, 1000);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) update(); });
+  }
   function initMaps(){const d=$('#journey-details');if(!d)return;let loaded=false;d.addEventListener('toggle',async()=>{if(!d.open||loaded)return;loaded=true;try{if(!window.L){const css=document.createElement('link');css.rel='stylesheet';css.href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';document.head.appendChild(css);await new Promise((res,rej)=>{const s=document.createElement('script');s.src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';s.onload=res;s.onerror=rej;document.head.appendChild(s);});}const locations=[['map-school',29.623503,52.475145,'Tohidi High School'],['map-uni',29.625778,52.493417,'Zand Institute'],['map-service',29.62875,51.64139,'Service Location']];locations.forEach(([id,lat,lng,label])=>{const el=$(`#${id}`);if(!el||el.dataset.ready)return;const map=L.map(el).setView([lat,lng],14);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OpenStreetMap contributors'}).addTo(map);L.marker([lat,lng]).addTo(map).bindPopup(label);el.dataset.ready='1';setTimeout(()=>map.invalidateSize(),150);});}catch(_){toast('Map module could not be loaded.','error');}});}
   function initHaiku(){const jp=$('#haiku-jp'),en=$('#haiku-en'),a=$('#haiku-author');if(!jp||!en||!a)return;const hs=[{jp:'古池や\n蛙飛びこむ\n水の音',en:'Old pond —\na frog jumps in,\nsound of water.',a:'Matsuo Bashō'},{jp:'蛍の火や\n吹き消す風の\n恋しき',en:"Firefly's light —\nthe wind that blows it out\nis dear to me.",a:'Kobayashi Issa'},{jp:'我死なば\n筆を捨てよと\n蝉の声',en:'When I die,\nthrow away my brush —\nthe cicada’s cry.',a:'Miyamoto Musashi'},{jp:'荒海や\n佐渡によこたふ\n天の川',en:'Rough sea —\nstretching out towards Sado,\nthe Milky Way.',a:'Matsuo Bashō'}];let i=0;const show=()=>{jp.innerHTML=escapeHTML(hs[i].jp).replace(/\n/g,'<br>');en.textContent=hs[i].en;a.textContent=`— ${hs[i].a}`};show();if(!reducedMotion())setInterval(()=>{i=(i+1)%hs.length;show();},8000);}
   function initCopy(){ $$('[data-copy-target]').forEach(b=>b.addEventListener('click',async()=>{const t=$(`#${b.dataset.copyTarget}`);if(!t)return;try{if(navigator.clipboard?.writeText)await navigator.clipboard.writeText(t.textContent.trim());else{const x=document.createElement('textarea');x.value=t.textContent.trim();document.body.appendChild(x);x.select();document.execCommand('copy');x.remove();}const old=b.innerHTML;b.innerHTML='<i class="fas fa-check"></i> Copied';b.classList.add('copied');toast('Wallet address copied.','success');setTimeout(()=>{b.innerHTML=old;b.classList.remove('copied');},1800);}catch(_){toast('Copy failed. Please copy manually.','error');}})); $('#copy-profile')?.addEventListener('click',async()=>{try{await navigator.clipboard.writeText('Mehrdad Behrouzi — Computer Engineer, IoT & Embedded Developer\nhttps://mehrdadmb2.github.io/mehrdad-dev/');toast('Profile link copied.','success');}catch(_){toast('Could not copy profile link.','error');}});}
@@ -182,8 +410,9 @@
 
   async function boot(){
     document.body.classList.add('loading');
-    const safe=(fn)=>{try{fn();}catch(e){console.warn('Optional module error:',e);}};
-    safe(initTheme);safe(initMatrixLoader);safe(initGalaxy);safe(initTravelAndBirthday);safe(initNavigation);safe(initScroll);safe(initTyping);safe(initProjectControls);safe(initCommandPalette);safe(initSkills);safe(initRoadmap);safe(initMaps);safe(initHaiku);safe(initCopy);safe(initInteractions);safe(initFooter);
+    const safe=(fn)=>{try{fn();}catch(e){console.warn('Optional module error:',e);recordActivity(`${fn.name || 'Optional module'} could not initialize. Other page features will continue running.`, 'error');}};
+    safe(initNotificationCenter);safe(initTheme);safe(initMatrixLoader);safe(initGalaxy);safe(initTravelAndBirthday);safe(initNavigation);safe(initScroll);safe(initTyping);safe(initProjectControls);safe(initCommandPalette);safe(initSkills);safe(initRoadmap);safe(initMaps);safe(initHaiku);safe(initCopy);safe(initInteractions);safe(initFooter);
+    recordActivity('Portfolio initialized. Core interface modules are ready.', 'success');
     try{await loadGithub();}catch(e){console.warn(e);}
   }
 

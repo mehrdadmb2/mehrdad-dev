@@ -9,3 +9,10 @@
 - Added local cache, lazy loading, visible-tab refresh scheduling, offline fallback and explicit stale/source labels.
 - Added a 30-minute GitHub Actions snapshot collector that preserves last-good files when an upstream source fails.
 - Preserved the original Matrix loader, galaxy background, GitHub project discovery, analytics, visitor statistics, journey maps, donate section and image assets.
+
+## 2026-11-16 — Service tracker and activity center
+- Replaced the basic service road widget with a live, responsive duty dashboard.
+- Applied the recorded 3-month, 24-day reduction to the original Jalali end date.
+- Added Tehran-time counters for elapsed calendar duration, days, hours, minutes, seconds, and remaining time.
+- Added an in-page activity center, persisted local event log, accessible toast notifications, and online/offline status feedback.
+- Preserved existing portfolio modules, Live Hub data integrations, analytics, and media assets.

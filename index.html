@@ -78,6 +78,20 @@
         <li><a href="#contact">Contact</a></li>
       </ul>
       <div class="nav-actions" aria-label="Quick controls">
+        <div class="notification-wrap">
+          <button id="notification-toggle" type="button" title="Activity & notifications" aria-label="Activity and notifications" aria-expanded="false" aria-controls="notification-center">
+            <i class="far fa-bell"></i><span id="notification-count" class="notification-count" hidden>0</span>
+          </button>
+          <section id="notification-center" class="notification-center" aria-label="Activity and notifications" hidden>
+            <div class="notification-center-head">
+              <div><span class="notification-kicker">SYSTEM / ACTIVITY LOG</span><h3>Activity Center</h3></div>
+              <div class="notification-head-actions"><button id="notification-clear" type="button">Clear</button><button id="notification-close" type="button" aria-label="Close notifications"><i class="fas fa-xmark"></i></button></div>
+            </div>
+            <div class="notification-connection"><span class="notification-connection-dot" id="notification-connection-dot"></span><span id="notification-connection-label">Checking connection…</span><small>LOCAL ACTIVITY</small></div>
+            <div id="notification-list" class="notification-list" role="log" aria-live="polite" aria-relevant="additions text"></div>
+            <div class="notification-center-foot">Only this browser's local activity is stored.</div>
+          </section>
+        </div>
         <button id="theme-toggle" type="button" title="Toggle theme" aria-label="Toggle theme"><i class="fas fa-moon"></i></button>
         <button id="palette-toggle" type="button" title="Open command palette" aria-label="Open command palette"><i class="fas fa-terminal"></i></button>
       </div>
@@ -333,12 +347,73 @@
     <section id="extras">
       <h2 class="section-title font-tech">More</h2>
       <div class="extras-container">
-        <details class="glass-card collapsible" id="military-details">
-          <summary class="font-tech"><i class="fas fa-shield-halved"></i> Personal Timeline</summary>
-          <div class="roadmap-container">
-            <div class="road-progress"><div class="road-fill" id="road-fill"></div><div class="road-car" id="road-car">🚙</div><div class="milestone" style="left:0%" data-label="Start"></div><div class="milestone" style="left:25%" data-label="Training"></div><div class="milestone" style="left:50%" data-label="Assignment"></div><div class="milestone" style="left:75%" data-label="Current stage"></div><div class="milestone" style="left:100%" data-label="Finish"></div></div>
-            <div class="road-labels"><span>START</span><span>FINISH</span></div>
-            <div class="progress-text"><span id="progress-percent">0%</span> completed · <span id="remaining-days">--</span> days remaining</div>
+        <details class="glass-card collapsible military-card" id="military-details">
+          <summary class="font-tech military-summary">
+            <span class="military-summary-title"><i class="fas fa-shield-halved"></i> وضعیت خدمت <span class="military-summary-en">/ Military Service</span></span>
+            <span class="military-summary-status"><span class="service-status-dot"></span> <span id="service-summary-status-text">LIVE TRACKER</span></span>
+          </summary>
+          <div class="service-dashboard" id="service-tracker" lang="fa" dir="rtl">
+            <div class="service-hero-panel">
+              <div class="service-hero-copy">
+                <div class="service-eyebrow"><span class="service-eyebrow-dot"></span> PERSONAL SERVICE TRACKER <span class="service-zone">ASIA / TEHRAN</span></div>
+                <h3>مسیر خدمت؛ با تاریخ پایان به‌روزشده</h3>
+                <p class="service-hero-description">با اعمال <strong>۳ ماه و ۲۴ روز کسری ثبت‌شده</strong>، زمان‌بندی پایان خدمت دوباره محاسبه شده است.</p>
+                <div class="service-final-date-card">
+                  <span class="service-final-date-label">تاریخ پایان محاسباتی</span>
+                  <strong id="service-end-date">۱۴۰۵/۱۱/۰۸</strong>
+                  <small id="service-end-date-gregorian">2027-01-28</small>
+                </div>
+              </div>
+              <div class="service-countdown-card">
+                <div class="service-countdown-heading"><span>COUNTDOWN TO RELEASE</span><span class="service-live-badge"><i></i> <span id="service-live-label">LIVE</span></span></div>
+                <div class="service-countdown-grid" aria-label="شمارش معکوس تا پایان خدمت">
+                  <div class="service-countdown-unit service-countdown-days"><strong id="service-rem-days">--</strong><span>روز</span></div>
+                  <div class="service-countdown-unit"><strong id="service-rem-hours">--</strong><span>ساعت</span></div>
+                  <div class="service-countdown-unit"><strong id="service-rem-minutes">--</strong><span>دقیقه</span></div>
+                  <div class="service-countdown-unit"><strong id="service-rem-seconds">--</strong><span>ثانیه</span></div>
+                </div>
+                <div class="service-countdown-calendar" id="service-countdown-calendar">-- ماه و -- روز تقویمی باقی‌مانده</div>
+              </div>
+            </div>
+
+            <div class="service-progress-panel">
+              <div class="service-progress-header">
+                <div><span class="service-section-kicker">MISSION PROGRESS</span><h4>پیشرفت مسیر خدمت</h4></div>
+                <div class="service-progress-number"><strong id="progress-percent">0%</strong><span>تکمیل‌شده</span></div>
+              </div>
+              <div class="service-progress-track" role="progressbar" aria-label="درصد پیشرفت خدمت" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="service-progress-bar">
+                <div class="service-progress-fill" id="road-fill"></div>
+                <div class="service-progress-marker" id="road-car" aria-hidden="true"><i class="fas fa-crosshairs"></i></div>
+              </div>
+              <div class="service-progress-labels"><span>شروع خدمت</span><span>مسیر در حال تکمیل</span><span>پایان خدمت</span></div>
+              <div class="service-progress-caption"><span><i class="fas fa-calendar-check"></i> <b id="service-elapsed-days-inline">--</b> روز سپری‌شده</span><span><i class="fas fa-hourglass-half"></i> <b id="remaining-days">--</b> روز تقویمی باقی‌مانده</span></div>
+            </div>
+
+            <div class="service-metrics-grid">
+              <article class="service-metric-card service-metric-calendar"><span class="service-metric-icon"><i class="fas fa-calendar-days"></i></span><span class="service-metric-label">مدت تقویمی سپری‌شده</span><strong id="service-elapsed-calendar">--</strong><small>سال، ماه و روز کامل</small></article>
+              <article class="service-metric-card"><span class="service-metric-icon"><i class="fas fa-calendar-day"></i></span><span class="service-metric-label">کل روزهای خدمت</span><strong id="service-elapsed-days">--</strong><small>روز کامل سپری‌شده</small></article>
+              <article class="service-metric-card"><span class="service-metric-icon"><i class="fas fa-clock"></i></span><span class="service-metric-label">مجموع ساعت‌ها</span><strong id="service-elapsed-hours">--</strong><small>ساعت سپری‌شده</small></article>
+              <article class="service-metric-card"><span class="service-metric-icon"><i class="fas fa-stopwatch"></i></span><span class="service-metric-label">مجموع دقیقه‌ها</span><strong id="service-elapsed-minutes">--</strong><small>دقیقه سپری‌شده</small></article>
+              <article class="service-metric-card"><span class="service-metric-icon"><i class="fas fa-gauge-high"></i></span><span class="service-metric-label">مجموع ثانیه‌ها</span><strong id="service-elapsed-seconds">--</strong><small>شمارندهٔ زنده</small></article>
+              <article class="service-metric-card service-metric-total"><span class="service-metric-icon"><i class="fas fa-flag-checkered"></i></span><span class="service-metric-label">مدت کل تا پایان جدید</span><strong id="service-total-days">۵۲۳</strong><small>روز برنامه‌ریزی‌شده</small></article>
+            </div>
+
+            <div class="service-details-grid">
+              <section class="service-detail-card" aria-labelledby="service-date-heading">
+                <div class="service-detail-heading"><span><i class="fas fa-file-circle-check"></i></span><div><h4 id="service-date-heading">جزئیات زمان‌بندی</h4><small>DATE &amp; CREDIT DETAILS</small></div></div>
+                <div class="service-date-row"><span>تاریخ شروع خدمت</span><strong id="service-start-date">۱۴۰۴/۰۶/۰۱</strong></div>
+                <div class="service-date-row"><span>پایان اولیه</span><strong id="service-original-end-date">۱۴۰۶/۰۳/۰۲</strong></div>
+                <div class="service-date-row service-credit-row"><span>کسری اعمال‌شده</span><strong>۳ ماه و ۲۴ روز</strong></div>
+                <div class="service-date-row service-final-row"><span>پایان محاسباتی جدید</span><strong id="service-final-date-inline">۱۴۰۵/۱۱/۰۸</strong></div>
+              </section>
+              <section class="service-detail-card service-status-detail" aria-labelledby="service-status-heading">
+                <div class="service-detail-heading"><span><i class="fas fa-satellite-dish"></i></span><div><h4 id="service-status-heading">وضعیت شمارنده</h4><small>LIVE SYSTEM STATUS</small></div></div>
+                <div class="service-status-line"><span class="service-status-dot"></span><strong>محاسبهٔ زنده فعال است</strong></div>
+                <p>تمام ساعت‌ها بر اساس منطقهٔ زمانی تهران و با فرض شروع محاسبه از ابتدای روز شروع خدمت به‌روزرسانی می‌شوند.</p>
+                <div class="service-last-update"><i class="far fa-clock"></i> آخرین به‌روزرسانی: <strong id="service-last-update">--</strong></div>
+              </section>
+            </div>
+            <div class="service-calculation-note"><i class="fas fa-circle-info"></i><p>تاریخ جدید با کم‌کردن ۳ ماه تقویمی و سپس ۲۴ روز از تاریخ پایان اولیهٔ ۱۴۰۶/۰۳/۰۲ محاسبه شده است؛ نتیجهٔ تقویمی ۱۴۰۵/۱۱/۰۸ است. تاریخ قطعی تسویه و ترخیص، تاریخ ثبت‌شده در ابلاغیهٔ رسمی یگان خواهد بود. شمارش روز خدمت با احتساب روز شروع و روز پایان نمایش داده می‌شود؛ ساعت‌شمار، زمان سپری‌شده از ابتدای روز شروع را نشان می‌دهد.</p></div>
           </div>
         </details>
 
