@@ -1,38 +1,38 @@
 {
   "schema_version": 1,
   "name": "smarthome",
-  "fetchedAt": "2026-11-20T21:21:42+03:30",
+  "fetchedAt": "2026-11-21T03:28:06+03:30",
   "source": "https://raw.githubusercontent.com/mehrdadmb2/PySmartHome-PC/main/data/status.json",
   "raw": {
     "schema_version": 3,
-    "generated_at": "2026-11-20T21:21:42+03:30",
+    "generated_at": "2026-11-21T03:28:06+03:30",
     "timezone": "Asia/Tehran",
     "nodes": {
       "esp32_1": {
         "name": "Room 1 • Hub",
         "online": true,
-        "temperature": 24.4,
-        "humidity": 40.1,
-        "last_seen": "2026-11-20T21:21:42+03:30",
-        "latency_ms": 89,
-        "samples": 1675,
+        "temperature": 24,
+        "humidity": 35.9,
+        "last_seen": "2026-11-21T03:28:06+03:30",
+        "latency_ms": 107,
+        "samples": 3861,
         "consecutive_failures": 0
       },
       "esp32_s3": {
         "name": "Room 2 • Sensor S3",
         "online": true,
-        "temperature": 29.2,
-        "humidity": 26,
-        "last_seen": "2026-11-20T21:21:42+03:30",
-        "latency_ms": 108,
-        "samples": 1675,
+        "temperature": 27.1,
+        "humidity": 27.1,
+        "last_seen": "2026-11-21T03:28:06+03:30",
+        "latency_ms": 97,
+        "samples": 3862,
         "consecutive_failures": 0
       }
     },
     "server": {
-      "uptime_seconds": 16885,
-      "last_poll": "2026-11-20T21:21:42+03:30",
-      "last_publish": "2026-11-20T21:16:51+03:30",
+      "uptime_seconds": 38869,
+      "last_poll": "2026-11-21T03:28:06+03:30",
+      "last_publish": "2026-11-21T03:23:12+03:30",
       "publish_ok": true
     },
     "thresholds": {
